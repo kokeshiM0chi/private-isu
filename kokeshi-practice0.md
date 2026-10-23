@@ -1,34 +1,41 @@
-# 練習 0: ログを見て、変更前後のスコアを比べる
+# 練習 0: Goでログを見て、変更前後のスコアを比べる
 
-この練習では、Ruby実装のトップページを題材に、MySQLのスロークエリログで時間のかかるSQLを確認し、小さく修正してベンチマーク結果を比べます。
+この練習では、Go実装のトップページを題材に、MySQLのスロークエリログで時間のかかるSQLを確認し、小さく修正してベンチマーク結果を比べます。
 
 ## 使う環境
 
 - macOS、Colima、Docker Compose
-- アプリは`webapp/compose.yml`のデフォルト設定（Ruby実装）
+- アプリは`webapp/compose.yml`から起動するGo実装
 - ベンチマーカーはDockerイメージ`private-isu-benchmarker`
 
-この環境では、変更前のベンチマークは次の結果でした。スコアは実行環境や負荷で変わるため、目安として記録します。
+以前に取得した`score:1178`はRuby実装の結果なので、Goの変更前スコアとしては使いません。Goに切り替えたあと、Goのベースラインを測って記録してください。
 
-```json
-{"pass":true,"score":1178,"success":1017,"fail":0,"messages":[]}
-```
-
-## 1. アプリを起動して画面を見る
-
-Colimaが起動していることを確認します。
+## 1. Colimaを起動し、Go実装に切り替える
 
 ```sh
 colima start
 ```
 
-リポジトリのルートで初期データを用意します。すでに`make init`が完了している場合は、再実行不要です。
+`webapp/compose.yml`を開き、`app`サービスのビルド設定をRubyからGoに変更します。
+
+```yaml
+  app:
+    build:
+      context: golang/
+      dockerfile: Dockerfile
+```
+
+`context: ruby/`を`context: golang/`に変えるのがポイントです。ほかの設定はそのままにします。
+
+## 2. 初期データを準備
+
+リポジトリのルートディレクトリで実行します。すでに`make init`が完了している場合は、再実行不要です。
 
 ```sh
 make init
 ```
 
-アプリを起動します。
+## 3. Goアプリを起動して画面を見る
 
 ```sh
 cd webapp
@@ -36,11 +43,23 @@ docker compose up -d --build
 docker compose ps
 ```
 
-ブラウザで`http://localhost/`を開きます。画面にユーザー登録リンクがあれば、`http://localhost/register`から任意のアカウントを登録してログインできます。ベンチマーカーは自動でリクエストを行うため、画面上の登録はベンチマーク実行の必須条件ではありません。
+ブラウザで`http://localhost/`を開きます。ユーザー登録する場合は`http://localhost/register`を使います。ベンチマーカーは自動でリクエストを行うため、画面上の登録はベンチマーク実行の必須条件ではありません。
 
-## 2. 変更前のスコアを記録
+Goアプリの起動ログやエラーは、次のコマンドで確認できます。ログ表示を終えるには`Ctrl-C`を押します。
 
-ベンチマーカーのディレクトリから、変更前のベンチマークを実行します。アプリは起動したままにしてください。
+```sh
+docker compose logs -f app
+```
+
+アプリの応答も確認します。
+
+```sh
+curl -i http://localhost/
+```
+
+## 4. Go実装の変更前スコアを記録
+
+ベンチマーカーのディレクトリから実行します。アプリは起動したままにしてください。
 
 ```sh
 cd ../benchmarker
@@ -48,9 +67,9 @@ docker run --network host -i private-isu-benchmarker \
   /bin/benchmarker -t http://host.docker.internal -u /opt/userdata
 ```
 
-`pass`、`score`、`success`、`fail`を記録します。比較するときは、同じマシン、同じアプリ構成で実行します。
+`pass`、`score`、`success`、`fail`を記録します。Go実装を変更したあとの比較には、このGoの結果を使います。
 
-## 3. MySQLのスロークエリログを有効にする
+## 5. MySQLのスロークエリログを有効にする
 
 `webapp`ディレクトリに戻り、10ミリ秒以上かかったSQLを一時的に記録します。
 
@@ -59,11 +78,11 @@ cd ../webapp
 docker compose exec -T mysql mysql -uroot -proot -e "SET GLOBAL log_output='TABLE'; SET GLOBAL long_query_time=0.01; SET GLOBAL slow_query_log=ON;"
 ```
 
-この設定は実行中のMySQLに対する一時設定です。ログを取っている間は処理に余分な負荷がかかるため、その間のベンチマークスコアは比較用に使いません。
+ログを取っている間はMySQLに余分な負荷がかかります。そのため、この間に測ったスコアは変更前後の比較には使いません。
 
-## 4. ベンチマークを実行してログを確認
+## 6. ベンチマークを実行してSQLログを見る
 
-スロークエリログに対象SQLを記録させるため、ベンチマークを1回実行します。
+ログに対象SQLを記録するため、ベンチマークを1回実行します。
 
 ```sh
 cd ../benchmarker
@@ -71,7 +90,7 @@ docker run --network host -i private-isu-benchmarker \
   /bin/benchmarker -t http://host.docker.internal -u /opt/userdata
 ```
 
-`webapp`ディレクトリで、実行時間が長かったSQLを表示します。
+`webapp`ディレクトリで、時間のかかったSQLを表示します。
 
 ```sh
 cd ../webapp
@@ -79,49 +98,41 @@ docker compose exec -T mysql mysql -uroot -proot -e \
   "SELECT ROUND(TIME_TO_SEC(query_time),4) AS seconds, rows_examined, LEFT(sql_text,200) AS sql FROM mysql.slow_log ORDER BY query_time DESC LIMIT 20;"
 ```
 
-トップページの投稿一覧取得SQLは、Ruby実装の`webapp/ruby/app.rb`にあります。`get '/'`の中にある次のクエリを探してください。
+Go実装のトップページ取得SQLは`webapp/golang/app.go`の`getIndex`関数にあります。次のような、`LIMIT`なしで投稿を取得するクエリがログに出るか確認します。
 
-```ruby
-results = db.query('SELECT `id`, `user_id`, `body`, `created_at`, `mime` FROM `posts` ORDER BY `created_at` DESC')
+```go
+err := db.SelectContext(ctx, &results, "SELECT `id`, `user_id`, `body`, `mime`, `created_at` FROM `posts` ORDER BY `created_at` DESC")
 ```
 
-このSQLには`LIMIT`がありません。ログにこのクエリが出ているか、`rows_examined`が多いかを確認します。ログに出なければ、その実行では10ミリ秒を超えなかった可能性があります。
+`rows_examined`が大きいかも見ます。ログに出なければ、その実行ではクエリが10ミリ秒を超えなかった可能性があります。
 
-アプリログも別途確認できます。これは主に起動メッセージやエラーの確認用で、通常はSQLの実行時間までは記録しません。
+## 7. ログ収集を止める
 
-```sh
-docker compose logs -f app
-```
-
-ログ表示を終えるには`Ctrl-C`を押します。
-
-## 5. ログ収集を止める
-
-スコア比較の前に、スロークエリログを無効にします。
+スコアを比較する前に、スロークエリログを無効にします。
 
 ```sh
 docker compose exec -T mysql mysql -uroot -proot -e "SET GLOBAL slow_query_log=OFF;"
 ```
 
-## 6. 小さく修正して再ビルド
+## 8. Goコードを修正して再ビルド
 
-ログでトップページの全件取得SQLを確認できたら、まず`webapp/ruby/app.rb`の`get '/'`にあるクエリを見直します。投稿を20件だけ取得する単純な変更は、削除済みユーザーの投稿が混ざる場合に画面の表示件数が変わることがあります。出力される投稿の挙動を保つには、削除済みユーザーをSQL側で除外してから件数を制限する必要があります。
+ログでトップページの全件取得SQLを確認できたら、`webapp/golang/app.go`の`getIndex`関数にあるクエリを見直します。単純に`LIMIT 20`を追加すると、削除済みユーザーの投稿が混ざった場合に表示件数が変わる可能性があります。既存の表示挙動を保つには、削除済みユーザーの投稿を除外してから件数を制限する必要があります。
 
-修正したら、`webapp`ディレクトリでRubyアプリを再ビルドして起動し直します。
+修正後、`webapp`ディレクトリでGoアプリを再ビルドして起動し直します。
 
 ```sh
 docker compose up -d --build app
 ```
 
-その後、トップページが表示できることを確認します。
+アプリの応答を確認します。
 
 ```sh
 curl -i http://localhost/
 ```
 
-## 7. 変更後のスコアを測る
+## 9. 変更後のスコアを測る
 
-アプリを起動した状態で、同じコマンドを使ってベンチマークを再実行します。
+アプリを起動した状態で、変更前と同じベンチマークを実行します。
 
 ```sh
 cd ../benchmarker
@@ -129,11 +140,11 @@ docker run --network host -i private-isu-benchmarker \
   /bin/benchmarker -t http://host.docker.internal -u /opt/userdata
 ```
 
-変更前後の`pass`、`score`、`success`、`fail`を比べます。`pass:true`と`fail:0`を保ったまま、複数回の実行でスコアが安定して上がるか確認します。1回だけの上下は測定のばらつきの可能性があります。
+変更前後の`pass`、`score`、`success`、`fail`を比べます。`pass:true`と`fail:0`を保ち、複数回の実行でスコアが安定して上がるか確認します。1回だけの上下は測定のばらつきの可能性があります。
 
 ## 補足
 
-- 通常の`docker compose logs app`ではSQLごとの時間は分かりません。この練習ではMySQLのスロークエリログを使います。
+- `docker compose logs -f app`はGoアプリの起動ログやエラー確認に使います。通常、SQLごとの実行時間は出ません。この練習ではMySQLのスロークエリログを使います。
 - `long_query_time=0.01`は10ミリ秒です。ログが空なら、閾値を一時的に下げて再計測できます。
-- ログ収集を有効にした状態のスコアは、修正前後の比較に使わないでください。
-- ベンチマーカーは初期化リクエストを送るため、同じ環境で各測定を行ってください。
+- スロークエリログを有効にした状態のスコアは比較に使わないでください。
+- ベンチマーカーは初期化リクエストを送るため、変更前後で同じ環境・コマンドを使います。
