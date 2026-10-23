@@ -78,16 +78,85 @@ cd ../webapp
 docker compose exec -T mysql mysql -uroot -proot -e "SET GLOBAL log_output='TABLE'; SET GLOBAL long_query_time=0.01; SET GLOBAL slow_query_log=ON;"
 ```
 
-ログを取っている間はMySQLに余分な負荷がかかります。そのため、この間に測ったスコアは変更前後の比較には使いません。
-
-## 6. ベンチマークを実行してSQLログを見る
-
-ログに対象SQLを記録するため、ベンチマークを1回実行します。
+分析用のMySQLログをファイルに書き出したい場合
 
 ```sh
-cd ../benchmarker
-docker run --network host -i private-isu-benchmarker \
-  /bin/benchmarker -t http://host.docker.internal -u /opt/userdata
+docker compose exec -T mysql mysql -uroot -proot -e \
+  "SET GLOBAL log_output='FILE'; SET GLOBAL long_query_time=0.01; SET GLOBAL slow_query_log=ON;"
+```
+
+MySQLコンテナ内のログ
+
+```sh
+docker compose exec mysql cat /var/lib/mysql/b39eab4e87c2-slow.log
+```
+
+ホスト側にコピーして分析するなら、webappディレクトリで次を実行してください。
+
+```sh
+docker compose cp mysql:/var/lib/mysql/b39eab4e87c2-slow.log ./slow.log
+```
+
+これでwebapp/slow.logに保存されます。たとえば、postsに関する行を絞って別ファイルに書き出すには：
+
+```sh
+rg -n -C 5 "FROM.*posts" slow.log > posts-queries.txt
+```
+
+なお、MySQLのパスワードをコマンドラインに渡すことに対する警告は出ていますが、今回はコマンド自体は実行できています。
+  Worked for 3s • 20:19
+
+ログを取っている間はMySQLに余分な負荷がかかります。そのため、この間に測ったスコアは変更前後の比較には使いません。
+
+```sh
+docker compose exec -T mysql mysql -uroot -proot -e \
+  "SHOW GLOBAL VARIABLES WHERE Variable_name IN ('slow_query_log','long_query_time','log_output','slow_query_log_file');"
+```
+
+```sh
+mysql: [Warning] Using a password on the command line interface can be insecure.
+Variable_name	Value
+log_output	FILE
+long_query_time	0.010000
+slow_query_log	ON
+slow_query_log_file	/var/lib/mysql/b39eab4e87c2-slow.log
+```
+
+
+トップページにアクセス
+
+```sh
+curl -s -o /dev/null http://localhost/
+docker compose exec mysql cat /var/lib/mysql/b39eab4e87c2-slow.log
+```
+
+```sh
+/usr/sbin/mysqld, Version: 9.7.4 (MySQL Community Server - GPL). started with:
+Tcp port: 3306  Unix socket: /var/run/mysqld/mysqld.sock
+Time                 Id Command    Argument
+# Time: 2026-10-23T11:22:23.639578Z
+# User@Host: root[root] @ localhost []  Id:   169
+# Query_time: 0.150487  Lock_time: 0.000633 Rows_sent: 4  Rows_examined: 4
+SET timestamp=1792754543;
+SHOW GLOBAL VARIABLES WHERE Variable_name IN ('slow_query_log','long_query_time','log_output','slow_query_log_file');
+```
+
+```output
+mysql: [Warning] Using a password on the command line interface can be insecure.
+Variable_name	Value
+log_output	FILE
+long_query_time	0.010000
+slow_query_log	ON
+slow_query_log_file	/var/lib/mysql/b39eab4e87c2-slow.log
+
+```
+
+## 6. トップページを1回だけ開いてSQLログを見る
+
+スロークエリログを有効にしたままベンチマーク全体を実行すると、記録処理自体が負荷になり、リクエストがタイムアウトすることがあります。ベンチマークは実行せず、トップページを1回だけ開いてSQLを記録します。
+
+```sh
+curl -s -o /dev/null http://localhost/
 ```
 
 `webapp`ディレクトリで、時間のかかったSQLを表示します。
@@ -146,5 +215,5 @@ docker run --network host -i private-isu-benchmarker \
 
 - `docker compose logs -f app`はGoアプリの起動ログやエラー確認に使います。通常、SQLごとの実行時間は出ません。この練習ではMySQLのスロークエリログを使います。
 - `long_query_time=0.01`は10ミリ秒です。ログが空なら、閾値を一時的に下げて再計測できます。
-- スロークエリログを有効にした状態のスコアは比較に使わないでください。
+- スロークエリログを有効にするのは、トップページなどを1回確認するときだけにします。全ベンチマーク中は有効にしないでください。
 - ベンチマーカーは初期化リクエストを送るため、変更前後で同じ環境・コマンドを使います。
