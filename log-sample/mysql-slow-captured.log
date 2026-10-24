@@ -1,0 +1,1964 @@
+/usr/sbin/mysqld, Version: 9.7.4 (MySQL Community Server - GPL). started with:
+Tcp port: 3306  Unix socket: /var/run/mysqld/mysqld.sock
+Time                 Id Command    Argument
+# Time: 2026-10-23T11:22:23.639578Z
+# User@Host: root[root] @ localhost []  Id:   169
+# Query_time: 0.150487  Lock_time: 0.000633 Rows_sent: 4  Rows_examined: 4
+SET timestamp=1792754543;
+SHOW GLOBAL VARIABLES WHERE Variable_name IN ('slow_query_log','long_query_time','log_output','slow_query_log_file');
+# Time: 2026-10-23T11:25:37.238947Z
+# User@Host: root[root] @ localhost []  Id:   170
+# Query_time: 0.014790  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754737;
+SET GLOBAL log_output='FILE';
+# Time: 2026-10-23T11:26:00.840462Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.001644  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+use isuconp;
+SET timestamp=1792754760;
+SET NAMES utf8mb4;
+# Time: 2026-10-23T11:26:00.908904Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.067047  Lock_time: 0.000230 Rows_sent: 10001  Rows_examined: 20002
+SET timestamp=1792754760;
+SELECT `id`, `user_id`, `body`, `mime`, `created_at` FROM `posts` ORDER BY `created_at` DESC;
+# Time: 2026-10-23T11:26:00.939702Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.001253  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754760;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:00.974071Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.034226  Lock_time: 0.000010 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754760;
+SELECT COUNT(*) AS `count` FROM `comments` WHERE `post_id` = 10011;
+# Time: 2026-10-23T11:26:00.974318Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000031  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754760;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:00.974546Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000167  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754760;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.010677Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.035852  Lock_time: 0.000002 Rows_sent: 0  Rows_examined: 100001
+SET timestamp=1792754760;
+SELECT * FROM `comments` WHERE `post_id` = 10011 ORDER BY `created_at` DESC LIMIT 3;
+# Time: 2026-10-23T11:26:01.011010Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000018  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 100001
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.011433Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000395  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.012069Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000573  Lock_time: 0.000002 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 518;
+# Time: 2026-10-23T11:26:01.012200Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000006  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.012558Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000321  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.024159Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.011527  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+SELECT COUNT(*) AS `count` FROM `comments` WHERE `post_id` = 10000;
+# Time: 2026-10-23T11:26:01.024260Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000008  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.024363Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000078  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.059982Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.035541  Lock_time: 0.000002 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+SELECT * FROM `comments` WHERE `post_id` = 10000 ORDER BY `created_at` DESC LIMIT 3;
+# Time: 2026-10-23T11:26:01.060276Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000009  Lock_time: 0.000000 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.060382Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000082  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.060537Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000099  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 41;
+# Time: 2026-10-23T11:26:01.060651Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.060729Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000035  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.061230Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000444  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 296;
+# Time: 2026-10-23T11:26:01.061314Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.061397Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000063  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.061521Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000063  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 804;
+# Time: 2026-10-23T11:26:01.061602Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.061672Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000050  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.061753Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000044  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 112;
+# Time: 2026-10-23T11:26:01.061847Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000003  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.062235Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000375  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.073793Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.011478  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+SELECT COUNT(*) AS `count` FROM `comments` WHERE `post_id` = 9999;
+# Time: 2026-10-23T11:26:01.073894Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000008  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.073995Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000058  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.109623Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.035584  Lock_time: 0.000001 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+SELECT * FROM `comments` WHERE `post_id` = 9999 ORDER BY `created_at` DESC LIMIT 3;
+# Time: 2026-10-23T11:26:01.109846Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000007  Lock_time: 0.000000 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.110264Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000393  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.110424Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000088  Lock_time: 0.000002 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 357;
+# Time: 2026-10-23T11:26:01.110533Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000005  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.110601Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000033  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.110707Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000048  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 410;
+# Time: 2026-10-23T11:26:01.110797Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.111172Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000339  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.111310Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000061  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 248;
+# Time: 2026-10-23T11:26:01.111369Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.111423Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000034  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.111813Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000298  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 792;
+# Time: 2026-10-23T11:26:01.111880Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000002  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.111992Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000068  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.123525Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.011461  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+SELECT COUNT(*) AS `count` FROM `comments` WHERE `post_id` = 9998;
+# Time: 2026-10-23T11:26:01.123623Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000007  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.123747Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000058  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.159364Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.035559  Lock_time: 0.000001 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+SELECT * FROM `comments` WHERE `post_id` = 9998 ORDER BY `created_at` DESC LIMIT 3;
+# Time: 2026-10-23T11:26:01.159509Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000007  Lock_time: 0.000000 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.159867Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000335  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.160040Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000092  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 648;
+# Time: 2026-10-23T11:26:01.160121Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.160188Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000046  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.160276Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000040  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 273;
+# Time: 2026-10-23T11:26:01.160364Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.160658Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000274  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.160774Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000056  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 925;
+# Time: 2026-10-23T11:26:01.160863Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.160931Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000048  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.161045Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000047  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 149;
+# Time: 2026-10-23T11:26:01.161136Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000005  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.161194Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000039  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.172742Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.011469  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+SELECT COUNT(*) AS `count` FROM `comments` WHERE `post_id` = 9997;
+# Time: 2026-10-23T11:26:01.172894Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000009  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.173324Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000361  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.209520Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.036124  Lock_time: 0.000002 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+SELECT * FROM `comments` WHERE `post_id` = 9997 ORDER BY `created_at` DESC LIMIT 3;
+# Time: 2026-10-23T11:26:01.209659Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000023  Lock_time: 0.000000 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.209733Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000056  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.209900Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000085  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 363;
+# Time: 2026-10-23T11:26:01.209977Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000003  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.210039Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000046  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.210145Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000048  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 838;
+# Time: 2026-10-23T11:26:01.210222Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.210283Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000041  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.210382Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000056  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 266;
+# Time: 2026-10-23T11:26:01.210441Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.210826Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000366  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.210942Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000055  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 89;
+# Time: 2026-10-23T11:26:01.211018Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000003  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.211065Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000034  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.222595Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.011471  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+SELECT COUNT(*) AS `count` FROM `comments` WHERE `post_id` = 9996;
+# Time: 2026-10-23T11:26:01.222706Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000008  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.222821Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000066  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.258588Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.035689  Lock_time: 0.000001 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+SELECT * FROM `comments` WHERE `post_id` = 9996 ORDER BY `created_at` DESC LIMIT 3;
+# Time: 2026-10-23T11:26:01.258784Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000008  Lock_time: 0.000000 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.258872Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000064  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.259016Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000079  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 969;
+# Time: 2026-10-23T11:26:01.259100Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.259176Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000056  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.259263Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000040  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 573;
+# Time: 2026-10-23T11:26:01.259381Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.259451Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000034  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.259533Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000039  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 646;
+# Time: 2026-10-23T11:26:01.259618Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.260002Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000364  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.260140Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000060  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 876;
+# Time: 2026-10-23T11:26:01.260215Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000003  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.260264Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000036  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.273431Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.013099  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+SELECT COUNT(*) AS `count` FROM `comments` WHERE `post_id` = 9995;
+# Time: 2026-10-23T11:26:01.276893Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000016  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.280052Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.003066  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.346637Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.066470  Lock_time: 0.000002 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+SELECT * FROM `comments` WHERE `post_id` = 9995 ORDER BY `created_at` DESC LIMIT 3;
+# Time: 2026-10-23T11:26:01.347012Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000022  Lock_time: 0.000000 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.347177Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000125  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.347364Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000125  Lock_time: 0.000002 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 974;
+# Time: 2026-10-23T11:26:01.347469Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000003  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.347538Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000052  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.347679Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000070  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 549;
+# Time: 2026-10-23T11:26:01.347787Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000006  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.347855Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000044  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.348102Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000058  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 395;
+# Time: 2026-10-23T11:26:01.348214Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000005  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.348569Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000313  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.348998Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000336  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 517;
+# Time: 2026-10-23T11:26:01.349074Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000003  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.349140Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000049  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.361864Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.012677  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+SELECT COUNT(*) AS `count` FROM `comments` WHERE `post_id` = 9994;
+# Time: 2026-10-23T11:26:01.362659Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000012  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.362854Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000123  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.399320Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.036389  Lock_time: 0.000002 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+SELECT * FROM `comments` WHERE `post_id` = 9994 ORDER BY `created_at` DESC LIMIT 3;
+# Time: 2026-10-23T11:26:01.399504Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000009  Lock_time: 0.000000 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.399600Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000078  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.399740Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000108  Lock_time: 0.000002 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 395;
+# Time: 2026-10-23T11:26:01.399800Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000003  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.399862Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000047  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.400363Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000465  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 75;
+# Time: 2026-10-23T11:26:01.400437Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000003  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.400486Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000035  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.400626Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000045  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 37;
+# Time: 2026-10-23T11:26:01.400665Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000002  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.400724Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000046  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.400768Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000034  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 455;
+# Time: 2026-10-23T11:26:01.400812Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000002  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.400871Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000047  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.412413Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.011530  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+SELECT COUNT(*) AS `count` FROM `comments` WHERE `post_id` = 9993;
+# Time: 2026-10-23T11:26:01.412541Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000009  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.412647Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000086  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.448314Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.035603  Lock_time: 0.000001 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+SELECT * FROM `comments` WHERE `post_id` = 9993 ORDER BY `created_at` DESC LIMIT 3;
+# Time: 2026-10-23T11:26:01.448526Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000008  Lock_time: 0.000000 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.448609Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000061  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.448774Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000086  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 112;
+# Time: 2026-10-23T11:26:01.448853Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.449243Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000369  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.449396Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000071  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 362;
+# Time: 2026-10-23T11:26:01.449460Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000003  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.449507Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000032  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.449634Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000054  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 230;
+# Time: 2026-10-23T11:26:01.449715Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000005  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.449783Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000051  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.450201Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000350  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 945;
+# Time: 2026-10-23T11:26:01.450331Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.450395Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000041  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.461963Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.011501  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+SELECT COUNT(*) AS `count` FROM `comments` WHERE `post_id` = 9992;
+# Time: 2026-10-23T11:26:01.462099Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000010  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.462204Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000066  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.497747Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.035417  Lock_time: 0.000001 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+SELECT * FROM `comments` WHERE `post_id` = 9992 ORDER BY `created_at` DESC LIMIT 3;
+# Time: 2026-10-23T11:26:01.497953Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000010  Lock_time: 0.000000 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.498405Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000418  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.498561Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000105  Lock_time: 0.000002 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 561;
+# Time: 2026-10-23T11:26:01.498734Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000006  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.498811Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000049  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.498925Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000068  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 697;
+# Time: 2026-10-23T11:26:01.498973Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000002  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.499029Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000042  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.499102Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000038  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 409;
+# Time: 2026-10-23T11:26:01.499148Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000002  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.499192Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000030  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.499243Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000031  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 550;
+# Time: 2026-10-23T11:26:01.499279Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000002  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.499426Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000060  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.511573Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.012008  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+SELECT COUNT(*) AS `count` FROM `comments` WHERE `post_id` = 9991;
+# Time: 2026-10-23T11:26:01.511863Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000015  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.512054Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000152  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.551323Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.039183  Lock_time: 0.000003 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+SELECT * FROM `comments` WHERE `post_id` = 9991 ORDER BY `created_at` DESC LIMIT 3;
+# Time: 2026-10-23T11:26:01.551545Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000010  Lock_time: 0.000000 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.551675Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000098  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.551851Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000104  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 896;
+# Time: 2026-10-23T11:26:01.551958Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.552037Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000038  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.552145Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000052  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 598;
+# Time: 2026-10-23T11:26:01.552230Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000006  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.552609Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000356  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.552768Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000070  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 487;
+# Time: 2026-10-23T11:26:01.552852Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.552933Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000062  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.553040Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000059  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 618;
+# Time: 2026-10-23T11:26:01.553125Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000002  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.553186Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000047  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.564733Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.011473  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+SELECT COUNT(*) AS `count` FROM `comments` WHERE `post_id` = 9990;
+# Time: 2026-10-23T11:26:01.564874Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000010  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.564980Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000083  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.600605Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.035574  Lock_time: 0.000002 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+SELECT * FROM `comments` WHERE `post_id` = 9990 ORDER BY `created_at` DESC LIMIT 3;
+# Time: 2026-10-23T11:26:01.600782Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000009  Lock_time: 0.000000 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.600883Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000078  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.601033Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000078  Lock_time: 0.000002 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 442;
+# Time: 2026-10-23T11:26:01.601171Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.601231Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000037  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.601713Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000402  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 342;
+# Time: 2026-10-23T11:26:01.601832Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.602184Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000331  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.602309Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000050  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 117;
+# Time: 2026-10-23T11:26:01.602402Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.602459Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000037  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.602587Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000047  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 304;
+# Time: 2026-10-23T11:26:01.602678Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.602746Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000048  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.614348Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.011524  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+SELECT COUNT(*) AS `count` FROM `comments` WHERE `post_id` = 9989;
+# Time: 2026-10-23T11:26:01.614460Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000008  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.614545Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000064  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.650411Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.035800  Lock_time: 0.000001 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+SELECT * FROM `comments` WHERE `post_id` = 9989 ORDER BY `created_at` DESC LIMIT 3;
+# Time: 2026-10-23T11:26:01.650531Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000007  Lock_time: 0.000000 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.650622Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000068  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.650753Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000069  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 979;
+# Time: 2026-10-23T11:26:01.650880Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.650953Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000053  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.651036Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000040  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 82;
+# Time: 2026-10-23T11:26:01.651142Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000005  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.651204Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000044  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.651347Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000063  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 471;
+# Time: 2026-10-23T11:26:01.651420Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000003  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.651465Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000032  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.651570Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000037  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 775;
+# Time: 2026-10-23T11:26:01.651650Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.651735Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000065  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.663247Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.011466  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+SELECT COUNT(*) AS `count` FROM `comments` WHERE `post_id` = 9988;
+# Time: 2026-10-23T11:26:01.663364Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000008  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.663450Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000063  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.699263Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.035753  Lock_time: 0.000001 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+SELECT * FROM `comments` WHERE `post_id` = 9988 ORDER BY `created_at` DESC LIMIT 3;
+# Time: 2026-10-23T11:26:01.699435Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000008  Lock_time: 0.000000 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.700445Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000988  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.700562Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000063  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 961;
+# Time: 2026-10-23T11:26:01.700663Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.700734Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000034  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.700839Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000048  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 701;
+# Time: 2026-10-23T11:26:01.700925Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.701268Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000320  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.701406Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000061  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 652;
+# Time: 2026-10-23T11:26:01.701478Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000002  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.701521Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000030  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.701643Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000053  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 878;
+# Time: 2026-10-23T11:26:01.701759Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.701828Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000051  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.713493Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.011605  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+SELECT COUNT(*) AS `count` FROM `comments` WHERE `post_id` = 9987;
+# Time: 2026-10-23T11:26:01.713691Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000008  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.713794Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000080  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.749744Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.035872  Lock_time: 0.000002 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+SELECT * FROM `comments` WHERE `post_id` = 9987 ORDER BY `created_at` DESC LIMIT 3;
+# Time: 2026-10-23T11:26:01.749886Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000026  Lock_time: 0.000000 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.749999Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000095  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.750136Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000065  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 8;
+# Time: 2026-10-23T11:26:01.750221Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.750290Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000048  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.750378Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000041  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 714;
+# Time: 2026-10-23T11:26:01.750465Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.750527Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000041  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.750626Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000048  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 409;
+# Time: 2026-10-23T11:26:01.750697Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000002  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.751112Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000402  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.751251Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000113  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 161;
+# Time: 2026-10-23T11:26:01.751267Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000003  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.751335Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000041  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.762903Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.011492  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+SELECT COUNT(*) AS `count` FROM `comments` WHERE `post_id` = 9986;
+# Time: 2026-10-23T11:26:01.763024Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000008  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.763135Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000089  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.798559Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.035368  Lock_time: 0.000001 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+SELECT * FROM `comments` WHERE `post_id` = 9986 ORDER BY `created_at` DESC LIMIT 3;
+# Time: 2026-10-23T11:26:01.798723Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000007  Lock_time: 0.000000 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.798802Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000056  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.798999Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000067  Lock_time: 0.000002 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 386;
+# Time: 2026-10-23T11:26:01.799080Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.799165Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000064  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.799660Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000443  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 86;
+# Time: 2026-10-23T11:26:01.799748Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000003  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.799808Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000045  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.799890Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000037  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 575;
+# Time: 2026-10-23T11:26:01.799998Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000005  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.800082Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000048  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.800185Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000048  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 963;
+# Time: 2026-10-23T11:26:01.800271Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.800328Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000040  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.811937Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.011536  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+SELECT COUNT(*) AS `count` FROM `comments` WHERE `post_id` = 9985;
+# Time: 2026-10-23T11:26:01.812034Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000007  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.812128Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000072  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.847599Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.035411  Lock_time: 0.000001 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+SELECT * FROM `comments` WHERE `post_id` = 9985 ORDER BY `created_at` DESC LIMIT 3;
+# Time: 2026-10-23T11:26:01.847719Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000006  Lock_time: 0.000000 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.847791Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000050  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.847926Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000077  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 750;
+# Time: 2026-10-23T11:26:01.848032Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.848433Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000380  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.848526Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000041  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 631;
+# Time: 2026-10-23T11:26:01.848607Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.848668Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000040  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.848764Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000046  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 727;
+# Time: 2026-10-23T11:26:01.848939Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.848998Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000040  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.849138Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000061  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 649;
+# Time: 2026-10-23T11:26:01.849201Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000002  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.849263Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000049  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.860721Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.011429  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+SELECT COUNT(*) AS `count` FROM `comments` WHERE `post_id` = 9984;
+# Time: 2026-10-23T11:26:01.860818Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000007  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.861262Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000422  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.896806Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.035491  Lock_time: 0.000001 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+SELECT * FROM `comments` WHERE `post_id` = 9984 ORDER BY `created_at` DESC LIMIT 3;
+# Time: 2026-10-23T11:26:01.896978Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000008  Lock_time: 0.000000 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.897065Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000064  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.897230Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000088  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 340;
+# Time: 2026-10-23T11:26:01.897311Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.897392Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000061  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.897476Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000039  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 548;
+# Time: 2026-10-23T11:26:01.897555Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.897609Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000033  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.897710Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000044  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 389;
+# Time: 2026-10-23T11:26:01.897804Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.897871Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000051  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.897989Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000049  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 700;
+# Time: 2026-10-23T11:26:01.898068Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.898139Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000052  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.909633Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.011451  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+SELECT COUNT(*) AS `count` FROM `comments` WHERE `post_id` = 9983;
+# Time: 2026-10-23T11:26:01.909760Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000007  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.910347Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000550  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.946109Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.035690  Lock_time: 0.000002 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+SELECT * FROM `comments` WHERE `post_id` = 9983 ORDER BY `created_at` DESC LIMIT 3;
+# Time: 2026-10-23T11:26:01.946259Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000022  Lock_time: 0.000000 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.946331Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000050  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.946450Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000064  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 697;
+# Time: 2026-10-23T11:26:01.946518Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.946623Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000057  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.946701Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000039  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 362;
+# Time: 2026-10-23T11:26:01.946784Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.946851Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000047  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.946959Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000061  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 859;
+# Time: 2026-10-23T11:26:01.947045Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.947107Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000045  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.947229Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000056  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 92;
+# Time: 2026-10-23T11:26:01.947319Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.947416Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000039  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.958907Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.011435  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+SELECT COUNT(*) AS `count` FROM `comments` WHERE `post_id` = 9982;
+# Time: 2026-10-23T11:26:01.959001Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000006  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.959082Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000066  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.994653Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.035506  Lock_time: 0.000001 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+SELECT * FROM `comments` WHERE `post_id` = 9982 ORDER BY `created_at` DESC LIMIT 3;
+# Time: 2026-10-23T11:26:01.994819Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000008  Lock_time: 0.000000 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.994902Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000059  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.995075Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000084  Lock_time: 0.000002 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 311;
+# Time: 2026-10-23T11:26:01.995157Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.995235Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000057  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.995319Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000039  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 355;
+# Time: 2026-10-23T11:26:01.995409Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.995470Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000041  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.995571Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000050  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 736;
+# Time: 2026-10-23T11:26:01.995637Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000002  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.995676Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000027  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:01.995781Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000046  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+SELECT * FROM `users` WHERE `id` = 544;
+# Time: 2026-10-23T11:26:01.995855Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754761;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:01.995997Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000060  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754761;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:02.007498Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.011439  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754761;
+SELECT COUNT(*) AS `count` FROM `comments` WHERE `post_id` = 9981;
+# Time: 2026-10-23T11:26:02.007590Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000005  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754762;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:02.007681Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000076  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754762;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:02.044131Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.036392  Lock_time: 0.000001 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754762;
+SELECT * FROM `comments` WHERE `post_id` = 9981 ORDER BY `created_at` DESC LIMIT 3;
+# Time: 2026-10-23T11:26:02.044278Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000008  Lock_time: 0.000000 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754762;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:02.044662Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000361  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754762;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:02.044780Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000066  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754762;
+SELECT * FROM `users` WHERE `id` = 314;
+# Time: 2026-10-23T11:26:02.044873Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754762;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:02.044943Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000052  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754762;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:02.045049Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000048  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754762;
+SELECT * FROM `users` WHERE `id` = 14;
+# Time: 2026-10-23T11:26:02.045185Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000015  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754762;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:02.045481Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000273  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754762;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:02.045589Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000053  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754762;
+SELECT * FROM `users` WHERE `id` = 922;
+# Time: 2026-10-23T11:26:02.045703Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754762;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:02.045757Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000034  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754762;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:02.045872Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000057  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754762;
+SELECT * FROM `users` WHERE `id` = 740;
+# Time: 2026-10-23T11:26:02.045997Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754762;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:02.046381Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000353  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754762;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:02.057871Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.011440  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754762;
+SELECT COUNT(*) AS `count` FROM `comments` WHERE `post_id` = 9980;
+# Time: 2026-10-23T11:26:02.057995Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000008  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754762;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:02.058071Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000055  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754762;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:02.093467Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.035331  Lock_time: 0.000001 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754762;
+SELECT * FROM `comments` WHERE `post_id` = 9980 ORDER BY `created_at` DESC LIMIT 3;
+# Time: 2026-10-23T11:26:02.093577Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000007  Lock_time: 0.000000 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754762;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:02.093662Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000063  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754762;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:02.093789Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000066  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754762;
+SELECT * FROM `users` WHERE `id` = 672;
+# Time: 2026-10-23T11:26:02.093873Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754762;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:02.093940Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000050  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754762;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:02.094025Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000041  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754762;
+SELECT * FROM `users` WHERE `id` = 722;
+# Time: 2026-10-23T11:26:02.094105Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754762;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:02.094436Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000311  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754762;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:02.094573Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000059  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754762;
+SELECT * FROM `users` WHERE `id` = 276;
+# Time: 2026-10-23T11:26:02.094639Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000003  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754762;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:02.094682Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000030  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754762;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:02.094793Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000044  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754762;
+SELECT * FROM `users` WHERE `id` = 37;
+# Time: 2026-10-23T11:26:02.094876Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754762;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:21.006676Z
+# User@Host: root[root] @ localhost []  Id:   172
+# Query_time: 0.001074  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754781;
+select @@version_comment limit 1;

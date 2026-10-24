@@ -1,0 +1,92 @@
+/usr/sbin/mysqld, Version: 9.7.4 (MySQL Community Server - GPL). started with:
+Tcp port: 3306  Unix socket: /var/run/mysqld/mysqld.sock
+Time                 Id Command    Argument
+# Time: 2026-10-23T11:26:02.045997Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754762;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:02.046381Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000353  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754762;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:02.057871Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.011440  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754762;
+SELECT COUNT(*) AS `count` FROM `comments` WHERE `post_id` = 9980;
+# Time: 2026-10-23T11:26:02.057995Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000008  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 100001
+SET timestamp=1792754762;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:02.058071Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000055  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754762;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:02.093467Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.035331  Lock_time: 0.000001 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754762;
+SELECT * FROM `comments` WHERE `post_id` = 9980 ORDER BY `created_at` DESC LIMIT 3;
+# Time: 2026-10-23T11:26:02.093577Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000007  Lock_time: 0.000000 Rows_sent: 3  Rows_examined: 100004
+SET timestamp=1792754762;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:02.093662Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000063  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754762;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:02.093789Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000066  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754762;
+SELECT * FROM `users` WHERE `id` = 672;
+# Time: 2026-10-23T11:26:02.093873Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754762;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:02.093940Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000050  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754762;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:02.094025Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000041  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754762;
+SELECT * FROM `users` WHERE `id` = 722;
+# Time: 2026-10-23T11:26:02.094105Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000004  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754762;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:02.094436Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000311  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754762;
+# administrator command: Prepare;
+# Time: 2026-10-23T11:26:02.094573Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000059  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754762;
+SELECT * FROM `users` WHERE `id` = 276;
+# Time: 2026-10-23T11:26:02.094639Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000003  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754762;
+# administrator command: Close stmt;
+# Time: 2026-10-23T11:26:02.094682Z
+# User@Host: root[root] @  [172.19.0.4]  Id:   171
+# Query_time: 0.000030  Lock_time: 0.000001 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1792754762;
+# Time: 2026-10-23T11:26:21.006676Z
+# User@Host: root[root] @ localhost []  Id:   172
+# Query_time: 0.001074  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1792754781;
+select @@version_comment limit 1;
