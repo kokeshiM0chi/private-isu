@@ -16,7 +16,7 @@
 
 `long_query_time=0`にすると、実行時間による条件としては、0秒より長くかかった通常のクエリがほぼすべて記録対象になります。ただし「データベースにある全行を取得する」という意味ではありません。また、MySQLはしきい値以外にも、クエリ処理中にテーブルから調べた行数が最低条件を満たすか、管理用SQLかどうかなどを記録条件に使います。通常のアプリの`SELECT`を調べるこの練習では、0にすると短いクエリも含めて記録できます。
 
-記録には、スロークエリログがONであることと、出力先が`FILE`または`TABLE`であることも必要です。さらに`min_examined_row_limit`（クエリ処理中にテーブルから調べた行数が、この値以上であること）が適用されます。この環境では通常0なので、テーブル行数による足切りはありません。管理用SQLは初期設定では記録されない場合があります。設定値の詳細は[MySQL 9.7のスロークエリログ説明](https://dev.mysql.com/doc/refman/9.7/en/slow-query-log.html)を参照してください。
+記録には、スロークエリログがONであることと、出力先が`FILE`または`TABLE`であることも必要です。さらに`min_examined_row_limit`（クエリ処理中にテーブルから調べた行数が、この値以上であること）が適用されます。この環境では通常0なので、テーブル行数による足切りはありません。管理用SQLは初期設定では記録されない場合があります。公式資料は末尾の参考資料を参照してください。[1]
 
 次の例は、**1回のクエリ**についてMySQLが記録した情報です。
 
@@ -102,11 +102,19 @@ docker compose exec -T mysql mysql -uroot -proot -e \
   "SET GLOBAL log_output='FILE'; SET GLOBAL long_query_time=0; SET GLOBAL slow_query_log=ON;"
 ```
 
-`long_query_time`はMySQL接続ごとの設定にもなります。すでに接続しているGoアプリに新しいしきい値を反映させるため、アプリを再起動します。
+### しきい値の変更とGoアプリのDB接続
+
+このGoアプリは`sqlx.Open`でデータベース用のハンドルを作り、Goの`database/sql`がその中で接続プールを管理します。ハンドルを作った時点で必ずMySQLへ接続するわけではありません。クエリを実行すると、プールにある接続を再利用するか、必要に応じて新しい接続を作ります。同じ接続を複数のクエリで使うことがあり、クエリのたびに必ず新しい接続を作るわけでも、一定時間ごとに接続するわけでもありません。[3][4]
+
+MySQLの`long_query_time`には、サーバー全体の`GLOBAL`値と、各接続で使われる`SESSION`値があります。新しい接続の`SESSION`値は、その接続が作られた時点の`GLOBAL`値を引き継ぎます。`SET GLOBAL long_query_time=...`を実行しても、すでにプール内にある接続の`SESSION`値は変更されません。[2]
+
+そのため、この練習ではしきい値を変えたあとにアプリを再起動し、プール内の古い接続を閉じます。再起動直後にDB接続ができるとは限らず、次にアプリがSQLを実行したときに新しい接続が作られます。その接続が変更後のしきい値を引き継ぎます。
 
 ```sh
 docker compose restart app
 ```
+
+一方、`slow_query_log`はサーバー全体に対する`GLOBAL`設定です。`SET GLOBAL slow_query_log=ON`または`OFF`を実行すればMySQLのログ記録が切り替わるため、アプリ再起動は不要です。`SET SESSION long_query_time=...`をMySQLの対話画面で実行した場合は、その対話画面の接続だけに適用され、Goアプリの接続プールには適用されません。[1][2]
 
 ## 4. 1回だけリクエストしてログを採取する
 
@@ -279,3 +287,10 @@ docker compose exec -T mysql mysql -uroot -proot -e \
 ```
 
 ベンチマーク前の目安は`slow_query_log=OFF`です。`log_output=FILE`は出力先の形式、`slow_query_log_file`はコンテナ内の保存場所です。MySQLのパスワードをコマンドに直接書くと警告が出ますが、今回のCompose環境ではrootパスワードが`root`に設定されています。
+
+## 参考資料
+
+1. [MySQL 9.7 Reference Manual: The Slow Query Log](https://dev.mysql.com/doc/refman/9.7/en/slow-query-log.html) — ログに記録する条件、`long_query_time`、ログ項目の説明。
+2. [MySQL 9.7 Reference Manual: Using System Variables](https://dev.mysql.com/doc/refman/9.7/en/using-system-variables.html) — `GLOBAL`値と`SESSION`値、新しい接続が設定を引き継ぐタイミング。
+3. [The Go Programming Language: Opening a Database Handle](https://go.dev/doc/database/open-handle) — `sql.Open`が接続プールのハンドルを作り、実接続は必要時に行う説明。
+4. [The Go Programming Language: Managing Connections](https://go.dev/doc/database/manage-connections) — クエリ時にプールから接続を取得・再利用し、必要なら接続を作成する説明。
