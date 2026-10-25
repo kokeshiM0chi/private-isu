@@ -100,7 +100,7 @@ docker compose cp mysql:/var/lib/mysql/b39eab4e87c2-slow.log ./slow.log
 これでwebapp/slow.logに保存されます。たとえば、postsに関する行を絞って別ファイルに書き出すには：
 
 ```sh
-rg -n -C 5 "FROM.*posts" slow.log > posts-queries.txt
+grep -n -C 5 -E 'FROM.*posts' slow.log > posts-queries.txt
 ```
 
 なお、MySQLのパスワードをコマンドラインに渡すことに対する警告は出ていますが、今回はコマンド自体は実行できています。

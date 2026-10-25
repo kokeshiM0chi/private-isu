@@ -81,6 +81,20 @@ docker compose logs -f app
 
 ログを有効にする前に、Go実装のベースラインを記録します。スロークエリログはOFFの状態で測ってください。
 
+負荷をかける直前に、MySQLの現在の状態を確認できます。`Value`が`OFF`ならログ記録は停止中です。`ON`なら、ベンチマーク前にOFFへ切り替えます。
+
+```sh
+docker compose exec -T mysql mysql -uroot -proot -e \
+  "SHOW GLOBAL VARIABLES LIKE 'slow_query_log';"
+```
+
+出力を機械的に確認したい場合は、値だけを表示します。`0`はOFF、`1`はONです。
+
+```sh
+docker compose exec -T mysql mysql -uroot -proot -Nse \
+  "SELECT @@GLOBAL.slow_query_log;"
+```
+
 ```sh
 cd ../benchmarker
 docker run --network host -i private-isu-benchmarker \
@@ -115,6 +129,14 @@ docker compose restart app
 ```
 
 一方、`slow_query_log`はサーバー全体に対する`GLOBAL`設定です。`SET GLOBAL slow_query_log=ON`または`OFF`を実行すればMySQLのログ記録が切り替わるため、アプリ再起動は不要です。`SET SESSION long_query_time=...`をMySQLの対話画面で実行した場合は、その対話画面の接続だけに適用され、Goアプリの接続プールには適用されません。[1][2]
+
+### しきい値を変えた前後のログ
+
+`long_query_time`を変更しても、既に記録されたログは消えず、後から新しいしきい値で判定し直されることもありません。`slow_query_log`をOFFにしても、すでにファイルに出力された記録は消えません。OFFにすると、その時点以降の記録を止めるだけです。ログファイルには、ONの間に条件を満たしたクエリが時刻順に追加されます。
+
+アプリの接続プールに古い接続が残っている状態で`SET GLOBAL long_query_time=...`を行うと、古い接続は変更前の`SESSION`値を使い続け、新しい接続は変更後の値を使います。その間に記録されたクエリは同じログファイルに混在する可能性があります。ログの各記録には、そのクエリに適用された`long_query_time`の値は書かれません。[1][2]
+
+変更後のしきい値だけで調査したい場合は、しきい値を設定し、アプリを再起動して接続プールを作り直してから、調査対象のリクエストを送ります。採取開始前に既存ログをホストへコピーしておくか、ログ内の時刻を記録しておくと、変更前後の記録を区別できます。スロークエリログがOFFだった期間のクエリは、後からONにしても記録されません。
 
 ## 4. 1回だけリクエストしてログを採取する
 
@@ -238,6 +260,13 @@ docker compose exec -T mysql mysql -uroot -proot -e \
   "SET GLOBAL slow_query_log=OFF;"
 ```
 
+ベンチマーク開始直前にも、値が`0`（OFF）になったことを確認します。
+
+```sh
+docker compose exec -T mysql mysql -uroot -proot -Nse \
+  "SELECT @@GLOBAL.slow_query_log;"
+```
+
 変更前後で同じコマンドを実行します。アプリ、ベンチマーカー、ColimaのCPU・メモリ割り当て、データを揃えます。
 
 ```sh
@@ -262,20 +291,33 @@ docker compose exec -T mysql mysql -uroot -proot isuconp -e \
 
 ## ログを検索・抽出するコマンド
 
-ホストへコピーしたログから、コメントSQLと前後の実行時間情報を表示できます。
+Linux標準の`grep`を使います。UbuntuなどのAWSサーバーでは通常使えます。Alpine Linuxでは`grep`はBusyBoxの機能として入っていることが多く、`rg`（ripgrep）は別途インストールしないと使えないことがあります。
+
+以下は、コピーしたログからコメントSQLと前後のログ行を表示する例です。`webapp`ディレクトリから実行します。
 
 ```sh
-rg -n -C 3 "Query_time:|FROM .comments." ../log-sample/mysql-slow-captured.log
+grep -n -C 3 -E 'Query_time:|FROM `comments`' ../log-sample/mysql-slow-captured.log
 ```
 
-結果を別ファイルに保存するには、出力先をリダイレクトします。
+`grep`は、ファイルの中から検索パターンを含む行を表示します。この例では`-E`で拡張正規表現を使い、`|`は「または」を表すので、`Query_time:`を含む行か、`FROM `comments``を含む行のどちらも表示します。特定の文字列をそのまま探す場合は、次の例のように`-F`を指定します。バッククォートを含むパターンはシングルクォートで囲み、シェルが別の意味に解釈しないようにします。
+
+特定のコメント一覧クエリと、その直前にある`Query_time`などを表示するには次のようにします。
 
 ```sh
-rg -n -C 3 "Query_time:|FROM .comments." ../log-sample/mysql-slow-captured.log \
-  > ../log-sample/comments-analysis.txt
+grep -n -B 4 -F 'SELECT * FROM `comments` WHERE `post_id`' ../log-sample/mysql-slow-captured.log
 ```
 
-`>`は指定ファイルを上書きし、`>>`は末尾に追記します。生ログを保管し、抽出結果は別ファイルに分けておくと、元データと分析メモを区別できます。
+`-n`はログファイル内の行番号、`-B 4`は一致した行の前4行も一緒に表示します。一致した行自体も表示されるので、最大で合計5行です。slow logでは実行時間がSQLの直前に記録されるので、SQLだけでなく`Query_time`も読めます。
+
+検索パターンにあるバッククォートは、SQLのテーブル名や列名を囲む文字として探しています。`-F`を付けた例では、バッククォートも含めて書いた文字列をそのまま検索します。コマンドをシングルクォートで囲んでいるため、シェルはバッククォートをコマンド実行記号として扱わず、検索文字として`grep`に渡します。
+
+抽出結果をファイルに保存するには、`>`で出力先を指定します。
+
+```sh
+grep -n -B 4 -F 'SELECT * FROM `comments` WHERE `post_id`' ../log-sample/mysql-slow-captured.log > ../log-sample/comments-queries.txt
+```
+
+`>`は指定ファイルを上書きし、`>>`は末尾に追記します。元のslow logを残し、検索結果は別ファイルに保存します。`grep`は文字列を検索する道具であり、数値の`Query_time`を数値として並べ替える機能はありません。似たSQLの集計や時間順の並べ替えには`mysqldumpslow`などを使います。
 
 ## ログ設定の確認
 
