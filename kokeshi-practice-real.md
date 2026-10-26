@@ -332,7 +332,7 @@ sudo mysql isuconp -e \
   'ALTER TABLE comments DROP INDEX idx_comments_post_created;'
 ```
 
-このインデックス例の詳しい背景と注意点は[MySQL調査の練習手順](kokeshi-practice2.md)を参照してください。
+このインデックス例の詳しい背景と注意点は[MySQL調査の練習手順](kokeshi-practice1.md)を参照してください。
 
 ## 8. 競技中のベンチマーク
 
@@ -421,8 +421,9 @@ sudo systemctl status isu-go --no-pager
 ## 関連資料
 
 - [private-isuの競技ルールと採点条件](public_manual.md)
-- [MySQLスロークエリログの採取・分析手順](kokeshi-practice2.md)
-- [MySQLのテーブル定義・データ・EXPLAINの確認](kokeshi-practice3.md)
+- [MySQLスロークエリログの採取・分析手順](kokeshi-practice1.md)
+- [MySQLのテーブル定義・データ・EXPLAINの確認](kokeshi-practice2.md)
+- [Goのpprofとキャッシュの練習](kokeshi-practice3.md)
 - [このリポジトリの当日マニュアル](manual.md)
 
 ## 参考資料

@@ -1,143 +1,172 @@
-# 練習 3: MySQLのテーブル定義とデータを調べる
+# 練習 3: Goのpprofで処理を測り、キャッシュ候補を考える
 
-slow query logに出たSQLを理解するには、テーブルの定義、インデックス、実際のデータを確認すると役立ちます。この手順では、Goアプリが接続している`isuconp`データベースを例にします。
+この練習では、MySQLのslow query logだけでは分からないGoアプリ内のCPU処理やメモリ使用量を調べ、結果からキャッシュを使う場所があるか考えます。アプリのコードは調査対象として読み、計測用の変更はローカル練習環境だけに一時追加します。
 
-## 1. MySQLの対話画面に入る
+## 1. 何を調べるか
 
-`webapp`ディレクトリで実行します。
+ボトルネックによって使う道具が変わります。
+
+| 観察したこと | 調べる場所・方法 |
+| --- | --- |
+| SQLの実行時間が長い、同じSQLが何度も出る | MySQL slow query log、`mysqldumpslow`、`EXPLAIN` |
+| HTTP応答が遅いが、DBのSQL時間は短い | GoのCPU profile、実行トレース、アプリコード |
+| GoプロセスのメモリやGCが気になる | Goのheap profile、`docker stats` |
+| 同じデータを何度も読み、DB負荷が大きい | SQLの呼び出し回数とアプリの呼び出し元からキャッシュ候補を検討 |
+
+`pprof`のCPU profileは、GoプログラムがCPUを使っている時間を集計します。MySQLの応答待ちやネットワーク待ちの時間は、CPUを使っていないためCPU profile上では目立たないことがあります。DB待ちを疑うときはslow query logも併用します。[1]
+
+このリポジトリのGoアプリはchiのルーターを使い、`http.ListenAndServe(":8080", r)`でHTTPサーバーを起動します。Memcachedはセッション保存に使われていますが、投稿やコメントなどのページデータをキャッシュする処理は現在のGoコードにはありません。Memcachedコンテナが起動していることと、ページデータがキャッシュされていることは別です。[2]
+
+## 2. pprofをローカル練習環境だけで有効にする
+
+`net/http/pprof`をインポートし、別のHTTPサーバーでprofile用のハンドラーを起動します。既存アプリはchiルーターを使うため、DefaultServeMuxに登録されるpprof用のHTTPサーバーを別ポートで起動します。
+
+`webapp/golang/app.go`のimportに一時的に追加します。
+
+```go
+_ "net/http/pprof"
+```
+
+同じファイルの`main`関数で、通常のアプリサーバーを起動する直前に次を追加します。
+
+```go
+go func() {
+	if err := http.ListenAndServe(":6060", nil); err != nil {
+		log.Printf("pprof server: %v", err)
+	}
+}()
+```
+
+`webapp/compose.yml`の`app`サービスに、ホストのループバックアドレスだけへポートを公開する設定を一時追加します。
+
+```yaml
+  app:
+    ports:
+      - "127.0.0.1:6060:6060"
+```
+
+pprofにはメモリや処理内容を調べる情報が含まれるため、インターネットに公開しません。この設定は自分のMacからの接続だけに限定しています。ISUCON本番サーバーには追加しないでください。
+
+アプリをビルドし直して起動します。`webapp`ディレクトリから実行します。
 
 ```sh
-docker compose exec -it mysql mysql -uroot -proot isuconp
+docker compose up -d --build app
+curl -fsS http://127.0.0.1:6060/debug/pprof/ | head
 ```
 
-接続できると`mysql>`プロンプトが表示されます。以下のSQLは、この対話画面に入力します。終了するときは`\q`を入力します。
+HTMLが表示されればprofile用サーバーに接続できています。`curl`が接続できない場合は、アプリのビルド・起動状態、`docker compose logs --tail=80 app`、Composeのport設定を確認します。
 
-## 2. テーブル一覧を見る
+## 3. CPUを多く使うGo関数を見つける
 
-```sql
-SHOW TABLES;
+CPU profileは調べたい時間帯に実際のリクエストを処理させて採取します。まず1つ目のターミナルで次を実行します。Go SDKが入ったホスト上のターミナルで実行してください。
+
+```sh
+go tool pprof -top 'http://127.0.0.1:6060/debug/pprof/profile?seconds=30'
 ```
 
-private-isuの主なテーブルは`users`、`posts`、`comments`です。
+このコマンドは30秒間profileを採取し、CPU時間の多い関数を表で表示します。採取中に2つ目のターミナルから対象ページへ繰り返しアクセスします。例はトップページを約10回/秒で開きます。調査目的の負荷なので、ベンチマークスコアの測定には使いません。
 
-- `users`: アカウント情報
-- `posts`: 投稿の本文や投稿者、投稿日時、画像データ
-- `comments`: 投稿に付いたコメント、投稿者、コメント日時
-
-## 3. テーブル定義を見る
-
-`DESCRIBE`は列名、データ型、NULL可否、キーなどを簡潔に表示します。
-
-```sql
-DESCRIBE users;
-DESCRIBE posts;
-DESCRIBE comments;
+```sh
+cd webapp
+while :; do
+  curl -sS -o /dev/null http://localhost/ || break
+  sleep 0.1
+done
 ```
 
-キーやテーブル定義を詳しく見るには、`SHOW CREATE TABLE`を使います。`\G`を末尾に付けると、横長の結果を縦向きで表示します。
+profileの採取が終わったら、リクエストを送るループは`Ctrl-C`で止めます。この例はレスポンスが短い場合に最大約10回/秒でトップページへアクセスします。pprofの`top`出力では、主に次を見ます。
 
-```sql
-SHOW CREATE TABLE comments\G
+- `flat`: その関数自身が使ったCPU時間。
+- `cum`: その関数と、そこから呼び出した関数が使ったCPU時間の合計。
+- `flat%`、`cum%`: profile全体に占める割合。
+
+特定の関数を調べる場合は、インタラクティブなpprofを起動します。
+
+```sh
+go tool pprof 'http://127.0.0.1:6060/debug/pprof/profile?seconds=30'
 ```
 
-ここでは列の型、主キー、ユニーク制約、インデックスの定義を確認できます。slow query logに現れた`post_id`、`created_at`などがどう定義されているかを見ます。
+表示された`(pprof)`プロンプトで次を入力します。
 
-## 4. インデックスを見る
-
-```sql
-SHOW INDEX FROM comments;
+```text
+top
+list getIndex
+quit
 ```
 
-`Key_name`はインデックス名、`Column_name`はそのインデックスに含まれる列、`Seq_in_index`は列の順番です。複合インデックスでは列の順番が重要です。たとえば`(post_id, created_at)`なら、`post_id`だけで絞る検索と、`post_id`で絞って`created_at`順に読む検索の両方で使える可能性があります。
+`top`はCPU使用量の多い関数、`list getIndex`は`getIndex`関数のソースコードとprofile値を表示します。関数名は実際の出力に合わせて指定します。関数内のDB呼び出しが遅いかどうかは、CPU profileだけで判断せずslow query logやリクエスト全体の時間と比べます。
 
-## 5. 件数とサンプルデータを見る
+## 4. メモリprofileを見る
 
-まず、各テーブルの行数を確認します。
+処理が遅い原因が大量の一時オブジェクトやメモリ確保にあるか調べるにはheap profileを使います。
 
-```sql
-SELECT COUNT(*) FROM users;
-SELECT COUNT(*) FROM posts;
-SELECT COUNT(*) FROM comments;
+```sh
+go tool pprof -top 'http://127.0.0.1:6060/debug/pprof/heap'
 ```
 
-数行の内容は`LIMIT`を付けて確認します。パスワードハッシュや大きな画像データは表示せず、調査に必要な列だけを選びます。
+heap profileは主に現在メモリ上に残っているデータを見ます。profile中の`inuse_space`は現在使用中のバイト数、`alloc_space`はプログラム開始後に確保した累積バイト数です。頻繁な確保やGCがCPU profileで目立つ場合は、heap profileでどの関数が多くのデータを作っているか確認します。[1][3]
 
-```sql
-SELECT id, account_name, del_flg
-FROM users
-LIMIT 5;
+profile採取自体にも負荷があります。pprofを有効にした状態のスコアは通常状態のスコアと比較しません。CPU、heapなどのprofileを同時に何種類も採らず、必要なものを一つずつ調べます。
 
-SELECT id, user_id, mime, created_at, LEFT(body, 80) AS body
-FROM posts
-ORDER BY id DESC
-LIMIT 5;
+## 5. profile結果からキャッシュ候補を考える
 
-SELECT id, post_id, user_id, created_at, LEFT(comment, 80) AS comment
-FROM comments
-ORDER BY id DESC
-LIMIT 5;
+キャッシュは、毎回行う処理を減らす仕組みです。profileでCPU使用量が多い関数を見つけても、すぐにキャッシュを足すとは限りません。まず、同じ入力に対して同じ結果を何度も作っているか、同じDBデータを何度も読んでいるかを確認します。
+
+### キャッシュを検討しやすい処理
+
+- 複数のリクエストから同じデータが繰り返し読まれる。
+- SQLやCPU処理のコストが大きく、結果の再利用でその処理を省ける。
+- データが変わったときにキャッシュを更新・削除できる。
+- 数秒から数分程度古い値を返しても、機能上問題がない。
+
+### キャッシュに向きにくい処理
+
+- ほとんど毎回異なる入力やユーザー固有のデータで、再利用されない。
+- もともと処理が十分速く、キャッシュへの通信・変換の方が高くつく。
+- 更新直後の正確な値が必要で、古い値を返すことが許されない。
+- キャッシュキーに必要な条件をすべて含められず、別ユーザーや別条件のデータが混ざる。
+
+今回のコメント取得SQLなら、投稿ごとのコメント一覧が複数リクエストで何度も読まれ、遅いSQLとして確認できた場合は候補になります。ただし、先に複合インデックスでデータ取得そのものを十分速くできるかを調べます。軽くなったSQLをキャッシュすると、キャッシュ管理の複雑さだけが増えることがあります。
+
+キャッシュはDBやCPUの仕事を減らす代わりに、アプリとMemcachedのメモリを使います。Colimaの割当が約2 GiBのこの練習環境では、大きなデータを安易にキャッシュせず、`docker stats`で使用量を確認しながら小さく試します。
+
+### キャッシュを試す設計
+
+最小の「cache-aside」方式では、アプリは次の順で動きます。
+
+1. すべての検索条件を含むキーでMemcachedを読む。
+2. 値があればそれを返す（cache hit）。
+3. 値がなければMySQLから取得する（cache miss）。
+4. 取得結果を期限付きでMemcachedへ保存し、レスポンスを返す。
+5. 投稿やコメントが更新・削除されたら、関連キーを削除または更新する。
+
+キーには投稿IDだけでなく、表示順・件数・ユーザー権限など結果を変える条件も含めます。ユーザー別の情報を全ユーザー共通のキーに入れないようにします。MySQLを正本データとし、Memcachedの値がなくてもMySQLから再取得できるようにします。TTL（有効期限）は古い値を残す時間の上限で、更新時の整合性を保つ無効化処理の代わりとは限りません。
+
+## 6. キャッシュの効果を確かめる
+
+キャッシュの前後で、同じデータ状態・同じリクエスト・同じ環境を使います。キャッシュ導入後は、少なくとも次を確認します。
+
+- cold cache（空のキャッシュ）とwarm cache（同じリクエスト後）の応答時間。
+- cache hit / miss回数とMemcachedへの接続エラー。
+- 対象SQLの実行回数・合計時間が減ったか。
+- 投稿・コメントを作成、編集、削除した後に画面へ正しい内容が反映されるか。
+- Memcached停止やキャッシュmissでもアプリがMySQLから取得して動くか。
+- MemcachedとGoアプリのメモリ使用量が許容範囲か。
+
+キャッシュを有効にした直後の最初のアクセスはmissになるため、1回だけの測定では効果を判断できません。cold/warm双方を記録し、同じ状態にリセットして複数回比べます。ベンチマーク中はslow query logをOFFにします。DBのリセット方法とベンチマーク結果の扱いは[`kokeshi-practice1.md`](kokeshi-practice1.md)を参照してください。
+
+## 7. 練習後に一時変更を戻す
+
+`webapp/golang/app.go`からpprof用importとサーバー起動コードを取り除き、`webapp/compose.yml`から`127.0.0.1:6060:6060`のport設定を取り除いてから通常のGoアプリを再ビルドします。自分が追加した行だけを戻し、作業前からあった変更をまとめて破棄しないようにします。
+
+```sh
+cd webapp
+docker compose up -d --build app
 ```
 
-`posts`には画像データの`imgdata`列があります。バイナリ画像は大きいため、内容を見る目的がなければ`SELECT *`で取得しないようにします。
+## 参考資料
 
-特定の投稿にコメントがいくつあるかは、次のように確認できます。
-
-```sql
-SELECT post_id, COUNT(*) AS comment_count
-FROM comments
-WHERE post_id = 9980
-GROUP BY post_id;
-```
-
-コメント数の多い投稿を探す場合は、次を使います。
-
-```sql
-SELECT post_id, COUNT(*) AS comment_count
-FROM comments
-GROUP BY post_id
-ORDER BY comment_count DESC
-LIMIT 10;
-```
-
-## 6. slow query logのSQLを実行計画で調べる
-
-slow query logに出ていたSQLを`EXPLAIN`に渡すと、MySQLがどのインデックスを使い、何行程度を調べると見積もっているか確認できます。
-
-```sql
-EXPLAIN
-SELECT COUNT(*) FROM comments WHERE post_id = 9980;
-
-EXPLAIN
-SELECT * FROM comments
-WHERE post_id = 9980
-ORDER BY created_at DESC
-LIMIT 3;
-```
-
-主に見る列は次のとおりです。
-
-- `type`: 参照方法。`ALL`はテーブル全体を読む計画です。
-- `key`: 使用予定のインデックス。`NULL`なら使用するインデックスがない計画です。
-- `rows`: 調査する行数の見積もりです。実際の行数とは異なる場合があります。
-- `Extra`: 並べ替えなど、追加処理に関する情報です。`Using filesort`が表示されることがあります。
-
-`EXPLAIN`の見積もりとslow query logの`Rows_examined`（そのSQLの処理中にテーブルから調べた行数の実測値）を比べます。ログ例では、コメント3件を返すSQLがテーブルから約100,004行を調べていました。これは`post_id`による絞り込みに適切なインデックスが使われていない可能性を示します。`SHOW INDEX`でも列と順序を確認してから、変更を検討します。
-
-## 7. ログから追加調査へ進む考え方
-
-1. slow query logで`Query_time`が長いSQLを探します。
-2. `Rows_sent`（返したレコード数）と`Rows_examined`（処理中にテーブルから調べた行数）を比較します。少数のレコードを返すのに多数のテーブル行を調べていれば、絞り込みに注目します。
-3. SQLの`WHERE`、`ORDER BY`、`JOIN`に使われる列を確認します。
-4. `SHOW CREATE TABLE`と`SHOW INDEX`で列定義とインデックスを確認します。
-5. `EXPLAIN`で実際に選ばれるアクセス方法やインデックスを確認します。
-6. 原因に対応する変更を一つだけ行い、同じSQLの実測値とベンチマーク結果を比較します。
-
-ログだけで原因を決めつけず、テーブル定義と実行計画で仮説を確かめるのがポイントです。
-
-## 8. 注意点
-
-- `COUNT(*)`や`GROUP BY`は多数の行を調べる場合があります。大きなテーブルに対して何度も実行しないようにします。
-- `SELECT *`は不要な列や大きなバイナリ列まで取得することがあります。サンプル確認では列を指定します。
-- `EXPLAIN`は実行計画を確認するコマンドです。負荷の高いSQLを実際に計測する前に、まず`EXPLAIN`で計画を確認します。
-- スキーマやインデックスを変更する前に現在の定義を記録し、同じ名前のインデックスを重複して追加しないようにします。
-- ベンチマークを測るときはslow query logをOFFにし、変更前後で同じデータと環境を使います。
+1. [Go Diagnostics](https://go.dev/doc/diagnostics) — CPU profile、heap、block、mutex profileの用途と制約。
+2. [Go package `net/http/pprof`](https://pkg.go.dev/net/http/pprof) — profile HTTP endpointの登録と使い方。
+3. [Go package `runtime/pprof`](https://pkg.go.dev/runtime/pprof) — heap、allocsなどprofileの意味。
+4. [MySQL 9.7 Reference Manual: How MySQL Uses Indexes](https://dev.mysql.com/doc/refman/9.7/en/mysql-indexes.html) — DBアクセスの調査にインデックスを使う仕組み。
