@@ -1,0 +1,1 @@
+{"pass":true,"score":0,"success":950,"fail":53,"messages":["リクエストがタイムアウトしました (GET /)","リクエストがタイムアウトしました (POST /login)","リクエストがタイムアウトしました (POST /register)"]}

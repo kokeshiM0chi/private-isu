@@ -184,20 +184,31 @@ docker compose up -d --force-recreate mysql
 ここからのコマンドは、`webapp`ディレクトリで同じターミナルから続けて実行します。最初にMySQLへ問い合わせてコンテナ内のログパスを取得し、次にそのファイルをホストへコピーし、ホスト側のコピーを`mysqldumpslow`で分析します。`mysqldump`ではなく`mysqldumpslow`がslow log分析用のコマンドです。
 
 ```sh
+# MySQLコンテナに問い合わせ、スロークエリログのコンテナ内パスを取得する。
 SLOW_LOG_CONTAINER=$(docker compose exec -T mysql mysql -uroot -proot -Nse \
   "SELECT @@global.slow_query_log_file;")
+# 取得したパスを表示する。これはコンテナ内のパス。
 printf 'コンテナ内のログ: %s\n' "$SLOW_LOG_CONTAINER"
 
+# ホスト側でログを保存するパスを変数に入れる。
 HOST_LOG=../log-sample/mysql-slow-captured.log
+# MySQLコンテナ内のログをホストへコピーする。
 docker compose cp "mysql:$SLOW_LOG_CONTAINER" "$HOST_LOG"
+# コピーできたことと、ファイルサイズを確認する。
 ls -lh "$HOST_LOG"
 
+# -s: sort（並べ替え）の基準を指定するオプション。
+# -s t: sort by total query time（クエリ実行時間の合計順）。
+# -t 20: top 20（上位20件）を表示する。
+# "$HOST_LOG": 集計対象にする、ホスト上へコピーしたログファイル。
+# >: 画面出力をこのファイルへ保存する。既存ファイルがあれば上書きする。
 mysqldumpslow -s t -t 20 "$HOST_LOG" \
   > ../log-sample/slow-by-total-time.txt
+# less: 保存した集計結果をページ単位で読む。qキーで終了する。
 less ../log-sample/slow-by-total-time.txt
 ```
 
-この一連の処理で、コンテナ内のログパス確認、ホストへのコピー、ファイル存在確認、合計実行時間順の集計、結果の閲覧まで行います。ホスト側に`log-sample/mysql-slow-captured.log`が元ログとして残り、集計結果は`log-sample/slow-by-total-time.txt`に保存されます。MySQLが停止中なら先に起動してください。ホストで`mysqldumpslow`が見つからない場合は、後述のHomebrew手順で導入してから分析コマンドを実行します。ファイルが大きい場合は、採取対象の時間を短くするか、元ログをコピーした後で必要な範囲を抽出します。
+この一連の処理で、コンテナ内のログパス確認、ホストへのコピー、ファイル存在確認、合計実行時間順の集計、結果の閲覧まで行います。`-s`はsort（並べ替え）の基準を指定し、`-s t`はsort by total query time（クエリ実行時間の合計順）です。`-t 20`はtop 20（上位20件）を表示します。ホスト側に`log-sample/mysql-slow-captured.log`が元ログとして残り、集計結果は`log-sample/slow-by-total-time.txt`に保存されます。MySQLが停止中なら先に起動してください。ホストで`mysqldumpslow`が見つからない場合は、後述のHomebrew手順で導入してから分析コマンドを実行します。ファイルが大きい場合は、採取対象の時間を短くするか、元ログをコピーした後で必要な範囲を抽出します。
 
 ## 6. ログからボトルネックを見つける
 
@@ -264,7 +275,25 @@ CREATE INDEX idx_comments_post_created ON comments (post_id, created_at);
 
 この練習はGoアプリで計測していますが、インデックスはMySQLの共有スキーマに対する変更です。データの返し方は変わらず、同じクエリを使うRuby、PHP、Python、Node.jsの実装にも影響します。
 
-インデックスを追加する場合は、ベンチマークのスロークエリログをOFFにした状態で、MySQLに実行します。
+インデックスを追加する**前**に、比較用のベンチマーク結果を保存します。スロークエリログがOFFで、アプリとデータが準備できていることを確認してください。`webapp`ディレクトリから実行します。
+
+```sh
+cd ../benchmarker
+docker run --network host -i private-isu-benchmarker \
+  /bin/benchmarker -t http://host.docker.internal -u /opt/userdata \
+  > ../log-sample/benchmark-before-index.json
+cd ../webapp
+```
+
+ベンチマークの標準出力をホスト上の`log-sample/benchmark-before-index.json`へ保存しています。結果に`"pass":true`、`"fail":0`があることを確認してから、インデックスを追加します。
+
+このベンチマーカーは標準設定で負荷を60秒かけ、その後10秒待ってから結果を出力します。初期化時間も加わるため、完了まで1分強かかることがあります。`>`で結果をファイルへリダイレクトしているので、実行中はJSONが画面に表示されず、完了してプロンプトに戻るとファイルへ結果が書き込まれています。完了を待ち、同じベンチマークを重ねて起動しないでください。
+
+```sh
+cat ../log-sample/benchmark-before-index.json
+```
+
+ベースラインを保存した後、スロークエリログをOFFにした状態でMySQLにインデックスを追加します。
 
 ```sh
 docker compose exec -T mysql mysql -uroot -proot isuconp -e \
@@ -289,15 +318,26 @@ docker compose exec -T mysql mysql -uroot -proot -Nse \
   "SELECT @@GLOBAL.slow_query_log;"
 ```
 
-変更前後で同じコマンドを実行します。アプリ、ベンチマーカー、ColimaのCPU・メモリ割り当て、データを揃えます。
+インデックス追加後、変更前と同じコマンドを実行し、別ファイルに保存します。アプリ、ベンチマーカー、ColimaのCPU・メモリ割り当て、データを揃えます。
 
 ```sh
 cd ../benchmarker
 docker run --network host -i private-isu-benchmarker \
-  /bin/benchmarker -t http://host.docker.internal -u /opt/userdata
+  /bin/benchmarker -t http://host.docker.internal -u /opt/userdata \
+  > ../log-sample/benchmark-after-index.json
+cd ../webapp
 ```
 
-`pass:true`かつ`fail:0`を維持していることを先に確認し、複数回のスコアを比べます。1回だけの上下は測定のばらつきかもしれません。ベースライン時にタイムアウトがあった場合、そのスコアは比較に使わず、正常に完走した結果を取り直します。
+この実行も標準設定では負荷が60秒、その後の待機が10秒あり、初期化時間も加わります。出力はファイルへリダイレクトされるため、完了してプロンプトに戻るまでJSONは画面に表示されません。
+
+`pass:true`かつ`fail:0`を維持していることを確認し、2つのJSONの`score`、`success`、`fail`などを比較します。保存した結果を表示する例です。
+
+```sh
+cat ../log-sample/benchmark-before-index.json
+cat ../log-sample/benchmark-after-index.json
+```
+
+`>`は標準出力をファイルへ保存し、同名ファイルがあれば上書きします。1回だけのスコアの上下は測定のばらつきかもしれないため、可能なら変更前後それぞれ複数回測り、正常に完走した結果を比べます。ベースライン時にタイムアウトがあった場合、その結果は比較に使わず取り直します。
 
 ## 10. 追加したインデックスを戻す方法
 
