@@ -270,6 +270,34 @@ sudo grep -n -B 4 -F 'SELECT * FROM `comments` WHERE `post_id`' "$SLOW_LOG" \
 
 `mysqldumpslow: command not found`となる場合は、MySQLのユーティリティが入っていない環境です。競技中にパッケージを追加する前に、まず元ログを`grep`で調べるか、主催者の環境ルールを確認してください。
 
+### 本番サーバーに`mysqldumpslow`がない場合
+
+まずOSと既存のコマンドを確認します。コンテナではなく、SSHで入ったホスト上で実行します。
+
+```sh
+cat /etc/os-release
+command -v mysqldumpslow
+command -v mariadb-dumpslow
+```
+
+このリポジトリのAWS練習環境と同じUbuntuでは、`mysqldumpslow`はMySQL Server Coreパッケージに含まれます。導入前に競技ルールと`apt`が表示する変更内容を確認してください。すでに別のMySQL構成があるサーバーで、パッケージ追加がサーバーの置き換えや起動につながりそうならキャンセルします。
+
+```sh
+sudo apt update
+sudo apt install mysql-server-core-8.0
+command -v mysqldumpslow
+```
+
+Amazon Linuxなど`dnf`を使うOSでは、利用できるリポジトリにどのパッケージがコマンドを含むかを先に検索します。表示されたパッケージ名を確認してからインストールします。
+
+```sh
+sudo dnf provides '*/mysqldumpslow'
+```
+
+MariaDBの環境では同じツールが`mariadb-dumpslow`という名前の場合があります。MariaDB公式説明では、Linuxでは`mysqldumpslow`名のシンボリックリンク経由でも利用できるとされています。コマンドが入った後は、見つかった名前で`$SLOW_LOG`を分析します。[1]
+
+パッケージ導入はネットワーク接続、sudo権限、時間を使い、環境によっては追加のサービスやファイルが導入されます。可能なら競技開始前に練習用サーバーで確認しておき、競技中は導入せず`grep`でログを調べる方法も使えるようにしておきます。
+
 ## 7. 遅いSQLの実行計画とインデックスを調べる
 
 遅いSQLを見つけたら、ログだけで原因を決めず、テーブル定義・インデックス・実行計画を確認します。たとえばコメント取得クエリなら、ホスト上のMySQLに次のSQLを実行します。
@@ -396,3 +424,8 @@ sudo systemctl status isu-go --no-pager
 - [MySQLスロークエリログの採取・分析手順](kokeshi-practice2.md)
 - [MySQLのテーブル定義・データ・EXPLAINの確認](kokeshi-practice3.md)
 - [このリポジトリの当日マニュアル](manual.md)
+
+## 参考資料
+
+1. [MariaDB Documentation: mariadb-dumpslow](https://mariadb.com/docs/server/clients-and-utilities/logging-tools/mariadb-dumpslow) — コマンド名とLinuxでの`mysqldumpslow`互換名。
+2. [Ubuntu Packages: mysql-server-core](https://packages.ubuntu.com/search?keywords=mysql-server-core) — UbuntuのMySQL Server Coreパッケージ情報。

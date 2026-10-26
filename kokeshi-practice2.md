@@ -181,13 +181,23 @@ docker compose up -d --force-recreate mysql
 
 ## 5. ログをファイルに保存する
 
-slow logはコンテナの中にあるため、リポジトリ内で分析するにはホストへコピーします。ここでは`webapp`ディレクトリから、リポジトリの`log-sample`へコピーする例です。ファイル名は手順4で確認したものに置き換えます。
+ここからのコマンドは、`webapp`ディレクトリで同じターミナルから続けて実行します。最初にMySQLへ問い合わせてコンテナ内のログパスを取得し、次にそのファイルをホストへコピーし、ホスト側のコピーを`mysqldumpslow`で分析します。`mysqldump`ではなく`mysqldumpslow`がslow log分析用のコマンドです。
 
 ```sh
-docker compose cp mysql:/var/lib/mysql/実際のファイル名-slow.log ../log-sample/mysql-slow-captured.log
+SLOW_LOG_CONTAINER=$(docker compose exec -T mysql mysql -uroot -proot -Nse \
+  "SELECT @@global.slow_query_log_file;")
+printf 'コンテナ内のログ: %s\n' "$SLOW_LOG_CONTAINER"
+
+HOST_LOG=../log-sample/mysql-slow-captured.log
+docker compose cp "mysql:$SLOW_LOG_CONTAINER" "$HOST_LOG"
+ls -lh "$HOST_LOG"
+
+mysqldumpslow -s t -t 20 "$HOST_LOG" \
+  > ../log-sample/slow-by-total-time.txt
+less ../log-sample/slow-by-total-time.txt
 ```
 
-ホスト側に`log-sample/mysql-slow-captured.log`ができます。ファイルが大きい場合は、最初に`tail`で必要範囲だけ確認するか、分析用に抽出した結果だけ保存します。
+この一連の処理で、コンテナ内のログパス確認、ホストへのコピー、ファイル存在確認、合計実行時間順の集計、結果の閲覧まで行います。ホスト側に`log-sample/mysql-slow-captured.log`が元ログとして残り、集計結果は`log-sample/slow-by-total-time.txt`に保存されます。MySQLが停止中なら先に起動してください。ホストで`mysqldumpslow`が見つからない場合は、後述のHomebrew手順で導入してから分析コマンドを実行します。ファイルが大きい場合は、採取対象の時間を短くするか、元ログをコピーした後で必要な範囲を抽出します。
 
 ## 6. ログからボトルネックを見つける
 
@@ -229,6 +239,18 @@ docker compose exec -T mysql mysql -uroot -proot isuconp -e \
 ```
 
 `type`が`ALL`で、`key`が`NULL`ならテーブル全体を調べる計画です。`rows`は見積もりなので、slow logの実測`Rows_examined`と合わせて見ます。`post_id`から始まるインデックスがあるのに全件走査している場合は、インデックスの列順や統計情報も調べます。インデックスを重複して作らないよう、`SHOW INDEX`の結果を先に確認してください。
+
+Query確認方法
+
+```sh
+docker compose exec -T mysql mysql -uroot -proot isuconp -e \
+  "SELECT COUNT(*) FROM comments WHERE post_id = 9980;"
+```
+
+```sh
+docker compose exec -T mysql mysql -uroot -proot isuconp -e \
+  "SELECT * FROM comments WHERE post_id = 9980 ORDER BY created_at DESC LIMIT 3;"
+```
 
 ## 8. 改善候補: 複合インデックスを追加
 
@@ -319,6 +341,78 @@ grep -n -B 4 -F 'SELECT * FROM `comments` WHERE `post_id`' ../log-sample/mysql-s
 
 `>`は指定ファイルを上書きし、`>>`は末尾に追記します。元のslow logを残し、検索結果は別ファイルに保存します。`grep`は文字列を検索する道具であり、数値の`Query_time`を数値として並べ替える機能はありません。似たSQLの集計や時間順の並べ替えには`mysqldumpslow`などを使います。
 
+## Docker環境で遅いSQLを並べる
+
+今回のMySQLコンテナには`mysqldumpslow`が入っていません。そのため、`docker compose exec mysql mysqldumpslow ...`は実行できません。これはコマンドの書式ではなく、コンテナ内に実行ファイルがないためです。スロークエリログをOFFにし、手順5でログをホストへコピーしてから分析します。
+
+### MySQLコンテナには追加インストールしない
+
+この練習環境では、MySQLコンテナ内で`microdnf install mariadb-server-utils`を実行すると、パッケージ管理が長時間メタデータを取得した後、コンテナが終了することがあります。今回の終了状態は`ExitCode=137`、`OOMKilled=true`でした。これはMySQLコンテナがメモリ不足で強制終了されたことを示します。Colimaのメモリが約2 GiBの環境では、稼働中のDBコンテナに分析ツールを追加しないでください。
+
+ログはMySQLコンテナからホストへコピーし、ホストに導入した`mysqldumpslow`で分析してください。ホストにコマンドがなければ、この節の後半にあるHomebrewの導入手順を使います。
+
+ホストに`mysqldumpslow`があるか確認します。見つかった場合はコピー済みのログに使えます。
+
+```sh
+command -v mysqldumpslow
+```
+
+macOSでHomebrewを使っている場合は、MySQLのFormulaを入れると`mysqldumpslow`も利用できます。`mysql-client` Formulaには含まれていないため、`mysql-client`を入れてもこのコマンドが使えないことがあります。[6]
+
+```sh
+brew install mysql
+command -v mysqldumpslow
+```
+
+この練習ではDockerのMySQLを使うので、Homebrew版のMySQLサーバーを起動する必要はありません。`brew services start mysql`は実行せず、インストールされた`mysqldumpslow`でコピー済みログを分析します。インストール後も`command -v`で見つからない場合は、Homebrewのインストール先から直接実行します。
+
+```sh
+"$(brew --prefix mysql)/bin/mysqldumpslow" -s t -t 20 ../log-sample/mysql-slow-captured.log
+```
+
+`mysqldumpslow`はslow logのSQLを似た形ごとにまとめます。`-s t`は各SQLパターンの実行時間合計が大きい順、`-s at`は平均実行時間順、`-s c`は実行回数順です。`-t 20`は上位20パターン、`-g comments`はSQLに`comments`を含むものだけに絞ります。
+
+```sh
+mysqldumpslow -s t -t 20 ../log-sample/mysql-slow-captured.log
+mysqldumpslow -s at -t 20 ../log-sample/mysql-slow-captured.log
+mysqldumpslow -s t -t 20 -g comments ../log-sample/mysql-slow-captured.log
+```
+
+合計時間順の結果をファイルに保存し、上から調べる例です。
+
+```sh
+mysqldumpslow -s t -t 20 ../log-sample/mysql-slow-captured.log \
+  > ../log-sample/slow-by-total-time.txt
+```
+
+集計でコメント取得SQLが上位に出たら、元ログから個々の実行時間とSQLを`grep`で確認します。`mysqldumpslow`は似たSQLをまとめた結果で、個々の実行記録は元のslow logに残っています。
+
+ホストにも`mysqldumpslow`がない場合は、追加インストールなしで、slow logに記録された個々のSQL実行を時間の長い順に並べられます。次の例は、実行時間と1行のSQLを取り出して、時間を数値として降順に並べ、上位20件を表示します。
+
+```sh
+awk '
+/^# Query_time:/ { query_time = $3; next }
+tolower($0) ~ /^(select|insert|update|delete|replace)/ && query_time != "" {
+  print query_time "\t" $0
+  query_time = ""
+}
+' ../log-sample/mysql-slow-captured.log | sort -nr | head -20
+```
+
+コメントSQLだけを上位表示する場合は、`grep`を間に挟みます。
+
+```sh
+awk '
+/^# Query_time:/ { query_time = $3; next }
+tolower($0) ~ /^(select|insert|update|delete|replace)/ && query_time != "" {
+  print query_time "\t" $0
+  query_time = ""
+}
+' ../log-sample/mysql-slow-captured.log | grep comments | sort -nr | head -20
+```
+
+この簡易例はSQLが1行で記録されている場合に使います。同じSQLパターンの実行回数や合計時間を集計せず、個々の実行を並べます。
+
 ## ログ設定の確認
 
 現在の設定は次で確認できます。
@@ -336,3 +430,34 @@ docker compose exec -T mysql mysql -uroot -proot -e \
 2. [MySQL 9.7 Reference Manual: Using System Variables](https://dev.mysql.com/doc/refman/9.7/en/using-system-variables.html) — `GLOBAL`値と`SESSION`値、新しい接続が設定を引き継ぐタイミング。
 3. [The Go Programming Language: Opening a Database Handle](https://go.dev/doc/database/open-handle) — `sql.Open`が接続プールのハンドルを作り、実接続は必要時に行う説明。
 4. [The Go Programming Language: Managing Connections](https://go.dev/doc/database/manage-connections) — クエリ時にプールから接続を取得・再利用し、必要なら接続を作成する説明。
+5. [MySQL 9.7 Reference Manual: mysqldumpslow](https://dev.mysql.com/doc/refman/9.7/en/mysqldumpslow.html) — slow log内の似たSQLを集計し、実行時間や回数で並べ替える方法。
+6. [Homebrew Formulae: mysql](https://formulae.brew.sh/formula/mysql) — macOSでMySQLと`mysqldumpslow`をインストールする方法。`mysql-client`のFormulaには`mysqldumpslow`が含まれないため、MySQL Formulaを使います。
+
+## 備考: 今回のコンテナ停止とColimaのメモリ
+
+今回、MySQLコンテナ内で`microdnf install mariadb-server-utils`を実行した後、MySQLコンテナが停止しました。`docker compose ps -a`では`Exited (137)`、`docker inspect`では`OOMKilled=true`と確認できました。`OOMKilled=true`は、コンテナのプロセスがメモリ不足時にOSから強制終了されたことを表します。パッケージ取得中に停止したため、インストール処理が重なったことが引き金になった可能性があります。ただし、どのプロセスが何MB使っていたかまでは、この情報だけでは断定できません。
+
+Colima VMに割り当てられたメモリ容量は`docker info`のServer欄で確認できます。今回の表示は`Total Memory: 1.914GiB`でした。これはVMに割り当てられた総容量で、停止時点の使用量や空き容量ではありません。実際の使用量は`docker stats`やColima VM内の`free -h`で別に確認します。
+
+```sh
+docker info | grep 'Total Memory'
+docker stats --no-stream
+colima ssh -- free -h
+```
+
+コンテナがメモリ不足で終了したか確認する例です。まず`docker compose ps -a`でMySQLのコンテナ名を調べ、その名前を指定します。
+
+```sh
+docker compose ps -a
+docker inspect --format 'ExitCode={{.State.ExitCode}} OOMKilled={{.State.OOMKilled}}' private-isu-mysql-1
+```
+
+`ExitCode=137 OOMKilled=true`なら、MySQLの設定変更やログ設定だけではなく、コンテナのメモリ不足を調べます。今回はコンテナ内へ分析ツールを追加する操作とメモリ不足が重なったため、以後はログをホストへコピーしてホスト上で分析します。ホスト上の分析でもホストのCPU・メモリは使いますが、MySQLコンテナと同じColima VM内で分析用パッケージを追加する負荷は避けられます。
+
+停止したMySQLを再開するには、`webapp`ディレクトリで次を実行し、起動状態とログを確認します。DBボリュームを削除する`docker compose down -v`は実行しません。
+
+```sh
+docker compose up -d mysql
+docker compose ps
+docker compose logs --tail=80 mysql
+```
