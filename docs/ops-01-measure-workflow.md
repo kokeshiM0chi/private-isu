@@ -36,17 +36,20 @@
 # 1. 分類を1つ決めて改善する
 # 2. コミットする（結果とコミットを対応させるため）
 git add -A
-git commit -m "Add indexes for timeline queries"
+git commit -m "perf-02 db-index: Add indexes for comments and posts"
 
 # 3. 計測する。名前は perf-連番-分類 にする
-scripts/practice.sh measure perf-01-db-index 0     # 遅延なしで3回
-scripts/practice.sh measure perf-01-db-index 100   # 100msで3回
+scripts/practice.sh measure perf-02-db-index 0     # 遅延なしで3回
+scripts/practice.sh measure perf-02-db-index 100   # 100msで3回
 
 # 4. 結果を確認して記録する
 scripts/practice.sh compare
-git add results
-git commit -m "Record perf-01 results"
+# docs/perf-00-history.md に1行追加し、docs/perf-連番-分類.md に詳細を書く
+git add results docs
+git commit -m "perf-02 db-index: Record results"
 ```
+
+連番は `docs/perf-*.md` と共通にする。`perf-01` は基準である。変更と結果のコミットメッセージの先頭には、同じ `perf-連番 分類:` を付ける。どの修正の結果かは、`docs/perf-00-history.md` と `results/summary.tsv` の `commit` 列で追える。
 
 `measure` は、アプリの再ビルド、DBの基準データへの復元、SQLの適用、遅延の設定、ベンチ、結果の記録を順に行う。
 
