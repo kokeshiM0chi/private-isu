@@ -150,6 +150,8 @@ cmd_reset() {
   fi
   compose stop mysql
   copy_volume "$BASE_VOLUME" "$MYSQL_VOLUME"
+  # 復元で消した領域をVMからMacへ返す。返さないとMacのディスクが減り続ける
+  colima ssh -- sudo fstrim -a
   compose start mysql
   wait_for_mysql
 
