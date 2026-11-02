@@ -33,7 +33,7 @@ private-isuの練習で作った資料の一覧である。アプリとDBの間�
 
 | 資料 | 分かること |
 | --- | --- |
-| [perf-00-report.md](perf-00-report.md) | 全段階の確定値、段階ごとの差分、環境の問題、未確認の点 |
+| [perf-00-report.md](perf-00-report.md) | 全段階の確定値、段階ごとの差分、遠隔設定の有無による効果の差、01から07の詳細、環境の問題、未確認の点 |
 | [perf-00-history.md](perf-00-history.md) | 変更とコミット、スコアの対応表 |
 | [perf-01-baseline.md](perf-01-baseline.md) | 改善なしの基準スコア、100msで失敗する理由（数値は一括計測の前のもの） |
 | [perf-02-db-index.md](perf-02-db-index.md) | インデックス追加の内容と結果（数値は一括計測の前のもの） |
