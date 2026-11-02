@@ -53,11 +53,21 @@ container_ip() {
   docker inspect -f "{{(index .NetworkSettings.Networks \"$NETWORK\").IPAddress}}" "$(container_id "$1")"
 }
 
-# appコンテナのネットワーク名前空間で、VM側のコマンドを実行する
-in_app_netns() {
-  local pid
-  pid="$(docker inspect -f '{{.State.Pid}}' "$(container_id app)")"
+# サービスのネットワーク名前空間で、VM側のコマンドを実行する
+in_netns() {
+  local service="$1" pid
+  shift
+  pid="$(docker inspect -f '{{.State.Pid}}' "$(container_id "$service")")"
   colima ssh -- sudo nsenter -t "$pid" -n "$@"
+}
+
+# 遅延を入れる通信の一覧。設定がないコミットでは、appからDBとmemcachedへ入れる
+latency_rules() {
+  if [[ -e "$ROOT/webapp/latency-targets" ]]; then
+    grep -v '^#' "$ROOT/webapp/latency-targets"
+  else
+    echo "app mysql memcached"
+  fi
 }
 
 wait_for_mysql() {
@@ -98,27 +108,32 @@ cmd_bench() {
 }
 
 delay_off() {
-  in_app_netns tc qdisc del dev eth0 root 2>/dev/null || true
+  local service
+  latency_rules | while read -r service _; do
+    in_netns "$service" tc qdisc del dev eth0 root 2>/dev/null || true
+  done
 }
 
 delay_status() {
-  in_app_netns tc qdisc show dev eth0
-  # VMにはpingがないので、appのネットワークを共有するコンテナから測る
-  docker run --rm --network "container:$(container_id app)" alpine:3.20 \
-    ping -c 3 -q "$(container_ip mysql)" | tail -1
+  local service target _rest
+  latency_rules | while read -r service target _rest; do
+    in_netns "$service" tc qdisc show dev eth0
+    # VMにはpingがないので、同じネットワークを共有するコンテナから測る
+    docker run --rm --network "container:$(container_id "$service")" alpine:3.20 \
+      ping -c 3 -q "$(container_ip "$target")" </dev/null | tail -1
+  done
 }
 
 delay_on() {
-  local ms="$1" mysql_ip memcached_ip ip
-  mysql_ip="$(container_ip mysql)"
-  memcached_ip="$(container_ip memcached)"
-
+  local ms="$1" service targets target
   delay_off
-  in_app_netns tc qdisc add dev eth0 root handle 1: prio
-  in_app_netns tc qdisc add dev eth0 parent 1:3 handle 30: netem delay "${ms}ms" limit 100000
-  for ip in "$mysql_ip" "$memcached_ip"; do
-    in_app_netns tc filter add dev eth0 protocol ip parent 1: prio 1 u32 \
-      match ip dst "$ip/32" flowid 1:3
+  latency_rules | while read -r service targets; do
+    in_netns "$service" tc qdisc add dev eth0 root handle 1: prio
+    in_netns "$service" tc qdisc add dev eth0 parent 1:3 handle 30: netem delay "${ms}ms" limit 100000
+    for target in $targets; do
+      in_netns "$service" tc filter add dev eth0 protocol ip parent 1: prio 1 u32 \
+        match ip dst "$(container_ip "$target")/32" flowid 1:3
+    done
   done
 }
 

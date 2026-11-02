@@ -93,6 +93,7 @@ func dbInitialize(ctx context.Context) {
 	for _, sql := range sqls {
 		db.ExecContext(ctx, sql)
 	}
+	clearCaches()
 }
 
 func tryLogin(ctx context.Context, accountName, password string) *User {
@@ -154,9 +155,7 @@ func getSessionUser(r *http.Request) User {
 		return User{}
 	}
 
-	u := User{}
-
-	err := db.GetContext(ctx, &u, "SELECT * FROM `users` WHERE `id` = ?", uid)
+	u, err := cachedUser(ctx, uid)
 	if err != nil {
 		return User{}
 	}
@@ -190,17 +189,8 @@ func selectPosts(ctx context.Context, index, where string, args ...any) ([]Post,
 	return posts, err
 }
 
-// makePosts はコメント数とコメントを1回ずつのクエリでまとめて取得する
-func makePosts(ctx context.Context, results []Post, csrfToken string, allComments bool) ([]Post, error) {
-	if len(results) == 0 {
-		return results, nil
-	}
-
-	postIDs := make([]int, len(results))
-	for i, p := range results {
-		postIDs[i] = p.ID
-	}
-
+// fetchPostComments はコメント数とコメントを1回ずつのクエリでまとめて取得する
+func fetchPostComments(ctx context.Context, postIDs []int, allComments bool) (map[int]postComments, error) {
 	counts := []struct {
 		PostID int `db:"post_id"`
 		Count  int `db:"count"`
@@ -211,10 +201,6 @@ func makePosts(ctx context.Context, results []Post, csrfToken string, allComment
 	}
 	if err := db.SelectContext(ctx, &counts, query, args...); err != nil {
 		return nil, err
-	}
-	commentCounts := make(map[int]int, len(counts))
-	for _, c := range counts {
-		commentCounts[c.PostID] = c.Count
 	}
 
 	// 全件表示でなければ、投稿ごとに新しい順で3件だけ取得する
@@ -234,14 +220,45 @@ func makePosts(ctx context.Context, results []Post, csrfToken string, allComment
 	if err := db.SelectContext(ctx, &comments, query, args...); err != nil {
 		return nil, err
 	}
-	commentsByPost := make(map[int][]Comment, len(results))
+
+	result := make(map[int]postComments, len(postIDs))
+	for _, c := range counts {
+		result[c.PostID] = postComments{Count: c.Count}
+	}
 	for _, c := range comments {
-		commentsByPost[c.PostID] = append(commentsByPost[c.PostID], c)
+		value := result[c.PostID]
+		value.Comments = append(value.Comments, c)
+		result[c.PostID] = value
+	}
+	return result, nil
+}
+
+// makePosts は投稿にコメントを付ける。投稿の詳細ページだけは、書き込みをすぐ反映するためDBから読む。
+func makePosts(ctx context.Context, results []Post, csrfToken string, allComments bool) ([]Post, error) {
+	if len(results) == 0 {
+		return results, nil
+	}
+
+	postIDs := make([]int, len(results))
+	for i, p := range results {
+		postIDs[i] = p.ID
+	}
+
+	var comments map[int]postComments
+	var err error
+	if allComments {
+		comments, err = fetchPostComments(ctx, postIDs, true)
+	} else {
+		comments, err = cachedPostComments(ctx, postIDs)
+	}
+	if err != nil {
+		return nil, err
 	}
 
 	for i := range results {
-		results[i].CommentCount = commentCounts[results[i].ID]
-		results[i].Comments = commentsByPost[results[i].ID]
+		value := comments[results[i].ID]
+		results[i].CommentCount = value.Count
+		results[i].Comments = value.Comments
 		results[i].CSRFToken = csrfToken
 	}
 
@@ -414,7 +431,7 @@ func getIndex(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	me := getSessionUser(r)
 
-	results, err := selectPosts(ctx, "idx_posts_created", "")
+	results, err := cachedIndexPosts(ctx)
 	if err != nil {
 		log.Print(err)
 		return
@@ -689,6 +706,8 @@ func postIndex(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	bumpCacheVersion(indexVersionKey)
+
 	http.Redirect(w, r, "/posts/"+strconv.FormatInt(pid, 10), http.StatusFound)
 }
 
@@ -778,6 +797,8 @@ func postComment(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	bumpCacheVersion(commentVersionKey(postID))
+
 	http.Redirect(w, r, fmt.Sprintf("/posts/%d", postID), http.StatusFound)
 }
 
@@ -840,6 +861,7 @@ func postAdminBanned(w http.ResponseWriter, r *http.Request) {
 	for _, id := range r.Form["uid[]"] {
 		db.ExecContext(ctx, query, 1, id)
 	}
+	bumpCacheVersion(indexVersionKey)
 
 	http.Redirect(w, r, "/admin/banned", http.StatusFound)
 }
