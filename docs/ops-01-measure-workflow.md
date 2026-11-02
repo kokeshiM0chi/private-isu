@@ -1,52 +1,85 @@
 # 変更ごとの性能比較
 
-改善をブランチごとに分け、同じ状態のDBから計測して比較する。
+`master` の改善なしの結果を基準にして、`kokeshi` ブランチで改善と計測を繰り返す。
 
-## 考え方
+## ブランチの役割
 
-Gitで戻るのはコードだけで、インデックスなどのDBの状態はColimaのボリュームに残る。そのため、次の2つを固定する。
-
-| 対象 | 固定する方法 |
+| ブランチ | 役割 |
 | --- | --- |
-| コード | `kokeshi` から改善ごとにブランチを切る。`kokeshi` のアプリは本家の `master` と同じ |
-| DB | 計測のたびに基準データ（`private-isu_mysql_base` ボリューム）へ戻す |
+| `master` | 本家のまま、改善なし。基準スコアの対象 |
+| `kokeshi` | すべての変更を積み重ねる。コード、構成、言語の変更を含む。文書と計測結果も置く |
 
-DBの変更は手で実行せず、ブランチの `webapp/sql-changes/` にSQLファイルとして置く。ファイルは名前の順に適用される。これでDBの変更もブランチに含まれる。
+基準の計測はツールのある `kokeshi` で行う。計測時点で `webapp/golang` と `benchmarker` は `master`（`730e8a4`）と差分がない。
 
-## 手順
+## 変更の単位
+
+1回の変更は、アプローチの分類1つとする。個々の修正の数では数えない。たとえば、複数のテーブルにインデックスを追加しても、1回の変更として扱う。計測もこの単位で行い、アプローチごとの改善幅を確かめる。
+
+| 分類 | 内容の例 |
+| --- | --- |
+| `db-index` | テーブルのインデックス追加 |
+| `db-query` | N+1の解消、クエリの書き換え |
+| `db-config` | バッファプールなどのDB設定 |
+| `app-cpu` | 外部コマンド呼び出しの廃止、計算処理の見直し |
+| `app-connection` | 接続プール、プレースホルダ、往復回数の削減 |
+| `data-memory` | データをメモリに置き、変更差分だけを同期する |
+| `cache` | memcachedやアプリ内のキャッシュ |
+| `static` | 画像のファイル化、nginxからの配信 |
+| `infra` | nginxの設定、振り分け、配置 |
+| `language` | 実装言語の変更 |
+
+表にない分類は、必要に応じて追加する。
+
+## 1回の改善の流れ
 
 ```bash
-git switch kokeshi
-git switch -c perf/01-comment-index
+# 1. 分類を1つ決めて改善する
+# 2. コミットする（結果とコミットを対応させるため）
+git add -A
+git commit -m "Add indexes for timeline queries"
 
-# 例: インデックスを追加する
-mkdir -p webapp/sql-changes
-echo 'CREATE INDEX idx_comments_post_created ON comments (post_id, created_at);' \
-  > webapp/sql-changes/01-comment-index.sql
-git add webapp/sql-changes
-git commit -m "Add comment index"
+# 3. 計測する。名前は perf-連番-分類 にする
+scripts/practice.sh measure perf-01-db-index 0     # 遅延なしで3回
+scripts/practice.sh measure perf-01-db-index 100   # 100msで3回
 
-scripts/practice.sh measure comment-index 0     # 遅延なしで3回
-scripts/practice.sh measure comment-index 100   # 100msで3回
-scripts/practice.sh compare                     # 一覧を表示
+# 4. 結果を確認して記録する
+scripts/practice.sh compare
+git add results
+git commit -m "Record perf-01 results"
 ```
 
 `measure` は、アプリの再ビルド、DBの基準データへの復元、SQLの適用、遅延の設定、ベンチ、結果の記録を順に行う。
 
-## 結果の記録
+## DBの変更
 
-`results/` はGitの管理外なので、ブランチを切り替えても消えない。Colimaではなく、Mac上に残る。
+Gitで戻るのはコードだけで、インデックスなどのDBの状態はColimaのボリュームに残る。計測のたびにDBを基準データ（`private-isu_mysql_base`）へ戻すので、DBの変更は手で実行せず、`webapp/sql-changes/` にSQLファイルとして追加する。
+
+```text
+webapp/sql-changes/01-db-index.sql
+webapp/sql-changes/02-....sql
+```
+
+ファイルは名前の順に毎回すべて適用されるので、改善が積み重なった状態で計測される。
+
+## 結果の記録
 
 | ファイル | 内容 |
 | --- | --- |
 | `results/summary.tsv` | 時刻、名前、ブランチ、コミット、未コミット変更の有無、遅延、中央値、各回のスコア |
 | `results/<時刻>-<名前>-<遅延>ms.jsonl` | ベンチの出力そのまま |
 
-`state` が `dirty` の行は、未コミットの変更を含むので、コミットだけでは再現できない。
+`state` が `dirty` の行は未コミットの変更を含むので、コミットだけでは再現できない。
 
 ## 比較の注意
 
 - 比較するのは、同じ遅延の中央値どうしにする
-- 改善は積み上げて計測する。前の改善を含むブランチから次のブランチを切る
+- 1回の変更に複数の分類を混ぜない
 - 差が各回のばらつきより小さいときは、効果があるとは言えない
-- 画像をファイルへ移すなど、DB以外の状態を変える改善では、`measure` がそのファイルを戻さない。別途手順を決める
+- スコアが上がっても、失敗が増えていないか確認する
+
+## 構成や言語を変えるとき
+
+- 言語の変更: `webapp/compose.kokeshi.yml` の `build.context` を変える
+- nginxの設定: `webapp/etc/nginx/conf.d` は `measure` で反映される
+- MySQLの設定: 今は設定ファイルを読み込んでいない。変更するときは `webapp/compose.kokeshi.yml` にマウントを追加する
+- 画像のファイル化: DB以外の状態が増えるので、`measure` で初期状態に戻らない。実施するときに、ファイルの再生成も手順に加える

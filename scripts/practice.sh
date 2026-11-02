@@ -169,14 +169,14 @@ cmd_measure() {
   fi
 
   # 前の計測の状態を引き継がないよう、アプリとDBを入れ替えてから測る
-  compose up -d --build --force-recreate app nginx
+  compose up -d --build --force-recreate
   cmd_reset
   delay_off
   if [[ "$ms" -gt 0 ]]; then
     delay_on "$ms"
   fi
 
-  local stamp branch commit dirty file median scores
+  local stamp branch commit dirty file median scores successes fails
   stamp="$(date +%Y%m%d-%H%M%S)"
   branch="$(git -C "$ROOT" branch --show-current)"
   commit="$(git -C "$ROOT" rev-parse --short HEAD)"
@@ -192,11 +192,15 @@ cmd_measure() {
 
   scores="$(sed -E 's/.*"score":(-?[0-9]+).*/\1/' "$file" | paste -sd, -)"
   median="$(sed -E 's/.*"score":(-?[0-9]+).*/\1/' "$file" | sort -n | sed -n "$(((count + 1) / 2))p")"
+  # スコアが0の間は、成功と失敗の回数で比べる
+  successes="$(sed -E 's/.*"success":([0-9]+).*/\1/' "$file" | paste -sd, -)"
+  fails="$(sed -E 's/.*"fail":([0-9]+).*/\1/' "$file" | paste -sd, -)"
   if [[ ! -e "$RESULTS_DIR/summary.tsv" ]]; then
-    printf 'time\tlabel\tbranch\tcommit\tstate\tdelay_ms\tmedian\tscores\n' >"$RESULTS_DIR/summary.tsv"
+    printf 'time\tlabel\tbranch\tcommit\tstate\tdelay_ms\tmedian\tscores\tsuccesses\tfails\n' \
+      >"$RESULTS_DIR/summary.tsv"
   fi
-  printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n' \
-    "$stamp" "$label" "$branch" "$commit" "$dirty" "$ms" "$median" "$scores" \
+  printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n' \
+    "$stamp" "$label" "$branch" "$commit" "$dirty" "$ms" "$median" "$scores" "$successes" "$fails" \
     >>"$RESULTS_DIR/summary.tsv"
   echo "記録した: ${file#"$ROOT"/}"
 }

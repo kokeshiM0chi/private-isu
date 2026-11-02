@@ -3,3 +3,16 @@ services:
   app:
     build:
       context: golang/
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+
+  # 1CPUの制限では、ベンチ中にMySQLが上限に張り付いた。
+  # 競技用の推奨であるc7a.large（2 vCPU）に合わせる。
+  mysql:
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 2g
