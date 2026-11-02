@@ -10,6 +10,32 @@ services:
         limits:
           cpus: "2"
 
+  # DBから遠い場所に置くアプリ
+  app2:
+    build:
+      context: golang/
+    depends_on:
+      - mysql
+      - memcached
+    environment:
+      ISUCONP_DB_HOST: mysql
+      ISUCONP_DB_PORT: 3306
+      ISUCONP_DB_USER: root
+      ISUCONP_DB_PASSWORD: root
+      ISUCONP_DB_NAME: isuconp
+      ISUCONP_MEMCACHED_ADDRESS: memcached:11211
+    networks:
+      - my_network
+    volumes:
+      - ./public:/home/public
+      - images:/home/public/image
+    init: true
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 1g
+
   # nginxからappへは毎回新しい接続を作るので、既定のままでは送信ポートが
   # 枯渇して502になる。計測環境の前提として広げる。
   nginx:

@@ -91,7 +91,8 @@ cmd_up() {
 }
 
 cmd_build() {
-  compose up -d --build app nginx
+  compose up -d --build --remove-orphans
+  compose restart nginx
 }
 
 cmd_down() {
@@ -226,7 +227,7 @@ cmd_measure() {
   fi
 
   # 前の計測の状態を引き継がないよう、アプリとDBを入れ替えてから測る
-  compose up -d --build --force-recreate
+  compose up -d --build --force-recreate --remove-orphans
   cmd_reset
   delay_off
   if [[ "$ms" -gt 0 ]]; then

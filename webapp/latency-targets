@@ -1,3 +1,4 @@
 # 遅延を入れる通信。<送信元のサービス> <宛先のサービス>...
-# memcachedはアプリの隣に置くので、遅延の対象にしない。
-app mysql
+# appはDBの隣、app2はmemcachedの隣にある構成を再現する。
+app memcached
+app2 mysql
