@@ -9,3 +9,5 @@ time	label	branch	commit	state	delay_ms	median	scores	successes	fails
 20261102-174510	baseline	kokeshi	1bf25fa	clean	100	0	0,0,0	4,4,4	6,6,6
 20261102-175018	perf-02-db-index-port-exhausted	kokeshi	1bf25fa	clean	0	0	0,0,0	28315,28240,28242	8104,3848,3439
 20261102-175545	perf-02-db-index	kokeshi	1bf25fa	clean	100	0	0,0,0	4,4,4	6,6,6
+20261102-182006	baseline	kokeshi	3f0eb60	clean	0	3098	3091,3247,3098	2972,3128,2979	0,0,0
+20261102-182511	perf-02-db-index	kokeshi	3f0eb60	clean	0	49872	50905,49872,32399	47703,46752,30425	0,0,0
