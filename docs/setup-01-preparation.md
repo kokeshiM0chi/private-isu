@@ -44,9 +44,9 @@ bench ──> app2 (nginx + Go) ──RTT約100ms─> db
 ## 手元のMacの準備
 
 - [ ] Ansible を導入する（`2026-10-31-isucon-practice` の仕組みを流用するため）
-- [ ] 初期データの取得はMacで行わない
+- [ ] 無料で練習する場合は `scripts/practice.sh` でColima上の環境を使う
 
-確認時点のディスク空き容量は5.9GiB（使用率98%）だった。`make init` が必要な場合はAWS側で実行する。AWSで進めるならDockerは不要で、colimaは停止したままでよい。
+Macのディスクは `scripts/clean-local-disk.sh` で空ける。初期データはColimaの `private-isu_mysql` ボリュームとベンチマーカーのイメージに残っているので、ボリュームを消さない限り `make init` は不要である。
 
 ## 既存サーバーの扱い
 

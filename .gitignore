@@ -16,3 +16,6 @@ portal/tmp
 !/portal/log/.keep
 /portal/tmp
 .vagrant
+
+# 計測結果はブランチを切り替えても残す
+/results/

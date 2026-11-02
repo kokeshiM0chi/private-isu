@@ -1,0 +1,5 @@
+# compose.yml に重ねて使う練習用の設定。scripts/practice.sh から読み込む。
+services:
+  app:
+    build:
+      context: golang/
