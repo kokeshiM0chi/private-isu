@@ -8,12 +8,19 @@ private-isuの練習で作った資料の一覧である。アプリとDBの間�
 | --- | --- |
 | 改善の全体像と結果 | [perf-00-report.md](perf-00-report.md) |
 | 計測の進め方 | [ops-01-measure-workflow.md](ops-01-measure-workflow.md) |
+| 遅延で再現している構成 | [arch-01-latency-topology.md](arch-01-latency-topology.md) |
 
 ## 準備
 
 | 資料 | 分かること |
 | --- | --- |
 | [setup-01-preparation.md](setup-01-preparation.md) | 練習の方針、構成案、AWSと手元のMacで準備するもの |
+
+## 構成
+
+| 資料 | 分かること |
+| --- | --- |
+| [arch-01-latency-topology.md](arch-01-latency-topology.md) | 遅延で再現している物理配置の図、段階ごとの構成、設定との対応、再現していないこと |
 
 ## 運用と手順
 
