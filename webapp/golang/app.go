@@ -35,6 +35,7 @@ const (
 	ISO8601Format = "2006-01-02T15:04:05-07:00"
 	UploadLimit   = 10 * 1024 * 1024 // 10mb
 	dbMaxConns    = 32
+	imageDir      = "../public/image"
 )
 
 type User struct {
@@ -660,13 +661,14 @@ func postIndex(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// 画像の本体はファイルに置くので、DBには空で保存する
 	query := "INSERT INTO `posts` (`user_id`, `mime`, `imgdata`, `body`) VALUES (?,?,?,?)"
 	result, err := db.ExecContext(
 		ctx,
 		query,
 		me.ID,
 		mime,
-		filedata,
+		[]byte{},
 		r.FormValue("body"),
 	)
 	if err != nil {
@@ -680,7 +682,36 @@ func postIndex(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	err = saveImage(imageURL(Post{ID: int(pid), Mime: mime}), filedata)
+	if err != nil {
+		log.Print(err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
 	http.Redirect(w, r, "/posts/"+strconv.FormatInt(pid, 10), http.StatusFound)
+}
+
+// saveImage はnginxから配信する画像ファイルを書き出す。
+// 書きかけのファイルを配信しないよう、書き終えてから名前を変える。
+func saveImage(url string, data []byte) error {
+	tmp, err := os.CreateTemp(imageDir, "tmp-")
+	if err != nil {
+		return err
+	}
+	defer os.Remove(tmp.Name())
+
+	if _, err := tmp.Write(data); err != nil {
+		tmp.Close()
+		return err
+	}
+	if err := tmp.Close(); err != nil {
+		return err
+	}
+	if err := os.Chmod(tmp.Name(), 0o644); err != nil {
+		return err
+	}
+	return os.Rename(tmp.Name(), path.Join(imageDir, path.Base(url)))
 }
 
 func getImage(w http.ResponseWriter, r *http.Request) {
@@ -693,7 +724,7 @@ func getImage(w http.ResponseWriter, r *http.Request) {
 	}
 
 	post := Post{}
-	err = db.GetContext(ctx, &post, "SELECT * FROM `posts` WHERE `id` = ?", pid)
+	err = db.GetContext(ctx, &post, "SELECT `id`, `mime`, `imgdata` FROM `posts` WHERE `id` = ?", pid)
 	if err != nil {
 		log.Print(err)
 		return
@@ -704,6 +735,11 @@ func getImage(w http.ResponseWriter, r *http.Request) {
 	if ext == "jpg" && post.Mime == "image/jpeg" ||
 		ext == "png" && post.Mime == "image/png" ||
 		ext == "gif" && post.Mime == "image/gif" {
+		// nginxで見つからなかった画像だけがここに届く。次回からファイルで返す
+		if err := saveImage(imageURL(post), post.Imgdata); err != nil {
+			log.Print(err)
+		}
+
 		w.Header().Set("Content-Type", post.Mime)
 		_, err := w.Write(post.Imgdata)
 		if err != nil {

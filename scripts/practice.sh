@@ -12,6 +12,7 @@
 #   scripts/practice.sh reset         DBを基準データに戻し、webapp/sql-changes/*.sql を適用する
 #   scripts/practice.sh measure <名前> [遅延ms] [回数]  今のブランチを計測してresults/に記録する
 #   scripts/practice.sh compare       計測結果の一覧を表示する
+#   scripts/practice.sh images        画像ファイルの基準データを作る（perf-05以降で初回だけ）
 #
 # 遅延はappの送信側だけに入れるので、指定値がそのままRTTの増加分になる。
 # nginxとappの間の通信には遅延を入れない。
@@ -22,14 +23,18 @@ if [[ "${1:-}" == measure && -z "${PRACTICE_NO_SLEEP:-}" ]] && command -v caffei
   PRACTICE_NO_SLEEP=1 exec caffeinate -ims "${BASH_SOURCE[0]}" "$@"
 fi
 
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# PRACTICE_ROOT を指定すると、別の場所に取り出したコミットのアプリとDB変更を計測する
+SCRIPT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ROOT="${PRACTICE_ROOT:-$SCRIPT_ROOT}"
 PROJECT=private-isu
 NETWORK="${PROJECT}_my_network"
 COLIMA_CPU=6
 COLIMA_MEMORY=5
 MYSQL_VOLUME="${PROJECT}_mysql"
 BASE_VOLUME="${PROJECT}_mysql_base"
-RESULTS_DIR="$ROOT/results"
+IMAGE_VOLUME="${PROJECT}_images"
+IMAGE_BASE_VOLUME="${PROJECT}_images_base"
+RESULTS_DIR="$SCRIPT_ROOT/results"
 SQL_CHANGES_DIR="$ROOT/webapp/sql-changes"
 
 compose() {
@@ -148,6 +153,30 @@ cmd_snapshot() {
   echo "基準データを保存した: $BASE_VOLUME"
 }
 
+# 画像ファイルはDBの外にあるので、DBとは別に基準データから戻す
+restore_images() {
+  if docker volume inspect "$IMAGE_BASE_VOLUME" >/dev/null 2>&1; then
+    copy_volume "$IMAGE_BASE_VOLUME" "$IMAGE_VOLUME"
+  fi
+  docker run --rm -v "$IMAGE_VOLUME:/v" alpine:3.20 chown -R 10001 /v
+}
+
+# 全画像をアプリ経由で一度取得してファイルにし、基準データとして保存する
+cmd_images() {
+  if docker volume inspect "$IMAGE_BASE_VOLUME" >/dev/null 2>&1; then
+    echo "画像の基準データはすでにある。作り直す場合は先に消す: docker volume rm $IMAGE_BASE_VOLUME" >&2
+    exit 1
+  fi
+  restore_images
+  compose exec -T mysql mysql -uroot -proot -N isuconp 2>/dev/null \
+    -e "SELECT CONCAT(id, '.', SUBSTRING_INDEX(REPLACE(mime, 'jpeg', 'jpg'), '/', -1)) FROM posts WHERE id <= 10000" |
+    docker run --rm -i --network "$NETWORK" alpine:3.20 \
+      sh -c 'xargs -P 8 -I{} wget -q -O /dev/null http://app:8080/image/{}'
+  docker volume create "$IMAGE_BASE_VOLUME" >/dev/null
+  copy_volume "$IMAGE_VOLUME" "$IMAGE_BASE_VOLUME"
+  docker run --rm -v "$IMAGE_BASE_VOLUME:/v:ro" alpine:3.20 sh -c 'echo "画像ファイル: $(ls /v | wc -l) 件、$(du -sh /v | cut -f1)"'
+}
+
 cmd_reset() {
   if ! docker volume inspect "$BASE_VOLUME" >/dev/null 2>&1; then
     echo "基準データがない。先に実行する: $0 snapshot" >&2
@@ -155,6 +184,7 @@ cmd_reset() {
   fi
   compose stop mysql
   copy_volume "$BASE_VOLUME" "$MYSQL_VOLUME"
+  restore_images
   # 復元で消した領域をVMからMacへ返す。返さないとMacのディスクが減り続ける
   colima ssh -- sudo fstrim -a
   compose start mysql
@@ -223,6 +253,7 @@ cmd_compare() {
 
 case "${1:-}" in
   snapshot) cmd_snapshot ;;
+  images) cmd_images ;;
   reset) cmd_reset ;;
   measure) cmd_measure "${2:-}" "${3:-0}" "${4:-3}" ;;
   compare) cmd_compare ;;
@@ -232,7 +263,7 @@ case "${1:-}" in
   bench) cmd_bench "${2:-1}" ;;
   delay) cmd_delay "${2:-status}" ;;
   *)
-    sed -n '2,17p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
+    sed -n '2,18p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
     exit 2
     ;;
 esac

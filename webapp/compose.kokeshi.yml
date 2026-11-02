@@ -3,6 +3,8 @@ services:
   app:
     build:
       context: golang/
+    volumes:
+      - images:/home/public/image
     deploy:
       resources:
         limits:
@@ -11,6 +13,8 @@ services:
   # nginxからappへは毎回新しい接続を作るので、既定のままでは送信ポートが
   # 枯渇して502になる。計測環境の前提として広げる。
   nginx:
+    volumes:
+      - images:/public/image:ro
     sysctls:
       net.ipv4.ip_local_port_range: "1024 65535"
       net.ipv4.tcp_tw_reuse: "1"
@@ -23,3 +27,6 @@ services:
         limits:
           cpus: "2"
           memory: 2g
+
+volumes:
+  images:
