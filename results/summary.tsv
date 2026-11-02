@@ -2,3 +2,4 @@ time	label	branch	commit	state	delay_ms	median	scores	successes	fails
 20261102-133848	baseline-mysql1cpu	kokeshi	ccc39e0	clean	0	0	0,0,0	442,382,110	58,57,64
 20261102-135603	baseline-mysql1cpu	kokeshi	ccc39e0	clean	100	0	0,0,0	4,4,4	6,6,6
 20261102-165533	baseline	kokeshi	c0fec05	clean	0	4478	4355,4478,4478	4204,4317,4329	0,0,0
+20261102-170310	baseline	kokeshi	e4d5e5b	clean	100	0	0,0,0	4,4,4	6,6,6
