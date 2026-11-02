@@ -175,55 +175,75 @@ func getFlash(w http.ResponseWriter, r *http.Request, key string) string {
 	}
 }
 
+// selectPosts は表示対象の投稿を投稿者付きで最大postsPerPage件取得する。
+// BANされたユーザーの投稿はここで除外する。
+func selectPosts(ctx context.Context, index, where string, args ...any) ([]Post, error) {
+	query := "SELECT p.id, p.user_id, p.body, p.mime, p.created_at, " +
+		"u.account_name AS `user.account_name`, u.del_flg AS `user.del_flg` " +
+		"FROM posts p FORCE INDEX (" + index + ") STRAIGHT_JOIN users u ON u.id = p.user_id " +
+		"WHERE u.del_flg = 0 " + where + " ORDER BY p.created_at DESC LIMIT " + strconv.Itoa(postsPerPage)
+
+	posts := []Post{}
+	err := db.SelectContext(ctx, &posts, query, args...)
+	return posts, err
+}
+
+// makePosts はコメント数とコメントを1回ずつのクエリでまとめて取得する
 func makePosts(ctx context.Context, results []Post, csrfToken string, allComments bool) ([]Post, error) {
-	var posts []Post
-
-	for _, p := range results {
-		err := db.GetContext(ctx, &p.CommentCount, "SELECT COUNT(*) AS `count` FROM `comments` WHERE `post_id` = ?", p.ID)
-		if err != nil {
-			return nil, err
-		}
-
-		query := "SELECT * FROM `comments` WHERE `post_id` = ? ORDER BY `created_at` DESC"
-		if !allComments {
-			query += " LIMIT 3"
-		}
-		var comments []Comment
-		err = db.SelectContext(ctx, &comments, query, p.ID)
-		if err != nil {
-			return nil, err
-		}
-
-		for i := range comments {
-			err := db.GetContext(ctx, &comments[i].User, "SELECT * FROM `users` WHERE `id` = ?", comments[i].UserID)
-			if err != nil {
-				return nil, err
-			}
-		}
-
-		// reverse
-		for i, j := 0, len(comments)-1; i < j; i, j = i+1, j-1 {
-			comments[i], comments[j] = comments[j], comments[i]
-		}
-
-		p.Comments = comments
-
-		err = db.GetContext(ctx, &p.User, "SELECT * FROM `users` WHERE `id` = ?", p.UserID)
-		if err != nil {
-			return nil, err
-		}
-
-		p.CSRFToken = csrfToken
-
-		if p.User.DelFlg == 0 {
-			posts = append(posts, p)
-		}
-		if len(posts) >= postsPerPage {
-			break
-		}
+	if len(results) == 0 {
+		return results, nil
 	}
 
-	return posts, nil
+	postIDs := make([]int, len(results))
+	for i, p := range results {
+		postIDs[i] = p.ID
+	}
+
+	counts := []struct {
+		PostID int `db:"post_id"`
+		Count  int `db:"count"`
+	}{}
+	query, args, err := sqlx.In("SELECT `post_id`, COUNT(*) AS `count` FROM `comments` WHERE `post_id` IN (?) GROUP BY `post_id`", postIDs)
+	if err != nil {
+		return nil, err
+	}
+	if err := db.SelectContext(ctx, &counts, query, args...); err != nil {
+		return nil, err
+	}
+	commentCounts := make(map[int]int, len(counts))
+	for _, c := range counts {
+		commentCounts[c.PostID] = c.Count
+	}
+
+	// 全件表示でなければ、投稿ごとに新しい順で3件だけ取得する
+	rankLimit := ""
+	if !allComments {
+		rankLimit = "WHERE c.rn <= 3 "
+	}
+	query, args, err = sqlx.In("SELECT c.id, c.post_id, c.user_id, c.comment, c.created_at, u.account_name AS `user.account_name` "+
+		"FROM (SELECT `id`, `post_id`, `user_id`, `comment`, `created_at`, "+
+		"ROW_NUMBER() OVER (PARTITION BY `post_id` ORDER BY `created_at` DESC, `id` DESC) AS rn "+
+		"FROM `comments` WHERE `post_id` IN (?)) c JOIN users u ON u.id = c.user_id "+
+		rankLimit+"ORDER BY c.created_at ASC, c.id ASC", postIDs)
+	if err != nil {
+		return nil, err
+	}
+	comments := []Comment{}
+	if err := db.SelectContext(ctx, &comments, query, args...); err != nil {
+		return nil, err
+	}
+	commentsByPost := make(map[int][]Comment, len(results))
+	for _, c := range comments {
+		commentsByPost[c.PostID] = append(commentsByPost[c.PostID], c)
+	}
+
+	for i := range results {
+		results[i].CommentCount = commentCounts[results[i].ID]
+		results[i].Comments = commentsByPost[results[i].ID]
+		results[i].CSRFToken = csrfToken
+	}
+
+	return results, nil
 }
 
 func imageURL(p Post) string {
@@ -392,9 +412,7 @@ func getIndex(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	me := getSessionUser(r)
 
-	results := []Post{}
-
-	err := db.SelectContext(ctx, &results, "SELECT `id`, `user_id`, `body`, `mime`, `created_at` FROM `posts` ORDER BY `created_at` DESC")
+	results, err := selectPosts(ctx, "idx_posts_created", "")
 	if err != nil {
 		log.Print(err)
 		return
@@ -439,9 +457,7 @@ func getAccountName(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	results := []Post{}
-
-	err = db.SelectContext(ctx, &results, "SELECT `id`, `user_id`, `body`, `mime`, `created_at` FROM `posts` WHERE `user_id` = ? ORDER BY `created_at` DESC", user.ID)
+	results, err := selectPosts(ctx, "idx_posts_user_created", "AND p.user_id = ?", user.ID)
 	if err != nil {
 		log.Print(err)
 		return
@@ -460,33 +476,18 @@ func getAccountName(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	postIDs := []int{}
-	err = db.SelectContext(ctx, &postIDs, "SELECT `id` FROM `posts` WHERE `user_id` = ?", user.ID)
+	postCount := 0
+	err = db.GetContext(ctx, &postCount, "SELECT COUNT(*) AS count FROM `posts` WHERE `user_id` = ?", user.ID)
 	if err != nil {
 		log.Print(err)
 		return
 	}
-	postCount := len(postIDs)
 
 	commentedCount := 0
-	if postCount > 0 {
-		s := []string{}
-		for range postIDs {
-			s = append(s, "?")
-		}
-		placeholder := strings.Join(s, ", ")
-
-		// convert []int -> []any
-		args := make([]any, len(postIDs))
-		for i, v := range postIDs {
-			args[i] = v
-		}
-
-		err = db.GetContext(ctx, &commentedCount, "SELECT COUNT(*) AS count FROM `comments` WHERE `post_id` IN ("+placeholder+")", args...)
-		if err != nil {
-			log.Print(err)
-			return
-		}
+	err = db.GetContext(ctx, &commentedCount, "SELECT COUNT(*) AS count FROM `comments` c JOIN `posts` p ON p.id = c.post_id WHERE p.user_id = ?", user.ID)
+	if err != nil {
+		log.Print(err)
+		return
 	}
 
 	me := getSessionUser(r)
@@ -529,8 +530,7 @@ func getPosts(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	results := []Post{}
-	err = db.SelectContext(ctx, &results, "SELECT `id`, `user_id`, `body`, `mime`, `created_at` FROM `posts` WHERE `created_at` <= ? ORDER BY `created_at` DESC", t.Format(ISO8601Format))
+	results, err := selectPosts(ctx, "idx_posts_created", "AND p.created_at <= ?", t.Format(ISO8601Format))
 	if err != nil {
 		log.Print(err)
 		return
@@ -566,8 +566,7 @@ func getPostsID(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	results := []Post{}
-	err = db.SelectContext(ctx, &results, "SELECT * FROM `posts` WHERE `id` = ?", pid)
+	results, err := selectPosts(ctx, "PRIMARY", "AND p.id = ?", pid)
 	if err != nil {
 		log.Print(err)
 		return
