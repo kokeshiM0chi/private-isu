@@ -5,3 +5,7 @@ time	label	branch	commit	state	delay_ms	median	scores	successes	fails
 20261102-170310	baseline-colima4cpu	kokeshi	e4d5e5b	clean	100	0	0,0,0	4,4,4	6,6,6
 20261102-171628	perf-02-db-index-colima4cpu	kokeshi	f4d14b0	clean	0	28116	28116,29762,15574	26200,27713,14639	0,0,0
 20261102-172317	perf-02-db-index-colima4cpu	kokeshi	f4d14b0	clean	100	0	0,0,0	4,4,4	6,6,6
+20261102-173951	baseline-before-port-fix	kokeshi	1bf25fa	clean	0	3131	3131,3146,3086	3010,3025,2967	0,0,0
+20261102-174510	baseline	kokeshi	1bf25fa	clean	100	0	0,0,0	4,4,4	6,6,6
+20261102-175018	perf-02-db-index-port-exhausted	kokeshi	1bf25fa	clean	0	0	0,0,0	28315,28240,28242	8104,3848,3439
+20261102-175545	perf-02-db-index	kokeshi	1bf25fa	clean	100	0	0,0,0	4,4,4	6,6,6
