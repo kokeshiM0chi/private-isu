@@ -17,3 +17,6 @@ portal/tmp
 /portal/tmp
 .vagrant
 
+
+# 閲覧用に手元で生成するファイル
+/docs/*.html

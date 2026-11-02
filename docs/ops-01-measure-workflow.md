@@ -85,4 +85,4 @@ webapp/sql-changes/02-....sql
 - 言語の変更: `webapp/compose.kokeshi.yml` の `build.context` を変える
 - nginxの設定: `webapp/etc/nginx/conf.d` は `measure` で反映される
 - MySQLの設定: 今は設定ファイルを読み込んでいない。変更するときは `webapp/compose.kokeshi.yml` にマウントを追加する
-- 画像のファイル化: DB以外の状態が増えるので、`measure` で初期状態に戻らない。実施するときに、ファイルの再生成も手順に加える
+- 画像のファイル化: `measure` が画像ファイルも初期状態へ戻す。詳しくは [ops-02-image-baseline.md](ops-02-image-baseline.md) を参照する
