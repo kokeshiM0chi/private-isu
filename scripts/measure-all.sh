@@ -30,7 +30,8 @@ if pmset -g | grep -Eq 'lowpowermode[[:space:]]+1'; then
   exit 1
 fi
 
-WORK="$(mktemp -d)"
+# ColimaのVMから見えるホーム以下に取り出す
+WORK="$(mktemp -d "$HOME/.private-isu-worktrees.XXXXXX")"
 trap 'git -C "$ROOT" worktree prune; rm -rf "$WORK"' EXIT
 
 for stage in "${STAGES[@]}"; do
