@@ -17,6 +17,11 @@
 # nginxとappの間の通信には遅延を入れない。
 set -euo pipefail
 
+# 計測中にMacがスリープすると結果が壊れるので、スリープを防いで実行し直す
+if [[ "${1:-}" == measure && -z "${PRACTICE_NO_SLEEP:-}" ]] && command -v caffeinate >/dev/null; then
+  PRACTICE_NO_SLEEP=1 exec caffeinate -ims "${BASH_SOURCE[0]}" "$@"
+fi
+
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PROJECT=private-isu
 NETWORK="${PROJECT}_my_network"
