@@ -20,7 +20,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PROJECT=private-isu
 NETWORK="${PROJECT}_my_network"
-COLIMA_CPU=4
+COLIMA_CPU=6
 COLIMA_MEMORY=5
 MYSQL_VOLUME="${PROJECT}_mysql"
 BASE_VOLUME="${PROJECT}_mysql_base"
@@ -154,6 +154,11 @@ cmd_reset() {
   colima ssh -- sudo fstrim -a
   compose start mysql
   wait_for_mysql
+
+  # 改善なしの状態を測り直すときだけ SKIP_SQL_CHANGES=1 を付ける
+  if [[ "${SKIP_SQL_CHANGES:-}" == 1 ]]; then
+    return 0
+  fi
 
   local file
   for file in "$SQL_CHANGES_DIR"/*.sql; do
