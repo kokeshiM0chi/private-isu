@@ -13,3 +13,4 @@ time	label	branch	commit	state	delay_ms	median	scores	successes	fails
 20261102-182511	perf-02-db-index	kokeshi	3f0eb60	clean	0	49872	50905,49872,32399	47703,46752,30425	0,0,0
 20261102-183220	perf-03-db-query-interrupted-by-sleep	kokeshi	5825ae6	clean	0	0	73401,0,0	66278,0,0	0,0,0
 20261102-212250	perf-03-db-query	kokeshi	5825ae6	clean	100	2558	2619,2558,2399	2420,2359,2206	0,0,0
+20261102-213007	perf-03-db-query	kokeshi	902e253	clean	0	36881	37213,36881,34379	33686,33470,31228	0,0,0

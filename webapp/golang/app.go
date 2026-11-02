@@ -34,6 +34,7 @@ const (
 	postsPerPage  = 20
 	ISO8601Format = "2006-01-02T15:04:05-07:00"
 	UploadLimit   = 10 * 1024 * 1024 // 10mb
+	dbMaxConns    = 32
 )
 
 type User struct {
@@ -841,6 +842,8 @@ func main() {
 	}
 	cfg.ParseTime = true
 	cfg.Loc = time.Local
+	// プレースホルダをクライアント側で展開し、準備と実行の2往復を1往復にする
+	cfg.InterpolateParams = true
 	dsn := cfg.FormatDSN()
 
 	db, err = sqlx.Open("mysql", dsn)
@@ -848,6 +851,11 @@ func main() {
 		log.Fatalf("Failed to connect to DB: %s.", err.Error())
 	}
 	defer db.Close()
+
+	// 接続を使い回し、接続のたびに発生する往復をなくす
+	db.SetMaxOpenConns(dbMaxConns)
+	db.SetMaxIdleConns(dbMaxConns)
+	db.SetConnMaxLifetime(5 * time.Minute)
 
 	r := chi.NewRouter()
 
