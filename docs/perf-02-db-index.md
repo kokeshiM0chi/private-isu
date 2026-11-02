@@ -1,5 +1,7 @@
 # perf-02 db-index
 
+この文書の数値は、一括計測の前の記録である。確定値は [perf-00-report.md](perf-00-report.md) を参照する。
+
 | 項目 | 値 |
 | --- | --- |
 | 分類 | `db-index` |

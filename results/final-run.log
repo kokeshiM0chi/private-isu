@@ -1,0 +1,1531 @@
+=== final-01-baseline 0ms (3f0eb60)
+ Image private-isu-app Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 598B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.65kB 0.0s done
+#2 DONE 0.1s
+
+#3 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#3 DONE 1.3s
+
+#4 docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#4 resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e 0.0s done
+#4 CACHED
+
+#5 [internal] load metadata for docker.io/library/golang:1.27
+#5 DONE 1.0s
+
+#6 [internal] load metadata for docker.io/library/debian:bookworm-slim
+#6 DONE 1.1s
+
+#7 [internal] load .dockerignore
+#7 transferring context: 2B 0.0s done
+#7 DONE 0.0s
+
+#8 [final 1/6] FROM docker.io/library/debian:bookworm-slim@sha256:99c0b25c46d0214d5a2091092e7908907dcaecd6a962cde0ac700acee222b6f3
+#8 resolve docker.io/library/debian:bookworm-slim@sha256:99c0b25c46d0214d5a2091092e7908907dcaecd6a962cde0ac700acee222b6f3 0.0s done
+#8 DONE 0.0s
+
+#9 [internal] load build context
+#9 transferring context: 31.10kB 0.0s done
+#9 DONE 0.0s
+
+#10 [build 1/4] FROM docker.io/library/golang:1.27@sha256:2920bb124f1a2e12a1d39f0cab756ae0068441ee1da7655dec7f5e374944095b
+#10 resolve docker.io/library/golang:1.27@sha256:2920bb124f1a2e12a1d39f0cab756ae0068441ee1da7655dec7f5e374944095b 0.0s done
+#10 DONE 0.0s
+
+#11 [build 4/4] RUN --mount=type=cache,target=/go/pkg/mod/   --mount=type=bind,target=.   CGO_ENABLED=0 GOARCH=arm64 go build -o /bin/server .
+#11 CACHED
+
+#12 [build 2/4] WORKDIR /src
+#12 CACHED
+
+#13 [final 3/6] RUN adduser   --disabled-password   --gecos ""   --home "/nonexistent"   --shell "/sbin/nologin"   --no-create-home   --uid "10001"   appuser
+#13 CACHED
+
+#14 [final 5/6] COPY --from=build /bin/server /bin/
+#14 CACHED
+
+#15 [final 2/6] RUN   --mount=type=cache,target=/var/lib/apt,sharing=locked   --mount=type=cache,target=/var/cache/apt,sharing=locked   apt-get update -qq && apt-get install -y openssl
+#15 CACHED
+
+#16 [build 3/4] RUN --mount=type=cache,target=/go/pkg/mod/   --mount=type=bind,source=go.sum,target=go.sum   --mount=type=bind,source=go.mod,target=go.mod   go mod download -x
+#16 CACHED
+
+#17 [final 4/6] WORKDIR /home/webapp
+#17 CACHED
+
+#18 [final 6/6] COPY ./templates ./templates
+#18 CACHED
+
+#19 exporting to image
+#19 exporting layers done
+#19 exporting manifest sha256:f08873e916cb8ae888674248e9aad324f8e0a787ab2988e438887884cff3ef1f done
+#19 exporting config sha256:22d8c9096a2d9170e1cc26f267a6249de0bfa9560db5a68e2b0db367a67d5347 done
+#19 exporting attestation manifest sha256:9d4091a48f4ad7c6fe4ac85274142d0dbd06140c4abc362b5260ce03364d16e4 0.0s done
+#19 exporting manifest list sha256:f12d0e656ca6640d882e0899588a41fd79be9988b904d98e4db48c2c7d65c5dd done
+#19 naming to docker.io/library/private-isu-app:latest done
+#19 unpacking to docker.io/library/private-isu-app:latest
+#19 unpacking to docker.io/library/private-isu-app:latest 0.2s done
+#19 DONE 0.3s
+
+#20 resolving provenance for metadata file
+#20 DONE 0.0s
+ Image private-isu-app Built 
+ Container private-isu-memcached-1 Recreate 
+ Container private-isu-mysql-1 Recreate 
+ Container private-isu-memcached-1 Recreated 
+ Container private-isu-mysql-1 Recreated 
+ Container private-isu-app-1 Recreate 
+ Container private-isu-app-1 Recreated 
+ Container private-isu-nginx-1 Recreate 
+ Container private-isu-nginx-1 Recreated 
+ Container private-isu-mysql-1 Starting 
+ Container private-isu-memcached-1 Starting 
+ Container private-isu-mysql-1 Started 
+ Container private-isu-memcached-1 Started 
+ Container private-isu-app-1 Starting 
+ Container private-isu-app-1 Started 
+ Container private-isu-nginx-1 Starting 
+ Container private-isu-nginx-1 Started 
+ Container private-isu-mysql-1 Stopping 
+ Container private-isu-mysql-1 Stopped 
+ Container private-isu-mysql-1 Starting 
+ Container private-isu-mysql-1 Started 
+MySQLの起動を待っている
+{"pass":true,"score":3461,"success":3335,"fail":0,"messages":[]}
+{"pass":true,"score":3509,"success":3388,"fail":0,"messages":[]}
+{"pass":true,"score":3476,"success":3350,"fail":0,"messages":[]}
+記録した: /Users/mariko/kokeshi/isucon/private-isu/results/20261102-223408-final-01-baseline-0ms.jsonl
+=== final-01-baseline 100ms (3f0eb60)
+ Image private-isu-app Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 598B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.65kB done
+#2 DONE 0.0s
+
+#3 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#3 DONE 1.0s
+
+#4 docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#4 resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e done
+#4 CACHED
+
+#5 [internal] load metadata for docker.io/library/golang:1.27
+#5 ...
+
+#6 [internal] load metadata for docker.io/library/debian:bookworm-slim
+#6 DONE 0.9s
+
+#5 [internal] load metadata for docker.io/library/golang:1.27
+#5 DONE 0.9s
+
+#7 [internal] load .dockerignore
+#7 transferring context: 2B done
+#7 DONE 0.0s
+
+#8 [internal] load build context
+#8 transferring context: 586B done
+#8 DONE 0.0s
+
+#9 [final 1/6] FROM docker.io/library/debian:bookworm-slim@sha256:99c0b25c46d0214d5a2091092e7908907dcaecd6a962cde0ac700acee222b6f3
+#9 resolve docker.io/library/debian:bookworm-slim@sha256:99c0b25c46d0214d5a2091092e7908907dcaecd6a962cde0ac700acee222b6f3 0.0s done
+#9 DONE 0.0s
+
+#10 [build 1/4] FROM docker.io/library/golang:1.27@sha256:2920bb124f1a2e12a1d39f0cab756ae0068441ee1da7655dec7f5e374944095b
+#10 resolve docker.io/library/golang:1.27@sha256:2920bb124f1a2e12a1d39f0cab756ae0068441ee1da7655dec7f5e374944095b 0.0s done
+#10 DONE 0.0s
+
+#11 [final 5/6] COPY --from=build /bin/server /bin/
+#11 CACHED
+
+#12 [build 2/4] WORKDIR /src
+#12 CACHED
+
+#13 [final 2/6] RUN   --mount=type=cache,target=/var/lib/apt,sharing=locked   --mount=type=cache,target=/var/cache/apt,sharing=locked   apt-get update -qq && apt-get install -y openssl
+#13 CACHED
+
+#14 [build 4/4] RUN --mount=type=cache,target=/go/pkg/mod/   --mount=type=bind,target=.   CGO_ENABLED=0 GOARCH=arm64 go build -o /bin/server .
+#14 CACHED
+
+#15 [final 3/6] RUN adduser   --disabled-password   --gecos ""   --home "/nonexistent"   --shell "/sbin/nologin"   --no-create-home   --uid "10001"   appuser
+#15 CACHED
+
+#16 [final 4/6] WORKDIR /home/webapp
+#16 CACHED
+
+#17 [build 3/4] RUN --mount=type=cache,target=/go/pkg/mod/   --mount=type=bind,source=go.sum,target=go.sum   --mount=type=bind,source=go.mod,target=go.mod   go mod download -x
+#17 CACHED
+
+#18 [final 6/6] COPY ./templates ./templates
+#18 CACHED
+
+#19 exporting to image
+#19 exporting layers done
+#19 exporting manifest sha256:f08873e916cb8ae888674248e9aad324f8e0a787ab2988e438887884cff3ef1f done
+#19 exporting config sha256:22d8c9096a2d9170e1cc26f267a6249de0bfa9560db5a68e2b0db367a67d5347 done
+#19 exporting attestation manifest sha256:dca915aa3602c9d2990065ac2ab949aa0a0f8fa16275a9841f937f1255e314d3 done
+#19 exporting manifest list sha256:3fa6d7f40b8fb5569649a72c62a7231e63327110459a37e6377fb6fa91fa2e51 done
+#19 naming to docker.io/library/private-isu-app:latest done
+#19 unpacking to docker.io/library/private-isu-app:latest done
+#19 DONE 0.0s
+
+#20 resolving provenance for metadata file
+#20 DONE 0.0s
+ Image private-isu-app Built 
+ Container private-isu-memcached-1 Recreate 
+ Container private-isu-mysql-1 Recreate 
+ Container private-isu-memcached-1 Recreated 
+ Container private-isu-mysql-1 Recreated 
+ Container private-isu-app-1 Recreate 
+ Container private-isu-app-1 Recreated 
+ Container private-isu-nginx-1 Recreate 
+ Container private-isu-nginx-1 Recreated 
+ Container private-isu-mysql-1 Starting 
+ Container private-isu-memcached-1 Starting 
+ Container private-isu-mysql-1 Started 
+ Container private-isu-memcached-1 Started 
+ Container private-isu-app-1 Starting 
+ Container private-isu-app-1 Started 
+ Container private-isu-nginx-1 Starting 
+ Container private-isu-nginx-1 Started 
+ Container private-isu-mysql-1 Stopping 
+ Container private-isu-mysql-1 Stopped 
+ Container private-isu-mysql-1 Starting 
+ Container private-isu-mysql-1 Started 
+MySQLの起動を待っている
+{"pass":false,"score":0,"success":4,"fail":6,"messages":["リクエストがタイムアウトしました (POST /login)","リクエストがタイムアウトしました (POST /register)"]}
+{"pass":false,"score":0,"success":4,"fail":6,"messages":["リクエストがタイムアウトしました (POST /login)","リクエストがタイムアウトしました (POST /register)"]}
+{"pass":false,"score":0,"success":4,"fail":6,"messages":["リクエストがタイムアウトしました (POST /login)","リクエストがタイムアウトしました (POST /register)"]}
+記録した: /Users/mariko/kokeshi/isucon/private-isu/results/20261102-223943-final-01-baseline-100ms.jsonl
+=== final-02-db-index 0ms (3f0eb60)
+ Image private-isu-app Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 598B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.65kB done
+#2 DONE 0.0s
+
+#3 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#3 DONE 1.3s
+
+#4 docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#4 resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e 0.0s done
+#4 CACHED
+
+#5 [internal] load metadata for docker.io/library/golang:1.27
+#5 DONE 0.9s
+
+#6 [internal] load metadata for docker.io/library/debian:bookworm-slim
+#6 DONE 0.9s
+
+#7 [internal] load .dockerignore
+#7 transferring context: 2B done
+#7 DONE 0.0s
+
+#8 [internal] load build context
+#8 transferring context: 31.10kB done
+#8 DONE 0.0s
+
+#9 [build 1/4] FROM docker.io/library/golang:1.27@sha256:2920bb124f1a2e12a1d39f0cab756ae0068441ee1da7655dec7f5e374944095b
+#9 resolve docker.io/library/golang:1.27@sha256:2920bb124f1a2e12a1d39f0cab756ae0068441ee1da7655dec7f5e374944095b 0.0s done
+#9 DONE 0.0s
+
+#10 [final 1/6] FROM docker.io/library/debian:bookworm-slim@sha256:99c0b25c46d0214d5a2091092e7908907dcaecd6a962cde0ac700acee222b6f3
+#10 resolve docker.io/library/debian:bookworm-slim@sha256:99c0b25c46d0214d5a2091092e7908907dcaecd6a962cde0ac700acee222b6f3 0.0s done
+#10 DONE 0.0s
+
+#11 [final 3/6] RUN adduser   --disabled-password   --gecos ""   --home "/nonexistent"   --shell "/sbin/nologin"   --no-create-home   --uid "10001"   appuser
+#11 CACHED
+
+#12 [build 2/4] WORKDIR /src
+#12 CACHED
+
+#13 [final 2/6] RUN   --mount=type=cache,target=/var/lib/apt,sharing=locked   --mount=type=cache,target=/var/cache/apt,sharing=locked   apt-get update -qq && apt-get install -y openssl
+#13 CACHED
+
+#14 [final 5/6] COPY --from=build /bin/server /bin/
+#14 CACHED
+
+#15 [build 3/4] RUN --mount=type=cache,target=/go/pkg/mod/   --mount=type=bind,source=go.sum,target=go.sum   --mount=type=bind,source=go.mod,target=go.mod   go mod download -x
+#15 CACHED
+
+#16 [final 4/6] WORKDIR /home/webapp
+#16 CACHED
+
+#17 [build 4/4] RUN --mount=type=cache,target=/go/pkg/mod/   --mount=type=bind,target=.   CGO_ENABLED=0 GOARCH=arm64 go build -o /bin/server .
+#17 CACHED
+
+#18 [final 6/6] COPY ./templates ./templates
+#18 CACHED
+
+#19 exporting to image
+#19 exporting layers done
+#19 exporting manifest sha256:f08873e916cb8ae888674248e9aad324f8e0a787ab2988e438887884cff3ef1f done
+#19 exporting config sha256:22d8c9096a2d9170e1cc26f267a6249de0bfa9560db5a68e2b0db367a67d5347 done
+#19 exporting attestation manifest sha256:00c30b18eead6754e40f4f0868864d0e478807197b131c41a3e14b5d942198d3 0.0s done
+#19 exporting manifest list sha256:ce657427061e05193d13cd22e4e02b0c3d66601477a96e05525c4f3a6689a3af
+#19 exporting manifest list sha256:ce657427061e05193d13cd22e4e02b0c3d66601477a96e05525c4f3a6689a3af done
+#19 naming to docker.io/library/private-isu-app:latest done
+#19 unpacking to docker.io/library/private-isu-app:latest done
+#19 DONE 0.0s
+
+#20 resolving provenance for metadata file
+#20 DONE 0.0s
+ Image private-isu-app Built 
+ Container private-isu-memcached-1 Recreate 
+ Container private-isu-mysql-1 Recreate 
+ Container private-isu-memcached-1 Recreated 
+ Container private-isu-mysql-1 Recreated 
+ Container private-isu-app-1 Recreate 
+ Container private-isu-app-1 Recreated 
+ Container private-isu-nginx-1 Recreate 
+ Container private-isu-nginx-1 Recreated 
+ Container private-isu-memcached-1 Starting 
+ Container private-isu-mysql-1 Starting 
+ Container private-isu-memcached-1 Started 
+ Container private-isu-mysql-1 Started 
+ Container private-isu-app-1 Starting 
+ Container private-isu-app-1 Started 
+ Container private-isu-nginx-1 Starting 
+ Container private-isu-nginx-1 Started 
+ Container private-isu-mysql-1 Stopping 
+ Container private-isu-mysql-1 Stopped 
+ Container private-isu-mysql-1 Starting 
+ Container private-isu-mysql-1 Started 
+MySQLの起動を待っている
+適用: webapp/sql-changes/01-db-index.sql
+{"pass":true,"score":33206,"success":31213,"fail":0,"messages":[]}
+{"pass":true,"score":38459,"success":36144,"fail":0,"messages":[]}
+{"pass":true,"score":39334,"success":36919,"fail":0,"messages":[]}
+記録した: /Users/mariko/kokeshi/isucon/private-isu/results/20261102-224956-final-02-db-index-0ms.jsonl
+=== final-02-db-index 100ms (3f0eb60)
+ Image private-isu-app Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 598B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.65kB 0.0s done
+#2 DONE 0.0s
+
+#3 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#3 DONE 1.3s
+
+#4 docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#4 resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e 0.0s done
+#4 CACHED
+
+#5 [internal] load metadata for docker.io/library/golang:1.27
+#5 ...
+
+#6 [internal] load metadata for docker.io/library/debian:bookworm-slim
+#6 DONE 0.8s
+
+#5 [internal] load metadata for docker.io/library/golang:1.27
+#5 DONE 0.9s
+
+#7 [internal] load .dockerignore
+#7 transferring context: 2B done
+#7 DONE 0.0s
+
+#8 [internal] load build context
+#8 transferring context: 586B done
+#8 DONE 0.0s
+
+#9 [final 1/6] FROM docker.io/library/debian:bookworm-slim@sha256:99c0b25c46d0214d5a2091092e7908907dcaecd6a962cde0ac700acee222b6f3
+#9 resolve docker.io/library/debian:bookworm-slim@sha256:99c0b25c46d0214d5a2091092e7908907dcaecd6a962cde0ac700acee222b6f3 0.0s done
+#9 DONE 0.0s
+
+#10 [build 1/4] FROM docker.io/library/golang:1.27@sha256:2920bb124f1a2e12a1d39f0cab756ae0068441ee1da7655dec7f5e374944095b
+#10 resolve docker.io/library/golang:1.27@sha256:2920bb124f1a2e12a1d39f0cab756ae0068441ee1da7655dec7f5e374944095b 0.0s done
+#10 DONE 0.0s
+
+#11 [build 2/4] WORKDIR /src
+#11 CACHED
+
+#12 [final 5/6] COPY --from=build /bin/server /bin/
+#12 CACHED
+
+#13 [build 4/4] RUN --mount=type=cache,target=/go/pkg/mod/   --mount=type=bind,target=.   CGO_ENABLED=0 GOARCH=arm64 go build -o /bin/server .
+#13 CACHED
+
+#14 [build 3/4] RUN --mount=type=cache,target=/go/pkg/mod/   --mount=type=bind,source=go.sum,target=go.sum   --mount=type=bind,source=go.mod,target=go.mod   go mod download -x
+#14 CACHED
+
+#15 [final 2/6] RUN   --mount=type=cache,target=/var/lib/apt,sharing=locked   --mount=type=cache,target=/var/cache/apt,sharing=locked   apt-get update -qq && apt-get install -y openssl
+#15 CACHED
+
+#16 [final 3/6] RUN adduser   --disabled-password   --gecos ""   --home "/nonexistent"   --shell "/sbin/nologin"   --no-create-home   --uid "10001"   appuser
+#16 CACHED
+
+#17 [final 4/6] WORKDIR /home/webapp
+#17 CACHED
+
+#18 [final 6/6] COPY ./templates ./templates
+#18 CACHED
+
+#19 exporting to image
+#19 exporting layers done
+#19 exporting manifest sha256:f08873e916cb8ae888674248e9aad324f8e0a787ab2988e438887884cff3ef1f done
+#19 exporting config sha256:22d8c9096a2d9170e1cc26f267a6249de0bfa9560db5a68e2b0db367a67d5347
+#19 exporting config sha256:22d8c9096a2d9170e1cc26f267a6249de0bfa9560db5a68e2b0db367a67d5347 done
+#19 exporting attestation manifest sha256:3c62a975faabe288dbf11f8186dcbd48481be83d25604f7d07922ca1eb4c3604 0.0s done
+#19 exporting manifest list sha256:b5be43b3a75d8bc876e9bf87063375713d2f3fa0b198b51323589344cd483275 0.0s done
+#19 naming to docker.io/library/private-isu-app:latest done
+#19 unpacking to docker.io/library/private-isu-app:latest done
+#19 DONE 0.1s
+
+#20 resolving provenance for metadata file
+#20 DONE 0.0s
+ Image private-isu-app Built 
+ Container private-isu-memcached-1 Recreate 
+ Container private-isu-mysql-1 Recreate 
+ Container private-isu-memcached-1 Recreated 
+ Container private-isu-mysql-1 Recreated 
+ Container private-isu-app-1 Recreate 
+ Container private-isu-app-1 Recreated 
+ Container private-isu-nginx-1 Recreate 
+ Container private-isu-nginx-1 Recreated 
+ Container private-isu-memcached-1 Starting 
+ Container private-isu-mysql-1 Starting 
+ Container private-isu-mysql-1 Started 
+ Container private-isu-memcached-1 Started 
+ Container private-isu-app-1 Starting 
+ Container private-isu-app-1 Started 
+ Container private-isu-nginx-1 Starting 
+ Container private-isu-nginx-1 Started 
+ Container private-isu-mysql-1 Stopping 
+ Container private-isu-mysql-1 Stopped 
+ Container private-isu-mysql-1 Starting 
+ Container private-isu-mysql-1 Started 
+MySQLの起動を待っている
+適用: webapp/sql-changes/01-db-index.sql
+{"pass":false,"score":0,"success":4,"fail":6,"messages":["リクエストがタイムアウトしました (POST /login)","リクエストがタイムアウトしました (POST /register)"]}
+{"pass":false,"score":0,"success":4,"fail":6,"messages":["リクエストがタイムアウトしました (POST /login)","リクエストがタイムアウトしました (POST /register)"]}
+{"pass":false,"score":0,"success":4,"fail":6,"messages":["リクエストがタイムアウトしました (POST /login)","リクエストがタイムアウトしました (POST /register)"]}
+記録した: /Users/mariko/kokeshi/isucon/private-isu/results/20261102-225542-final-02-db-index-100ms.jsonl
+=== final-03-db-query 0ms (902e253)
+ Image private-isu-app Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 598B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.65kB 0.0s done
+#2 DONE 0.0s
+
+#3 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#3 DONE 1.1s
+
+#4 docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#4 resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e done
+#4 CACHED
+
+#5 [internal] load metadata for docker.io/library/debian:bookworm-slim
+#5 DONE 0.8s
+
+#6 [internal] load metadata for docker.io/library/golang:1.27
+#6 DONE 0.9s
+
+#7 [internal] load .dockerignore
+#7 transferring context: 2B done
+#7 DONE 0.0s
+
+#8 [internal] load build context
+#8 transferring context: 31.93kB 0.0s done
+#8 DONE 0.0s
+
+#9 [final 1/6] FROM docker.io/library/debian:bookworm-slim@sha256:99c0b25c46d0214d5a2091092e7908907dcaecd6a962cde0ac700acee222b6f3
+#9 resolve docker.io/library/debian:bookworm-slim@sha256:99c0b25c46d0214d5a2091092e7908907dcaecd6a962cde0ac700acee222b6f3
+#9 resolve docker.io/library/debian:bookworm-slim@sha256:99c0b25c46d0214d5a2091092e7908907dcaecd6a962cde0ac700acee222b6f3 0.0s done
+#9 DONE 0.0s
+
+#10 [build 1/4] FROM docker.io/library/golang:1.27@sha256:2920bb124f1a2e12a1d39f0cab756ae0068441ee1da7655dec7f5e374944095b
+#10 resolve docker.io/library/golang:1.27@sha256:2920bb124f1a2e12a1d39f0cab756ae0068441ee1da7655dec7f5e374944095b 0.0s done
+#10 DONE 0.0s
+
+#11 [final 2/6] RUN   --mount=type=cache,target=/var/lib/apt,sharing=locked   --mount=type=cache,target=/var/cache/apt,sharing=locked   apt-get update -qq && apt-get install -y openssl
+#11 CACHED
+
+#12 [build 3/4] RUN --mount=type=cache,target=/go/pkg/mod/   --mount=type=bind,source=go.sum,target=go.sum   --mount=type=bind,source=go.mod,target=go.mod   go mod download -x
+#12 CACHED
+
+#13 [final 3/6] RUN adduser   --disabled-password   --gecos ""   --home "/nonexistent"   --shell "/sbin/nologin"   --no-create-home   --uid "10001"   appuser
+#13 CACHED
+
+#14 [final 4/6] WORKDIR /home/webapp
+#14 CACHED
+
+#15 [build 4/4] RUN --mount=type=cache,target=/go/pkg/mod/   --mount=type=bind,target=.   CGO_ENABLED=0 GOARCH=arm64 go build -o /bin/server .
+#15 CACHED
+
+#16 [final 5/6] COPY --from=build /bin/server /bin/
+#16 CACHED
+
+#17 [build 2/4] WORKDIR /src
+#17 CACHED
+
+#18 [final 6/6] COPY ./templates ./templates
+#18 CACHED
+
+#19 exporting to image
+#19 exporting layers done
+#19 exporting manifest sha256:efb2e5e13a556598706100808789994bd5708b2a30bae35b9df0f043afc7371a done
+#19 exporting config sha256:e092ab9cca3d8d621576403f9f2d403c95b9d613145bd5c18e77f14981ed745e done
+#19 exporting attestation manifest sha256:98bbd07dbe2a494cc02402c22fba1d24c0f39e1e3a43d30087c2f2279dfcd073 0.0s done
+#19 exporting manifest list sha256:ef3181719ac5fb2b09ce2fb260e4591c551d45900115eb4d037d1ff2c0320952 done
+#19 naming to docker.io/library/private-isu-app:latest done
+#19 unpacking to docker.io/library/private-isu-app:latest
+#19 unpacking to docker.io/library/private-isu-app:latest 0.3s done
+#19 DONE 0.4s
+
+#20 resolving provenance for metadata file
+#20 DONE 0.0s
+ Image private-isu-app Built 
+ Container private-isu-memcached-1 Recreate 
+ Container private-isu-mysql-1 Recreate 
+ Container private-isu-memcached-1 Recreated 
+ Container private-isu-mysql-1 Recreated 
+ Container private-isu-app-1 Recreate 
+ Container private-isu-app-1 Recreated 
+ Container private-isu-nginx-1 Recreate 
+ Container private-isu-nginx-1 Recreated 
+ Container private-isu-memcached-1 Starting 
+ Container private-isu-mysql-1 Starting 
+ Container private-isu-memcached-1 Started 
+ Container private-isu-mysql-1 Started 
+ Container private-isu-app-1 Starting 
+ Container private-isu-app-1 Started 
+ Container private-isu-nginx-1 Starting 
+ Container private-isu-nginx-1 Started 
+ Container private-isu-mysql-1 Stopping 
+ Container private-isu-mysql-1 Stopped 
+ Container private-isu-mysql-1 Starting 
+ Container private-isu-mysql-1 Started 
+MySQLの起動を待っている
+適用: webapp/sql-changes/01-db-index.sql
+{"pass":true,"score":62625,"success":56668,"fail":0,"messages":[]}
+{"pass":true,"score":59359,"success":53794,"fail":0,"messages":[]}
+{"pass":true,"score":62208,"success":56315,"fail":0,"messages":[]}
+記録した: /Users/mariko/kokeshi/isucon/private-isu/results/20261102-230050-final-03-db-query-0ms.jsonl
+=== final-03-db-query 100ms (902e253)
+ Image private-isu-app Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 598B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.65kB done
+#2 DONE 0.0s
+
+#3 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#3 DONE 1.0s
+
+#4 docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#4 resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e done
+#4 CACHED
+
+#5 [internal] load metadata for docker.io/library/golang:1.27
+#5 ...
+
+#6 [internal] load metadata for docker.io/library/debian:bookworm-slim
+#6 DONE 0.9s
+
+#5 [internal] load metadata for docker.io/library/golang:1.27
+#5 DONE 0.9s
+
+#7 [internal] load .dockerignore
+#7 transferring context: 2B done
+#7 DONE 0.0s
+
+#8 [internal] load build context
+#8 transferring context: 586B done
+#8 DONE 0.0s
+
+#9 [final 1/6] FROM docker.io/library/debian:bookworm-slim@sha256:99c0b25c46d0214d5a2091092e7908907dcaecd6a962cde0ac700acee222b6f3
+#9 resolve docker.io/library/debian:bookworm-slim@sha256:99c0b25c46d0214d5a2091092e7908907dcaecd6a962cde0ac700acee222b6f3 0.0s done
+#9 DONE 0.0s
+
+#10 [build 1/4] FROM docker.io/library/golang:1.27@sha256:2920bb124f1a2e12a1d39f0cab756ae0068441ee1da7655dec7f5e374944095b
+#10 resolve docker.io/library/golang:1.27@sha256:2920bb124f1a2e12a1d39f0cab756ae0068441ee1da7655dec7f5e374944095b 0.0s done
+#10 DONE 0.0s
+
+#11 [final 4/6] WORKDIR /home/webapp
+#11 CACHED
+
+#12 [build 2/4] WORKDIR /src
+#12 CACHED
+
+#13 [final 5/6] COPY --from=build /bin/server /bin/
+#13 CACHED
+
+#14 [final 3/6] RUN adduser   --disabled-password   --gecos ""   --home "/nonexistent"   --shell "/sbin/nologin"   --no-create-home   --uid "10001"   appuser
+#14 CACHED
+
+#15 [build 3/4] RUN --mount=type=cache,target=/go/pkg/mod/   --mount=type=bind,source=go.sum,target=go.sum   --mount=type=bind,source=go.mod,target=go.mod   go mod download -x
+#15 CACHED
+
+#16 [final 2/6] RUN   --mount=type=cache,target=/var/lib/apt,sharing=locked   --mount=type=cache,target=/var/cache/apt,sharing=locked   apt-get update -qq && apt-get install -y openssl
+#16 CACHED
+
+#17 [build 4/4] RUN --mount=type=cache,target=/go/pkg/mod/   --mount=type=bind,target=.   CGO_ENABLED=0 GOARCH=arm64 go build -o /bin/server .
+#17 CACHED
+
+#18 [final 6/6] COPY ./templates ./templates
+#18 CACHED
+
+#19 exporting to image
+#19 exporting layers done
+#19 exporting manifest sha256:efb2e5e13a556598706100808789994bd5708b2a30bae35b9df0f043afc7371a done
+#19 exporting config sha256:e092ab9cca3d8d621576403f9f2d403c95b9d613145bd5c18e77f14981ed745e done
+#19 exporting attestation manifest sha256:967a623f14636d1650c709f20b3479d69394e899b05d44ef6f210c8893ff5c99 done
+#19 exporting manifest list sha256:7818e840a97133284bc454b154c9402a6c555cc8ab39fa1ae77be93c3e3d718d done
+#19 naming to docker.io/library/private-isu-app:latest done
+#19 unpacking to docker.io/library/private-isu-app:latest done
+#19 DONE 0.0s
+
+#20 resolving provenance for metadata file
+#20 DONE 0.0s
+ Image private-isu-app Built 
+ Container private-isu-memcached-1 Recreate 
+ Container private-isu-mysql-1 Recreate 
+ Container private-isu-memcached-1 Recreated 
+ Container private-isu-mysql-1 Recreated 
+ Container private-isu-app-1 Recreate 
+ Container private-isu-app-1 Recreated 
+ Container private-isu-nginx-1 Recreate 
+ Container private-isu-nginx-1 Recreated 
+ Container private-isu-memcached-1 Starting 
+ Container private-isu-mysql-1 Starting 
+ Container private-isu-mysql-1 Started 
+ Container private-isu-memcached-1 Started 
+ Container private-isu-app-1 Starting 
+ Container private-isu-app-1 Started 
+ Container private-isu-nginx-1 Starting 
+ Container private-isu-nginx-1 Started 
+ Container private-isu-mysql-1 Stopping 
+ Container private-isu-mysql-1 Stopped 
+ Container private-isu-mysql-1 Starting 
+ Container private-isu-mysql-1 Started 
+MySQLの起動を待っている
+適用: webapp/sql-changes/01-db-index.sql
+{"pass":true,"score":2261,"success":2082,"fail":0,"messages":[]}
+{"pass":true,"score":2094,"success":1913,"fail":0,"messages":[]}
+{"pass":true,"score":2289,"success":2098,"fail":0,"messages":[]}
+記録した: /Users/mariko/kokeshi/isucon/private-isu/results/20261102-230617-final-03-db-query-100ms.jsonl
+=== final-04-app-connection 0ms (9817c01)
+ Image private-isu-app Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 610B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.65kB done
+#2 DONE 0.0s
+
+#3 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#3 DONE 1.0s
+
+#4 docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#4 resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e done
+#4 CACHED
+
+#5 [internal] load metadata for docker.io/library/debian:bookworm-slim
+#5 DONE 0.8s
+
+#6 [internal] load metadata for docker.io/library/golang:1.27
+#6 DONE 0.9s
+
+#7 [internal] load .dockerignore
+#7 transferring context: 2B done
+#7 DONE 0.0s
+
+#8 [internal] load build context
+#8 transferring context: 32.27kB done
+#8 DONE 0.0s
+
+#9 [final 1/6] FROM docker.io/library/debian:bookworm-slim@sha256:99c0b25c46d0214d5a2091092e7908907dcaecd6a962cde0ac700acee222b6f3
+#9 resolve docker.io/library/debian:bookworm-slim@sha256:99c0b25c46d0214d5a2091092e7908907dcaecd6a962cde0ac700acee222b6f3 0.0s done
+#9 DONE 0.0s
+
+#10 [build 1/4] FROM docker.io/library/golang:1.27@sha256:2920bb124f1a2e12a1d39f0cab756ae0068441ee1da7655dec7f5e374944095b
+#10 resolve docker.io/library/golang:1.27@sha256:2920bb124f1a2e12a1d39f0cab756ae0068441ee1da7655dec7f5e374944095b 0.0s done
+#10 DONE 0.0s
+
+#11 [final 4/6] WORKDIR /home/webapp
+#11 CACHED
+
+#12 [build 3/4] RUN --mount=type=cache,target=/go/pkg/mod/   --mount=type=bind,source=go.sum,target=go.sum   --mount=type=bind,source=go.mod,target=go.mod   go mod download -x
+#12 CACHED
+
+#13 [final 5/6] COPY --from=build /bin/server /bin/
+#13 CACHED
+
+#14 [final 2/6] RUN   --mount=type=cache,target=/var/lib/apt,sharing=locked   --mount=type=cache,target=/var/cache/apt,sharing=locked   apt-get update -qq && apt-get install -y openssl
+#14 CACHED
+
+#15 [build 4/4] RUN --mount=type=cache,target=/go/pkg/mod/   --mount=type=bind,target=.   CGO_ENABLED=0 GOARCH=arm64 go build -o /bin/server .
+#15 CACHED
+
+#16 [final 3/6] RUN adduser   --disabled-password   --gecos ""   --home "/nonexistent"   --shell "/sbin/nologin"   --no-create-home   --uid "10001"   appuser
+#16 CACHED
+
+#17 [build 2/4] WORKDIR /src
+#17 CACHED
+
+#18 [final 6/6] COPY ./templates ./templates
+#18 CACHED
+
+#19 exporting to image
+#19 exporting layers done
+#19 exporting manifest sha256:529f93afe572fc74450c5a11fbb58b813ee53ec398f73cd572c266e3cd0b6c56 done
+#19 exporting config sha256:fe053e7dc46006eb6b1eff6e5a014eaaf628693da90d51e92ba4444955d84818 done
+#19 exporting attestation manifest sha256:b33d7905fa6604ce795db6e9cbe8f82d5dd55251e0c4277f7d01576cfdf97944
+#19 exporting attestation manifest sha256:b33d7905fa6604ce795db6e9cbe8f82d5dd55251e0c4277f7d01576cfdf97944 0.0s done
+#19 exporting manifest list sha256:c8fe047ec42e3ef79be88a2a9f995f86e56008afcf43739f2f91e13c1b8b0e65 done
+#19 naming to docker.io/library/private-isu-app:latest done
+#19 unpacking to docker.io/library/private-isu-app:latest
+#19 unpacking to docker.io/library/private-isu-app:latest 0.2s done
+#19 DONE 0.2s
+
+#20 resolving provenance for metadata file
+#20 DONE 0.0s
+ Image private-isu-app Built 
+ Container private-isu-memcached-1 Recreate 
+ Container private-isu-mysql-1 Recreate 
+ Container private-isu-memcached-1 Recreated 
+ Container private-isu-mysql-1 Recreated 
+ Container private-isu-app-1 Recreate 
+ Container private-isu-app-1 Recreated 
+ Container private-isu-nginx-1 Recreate 
+ Container private-isu-nginx-1 Recreated 
+ Container private-isu-memcached-1 Starting 
+ Container private-isu-mysql-1 Starting 
+ Container private-isu-memcached-1 Started 
+ Container private-isu-mysql-1 Started 
+ Container private-isu-app-1 Starting 
+ Container private-isu-app-1 Started 
+ Container private-isu-nginx-1 Starting 
+ Container private-isu-nginx-1 Started 
+ Container private-isu-mysql-1 Stopping 
+ Container private-isu-mysql-1 Stopped 
+ Container private-isu-mysql-1 Starting 
+ Container private-isu-mysql-1 Started 
+MySQLの起動を待っている
+適用: webapp/sql-changes/01-db-index.sql
+{"pass":true,"score":76485,"success":69591,"fail":0,"messages":[]}
+{"pass":true,"score":82738,"success":75290,"fail":0,"messages":[]}
+{"pass":true,"score":76271,"success":69469,"fail":0,"messages":[]}
+記録した: /Users/mariko/kokeshi/isucon/private-isu/results/20261102-231321-final-04-app-connection-0ms.jsonl
+=== final-04-app-connection 100ms (9817c01)
+ Image private-isu-app Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 610B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.65kB done
+#2 DONE 0.0s
+
+#3 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#3 DONE 1.0s
+
+#4 docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#4 resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e done
+#4 CACHED
+
+#5 [internal] load metadata for docker.io/library/golang:1.27
+#5 DONE 0.8s
+
+#6 [internal] load metadata for docker.io/library/debian:bookworm-slim
+#6 DONE 0.8s
+
+#7 [internal] load .dockerignore
+#7 transferring context: 2B done
+#7 DONE 0.0s
+
+#8 [internal] load build context
+#8 transferring context: 586B done
+#8 DONE 0.0s
+
+#9 [final 1/6] FROM docker.io/library/debian:bookworm-slim@sha256:99c0b25c46d0214d5a2091092e7908907dcaecd6a962cde0ac700acee222b6f3
+#9 resolve docker.io/library/debian:bookworm-slim@sha256:99c0b25c46d0214d5a2091092e7908907dcaecd6a962cde0ac700acee222b6f3 0.0s done
+#9 DONE 0.0s
+
+#10 [build 1/4] FROM docker.io/library/golang:1.27@sha256:2920bb124f1a2e12a1d39f0cab756ae0068441ee1da7655dec7f5e374944095b
+#10 resolve docker.io/library/golang:1.27@sha256:2920bb124f1a2e12a1d39f0cab756ae0068441ee1da7655dec7f5e374944095b 0.0s done
+#10 DONE 0.0s
+
+#11 [final 4/6] WORKDIR /home/webapp
+#11 CACHED
+
+#12 [build 3/4] RUN --mount=type=cache,target=/go/pkg/mod/   --mount=type=bind,source=go.sum,target=go.sum   --mount=type=bind,source=go.mod,target=go.mod   go mod download -x
+#12 CACHED
+
+#13 [final 5/6] COPY --from=build /bin/server /bin/
+#13 CACHED
+
+#14 [build 2/4] WORKDIR /src
+#14 CACHED
+
+#15 [final 2/6] RUN   --mount=type=cache,target=/var/lib/apt,sharing=locked   --mount=type=cache,target=/var/cache/apt,sharing=locked   apt-get update -qq && apt-get install -y openssl
+#15 CACHED
+
+#16 [build 4/4] RUN --mount=type=cache,target=/go/pkg/mod/   --mount=type=bind,target=.   CGO_ENABLED=0 GOARCH=arm64 go build -o /bin/server .
+#16 CACHED
+
+#17 [final 3/6] RUN adduser   --disabled-password   --gecos ""   --home "/nonexistent"   --shell "/sbin/nologin"   --no-create-home   --uid "10001"   appuser
+#17 CACHED
+
+#18 [final 6/6] COPY ./templates ./templates
+#18 CACHED
+
+#19 exporting to image
+#19 exporting layers done
+#19 exporting manifest sha256:529f93afe572fc74450c5a11fbb58b813ee53ec398f73cd572c266e3cd0b6c56 done
+#19 exporting config sha256:fe053e7dc46006eb6b1eff6e5a014eaaf628693da90d51e92ba4444955d84818 done
+#19 exporting attestation manifest sha256:e2e6e7f9c12563ad4fe1e8a29da7be1638f006380ff80ee3ca70fadf4fb48f92 done
+#19 exporting manifest list sha256:5d307f5782ed3ee98366091b283c3eb5a37270f3c09ed2a3a10a6c66de457e18 done
+#19 naming to docker.io/library/private-isu-app:latest done
+#19 unpacking to docker.io/library/private-isu-app:latest done
+#19 DONE 0.0s
+
+#20 resolving provenance for metadata file
+#20 DONE 0.0s
+ Image private-isu-app Built 
+ Container private-isu-memcached-1 Recreate 
+ Container private-isu-mysql-1 Recreate 
+ Container private-isu-memcached-1 Recreated 
+ Container private-isu-mysql-1 Recreated 
+ Container private-isu-app-1 Recreate 
+ Container private-isu-app-1 Recreated 
+ Container private-isu-nginx-1 Recreate 
+ Container private-isu-nginx-1 Recreated 
+ Container private-isu-memcached-1 Starting 
+ Container private-isu-mysql-1 Starting 
+ Container private-isu-memcached-1 Started 
+ Container private-isu-mysql-1 Started 
+ Container private-isu-app-1 Starting 
+ Container private-isu-app-1 Started 
+ Container private-isu-nginx-1 Starting 
+ Container private-isu-nginx-1 Started 
+ Container private-isu-mysql-1 Stopping 
+ Container private-isu-mysql-1 Stopped 
+ Container private-isu-mysql-1 Starting 
+ Container private-isu-mysql-1 Started 
+MySQLの起動を待っている
+適用: webapp/sql-changes/01-db-index.sql
+{"pass":true,"score":6145,"success":5757,"fail":0,"messages":[]}
+{"pass":true,"score":5924,"success":5539,"fail":0,"messages":[]}
+{"pass":true,"score":5951,"success":5566,"fail":0,"messages":[]}
+記録した: /Users/mariko/kokeshi/isucon/private-isu/results/20261102-231900-final-04-app-connection-100ms.jsonl
+=== final-05-static 0ms (18dbd50)
+ Image private-isu-app Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 594B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.65kB 0.0s done
+#2 DONE 0.0s
+
+#3 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#3 DONE 1.1s
+
+#4 docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#4 resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e 0.0s done
+#4 CACHED
+
+#5 [internal] load metadata for docker.io/library/debian:bookworm-slim
+#5 DONE 1.1s
+
+#6 [internal] load metadata for docker.io/library/golang:1.27
+#6 DONE 1.1s
+
+#7 [internal] load .dockerignore
+#7 transferring context: 2B done
+#7 DONE 0.0s
+
+#8 [internal] load build context
+#8 DONE 0.0s
+
+#8 [internal] load build context
+#8 transferring context: 33.36kB 0.0s done
+#8 DONE 0.0s
+
+#9 [build 1/4] FROM docker.io/library/golang:1.27@sha256:2920bb124f1a2e12a1d39f0cab756ae0068441ee1da7655dec7f5e374944095b
+#9 resolve docker.io/library/golang:1.27@sha256:2920bb124f1a2e12a1d39f0cab756ae0068441ee1da7655dec7f5e374944095b 0.0s done
+#9 DONE 0.0s
+
+#10 [final 1/6] FROM docker.io/library/debian:bookworm-slim@sha256:99c0b25c46d0214d5a2091092e7908907dcaecd6a962cde0ac700acee222b6f3
+#10 resolve docker.io/library/debian:bookworm-slim@sha256:99c0b25c46d0214d5a2091092e7908907dcaecd6a962cde0ac700acee222b6f3 0.0s done
+#10 DONE 0.0s
+
+#11 [final 3/6] RUN adduser   --disabled-password   --gecos ""   --home "/nonexistent"   --shell "/sbin/nologin"   --no-create-home   --uid "10001"   appuser
+#11 CACHED
+
+#12 [build 3/4] RUN --mount=type=cache,target=/go/pkg/mod/   --mount=type=bind,source=go.sum,target=go.sum   --mount=type=bind,source=go.mod,target=go.mod   go mod download -x
+#12 CACHED
+
+#13 [build 4/4] RUN --mount=type=cache,target=/go/pkg/mod/   --mount=type=bind,target=.   CGO_ENABLED=0 GOARCH=arm64 go build -o /bin/server .
+#13 CACHED
+
+#14 [final 2/6] RUN   --mount=type=cache,target=/var/lib/apt,sharing=locked   --mount=type=cache,target=/var/cache/apt,sharing=locked   apt-get update -qq && apt-get install -y openssl
+#14 CACHED
+
+#15 [final 4/6] WORKDIR /home/webapp
+#15 CACHED
+
+#16 [build 2/4] WORKDIR /src
+#16 CACHED
+
+#17 [final 5/6] COPY --from=build /bin/server /bin/
+#17 CACHED
+
+#18 [final 6/6] COPY ./templates ./templates
+#18 CACHED
+
+#19 exporting to image
+#19 exporting layers done
+#19 exporting manifest sha256:d3e0368ca5146f155abecac0936a2adcfdadde46f80824547e20f18c1fca2a9d done
+#19 exporting config sha256:8f81b0fb7ec9e6f3009b3cba78d9c7e23b5226abc905ee80c1c2dc9318a0eb35 done
+#19 exporting attestation manifest sha256:bd6992fb39e8c30db634e916c46cd752324a96a14db4a6c1c6979fcc65316468 0.0s done
+#19 exporting manifest list sha256:863153ad1545e3ed508486c36aaef7985c19e50ac3bd8e2555825f9ce9b11458
+#19 exporting manifest list sha256:863153ad1545e3ed508486c36aaef7985c19e50ac3bd8e2555825f9ce9b11458 0.0s done
+#19 naming to docker.io/library/private-isu-app:latest done
+#19 unpacking to docker.io/library/private-isu-app:latest
+#19 unpacking to docker.io/library/private-isu-app:latest 3.8s done
+#19 DONE 3.9s
+
+#20 resolving provenance for metadata file
+#20 DONE 0.0s
+ Image private-isu-app Built 
+ Container private-isu-memcached-1 Recreate 
+ Container private-isu-mysql-1 Recreate 
+ Container private-isu-memcached-1 Recreated 
+ Container private-isu-mysql-1 Recreated 
+ Container private-isu-app-1 Recreate 
+ Container private-isu-app-1 Recreated 
+ Container private-isu-nginx-1 Recreate 
+ Container private-isu-nginx-1 Recreated 
+ Container private-isu-memcached-1 Starting 
+ Container private-isu-mysql-1 Starting 
+ Container private-isu-memcached-1 Started 
+ Container private-isu-mysql-1 Started 
+ Container private-isu-app-1 Starting 
+ Container private-isu-app-1 Started 
+ Container private-isu-nginx-1 Starting 
+ Container private-isu-nginx-1 Started 
+ Container private-isu-mysql-1 Stopping 
+ Container private-isu-mysql-1 Stopped 
+ Container private-isu-mysql-1 Starting 
+ Container private-isu-mysql-1 Started 
+MySQLの起動を待っている
+適用: webapp/sql-changes/01-db-index.sql
+{"pass":true,"score":251275,"success":244810,"fail":0,"messages":[]}
+{"pass":true,"score":296071,"success":287614,"fail":0,"messages":[]}
+{"pass":true,"score":299576,"success":291164,"fail":0,"messages":[]}
+記録した: /Users/mariko/kokeshi/isucon/private-isu/results/20261102-232733-final-05-static-0ms.jsonl
+=== final-05-static 100ms (18dbd50)
+ Image private-isu-app Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 594B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.65kB done
+#2 DONE 0.0s
+
+#3 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#3 DONE 1.0s
+
+#4 docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#4 resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e 0.0s done
+#4 CACHED
+
+#5 [internal] load metadata for docker.io/library/golang:1.27
+#5 ...
+
+#6 [internal] load metadata for docker.io/library/debian:bookworm-slim
+#6 DONE 0.9s
+
+#5 [internal] load metadata for docker.io/library/golang:1.27
+#5 DONE 0.9s
+
+#7 [internal] load .dockerignore
+#7 transferring context: 2B done
+#7 DONE 0.0s
+
+#8 [internal] load build context
+#8 transferring context: 586B done
+#8 DONE 0.0s
+
+#9 [final 1/6] FROM docker.io/library/debian:bookworm-slim@sha256:99c0b25c46d0214d5a2091092e7908907dcaecd6a962cde0ac700acee222b6f3
+#9 resolve docker.io/library/debian:bookworm-slim@sha256:99c0b25c46d0214d5a2091092e7908907dcaecd6a962cde0ac700acee222b6f3 0.0s done
+#9 DONE 0.0s
+
+#10 [build 1/4] FROM docker.io/library/golang:1.27@sha256:2920bb124f1a2e12a1d39f0cab756ae0068441ee1da7655dec7f5e374944095b
+#10 resolve docker.io/library/golang:1.27@sha256:2920bb124f1a2e12a1d39f0cab756ae0068441ee1da7655dec7f5e374944095b 0.0s done
+#10 DONE 0.0s
+
+#11 [build 3/4] RUN --mount=type=cache,target=/go/pkg/mod/   --mount=type=bind,source=go.sum,target=go.sum   --mount=type=bind,source=go.mod,target=go.mod   go mod download -x
+#11 CACHED
+
+#12 [final 2/6] RUN   --mount=type=cache,target=/var/lib/apt,sharing=locked   --mount=type=cache,target=/var/cache/apt,sharing=locked   apt-get update -qq && apt-get install -y openssl
+#12 CACHED
+
+#13 [final 4/6] WORKDIR /home/webapp
+#13 CACHED
+
+#14 [build 2/4] WORKDIR /src
+#14 CACHED
+
+#15 [build 4/4] RUN --mount=type=cache,target=/go/pkg/mod/   --mount=type=bind,target=.   CGO_ENABLED=0 GOARCH=arm64 go build -o /bin/server .
+#15 CACHED
+
+#16 [final 3/6] RUN adduser   --disabled-password   --gecos ""   --home "/nonexistent"   --shell "/sbin/nologin"   --no-create-home   --uid "10001"   appuser
+#16 CACHED
+
+#17 [final 5/6] COPY --from=build /bin/server /bin/
+#17 CACHED
+
+#18 [final 6/6] COPY ./templates ./templates
+#18 CACHED
+
+#19 exporting to image
+#19 exporting layers done
+#19 exporting manifest sha256:d3e0368ca5146f155abecac0936a2adcfdadde46f80824547e20f18c1fca2a9d done
+#19 exporting config sha256:8f81b0fb7ec9e6f3009b3cba78d9c7e23b5226abc905ee80c1c2dc9318a0eb35 done
+#19 exporting attestation manifest sha256:7b8220f082e217557b2be54f36b78df11adf924c633ee581fc540462ce34e437
+#19 exporting attestation manifest sha256:7b8220f082e217557b2be54f36b78df11adf924c633ee581fc540462ce34e437 0.0s done
+#19 exporting manifest list sha256:aa4f3339aac3f70826cb431e66be8101e774387adff2d48db74433c03c7e5f78 done
+#19 naming to docker.io/library/private-isu-app:latest done
+#19 unpacking to docker.io/library/private-isu-app:latest done
+#19 DONE 0.1s
+
+#20 resolving provenance for metadata file
+#20 DONE 0.0s
+ Image private-isu-app Built 
+ Container private-isu-memcached-1 Recreate 
+ Container private-isu-mysql-1 Recreate 
+ Container private-isu-memcached-1 Recreated 
+ Container private-isu-mysql-1 Recreated 
+ Container private-isu-app-1 Recreate 
+ Container private-isu-app-1 Recreated 
+ Container private-isu-nginx-1 Recreate 
+ Container private-isu-nginx-1 Recreated 
+ Container private-isu-mysql-1 Starting 
+ Container private-isu-memcached-1 Starting 
+ Container private-isu-memcached-1 Started 
+ Container private-isu-mysql-1 Started 
+ Container private-isu-app-1 Starting 
+ Container private-isu-app-1 Started 
+ Container private-isu-nginx-1 Starting 
+ Container private-isu-nginx-1 Started 
+ Container private-isu-mysql-1 Stopping 
+ Container private-isu-mysql-1 Stopped 
+ Container private-isu-mysql-1 Starting 
+ Container private-isu-mysql-1 Started 
+MySQLの起動を待っている
+適用: webapp/sql-changes/01-db-index.sql
+{"pass":true,"score":23643,"success":23134,"fail":0,"messages":[]}
+{"pass":true,"score":23720,"success":23199,"fail":0,"messages":[]}
+{"pass":true,"score":23711,"success":23187,"fail":0,"messages":[]}
+記録した: /Users/mariko/kokeshi/isucon/private-isu/results/20261102-233505-final-05-static-100ms.jsonl
+=== final-06-cache 0ms (24f452e)
+ Image private-isu-app Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 592B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.65kB 0.0s done
+#2 DONE 0.1s
+
+#3 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#3 DONE 1.0s
+
+#4 docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#4 resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e done
+#4 CACHED
+
+#5 [internal] load metadata for docker.io/library/golang:1.27
+#5 ...
+
+#6 [internal] load metadata for docker.io/library/debian:bookworm-slim
+#6 DONE 0.9s
+
+#5 [internal] load metadata for docker.io/library/golang:1.27
+#5 DONE 0.9s
+
+#7 [internal] load .dockerignore
+#7 transferring context: 2B done
+#7 DONE 0.0s
+
+#8 [internal] load build context
+#8 transferring context: 37.71kB 0.0s done
+#8 DONE 0.0s
+
+#9 [final 1/6] FROM docker.io/library/debian:bookworm-slim@sha256:99c0b25c46d0214d5a2091092e7908907dcaecd6a962cde0ac700acee222b6f3
+#9 resolve docker.io/library/debian:bookworm-slim@sha256:99c0b25c46d0214d5a2091092e7908907dcaecd6a962cde0ac700acee222b6f3 0.0s done
+#9 DONE 0.0s
+
+#10 [build 1/4] FROM docker.io/library/golang:1.27@sha256:2920bb124f1a2e12a1d39f0cab756ae0068441ee1da7655dec7f5e374944095b
+#10 resolve docker.io/library/golang:1.27@sha256:2920bb124f1a2e12a1d39f0cab756ae0068441ee1da7655dec7f5e374944095b 0.0s done
+#10 DONE 0.0s
+
+#11 [build 4/4] RUN --mount=type=cache,target=/go/pkg/mod/   --mount=type=bind,target=.   CGO_ENABLED=0 GOARCH=arm64 go build -o /bin/server .
+#11 CACHED
+
+#12 [final 2/6] RUN   --mount=type=cache,target=/var/lib/apt,sharing=locked   --mount=type=cache,target=/var/cache/apt,sharing=locked   apt-get update -qq && apt-get install -y openssl
+#12 CACHED
+
+#13 [final 3/6] RUN adduser   --disabled-password   --gecos ""   --home "/nonexistent"   --shell "/sbin/nologin"   --no-create-home   --uid "10001"   appuser
+#13 CACHED
+
+#14 [final 4/6] WORKDIR /home/webapp
+#14 CACHED
+
+#15 [build 3/4] RUN --mount=type=cache,target=/go/pkg/mod/   --mount=type=bind,source=go.sum,target=go.sum   --mount=type=bind,source=go.mod,target=go.mod   go mod download -x
+#15 CACHED
+
+#16 [build 2/4] WORKDIR /src
+#16 CACHED
+
+#17 [final 5/6] COPY --from=build /bin/server /bin/
+#17 CACHED
+
+#18 [final 6/6] COPY ./templates ./templates
+#18 CACHED
+
+#19 exporting to image
+#19 exporting layers done
+#19 exporting manifest sha256:caf8cfaa3ef746fb3465ba4fef3161a291ab0197c5f2459bbc20116fde611420 done
+#19 exporting config sha256:dc4348b8b477f3745f083544162f55648194e743282576c3562b7224dd4b5bf6 done
+#19 exporting attestation manifest sha256:d7452d4b4d5b665caf4fedc7ca2ede58c2f1839b2f55576a5d140db9b82d4cce 0.0s done
+#19 exporting manifest list sha256:289030bca6b1c7e3bc203a0b3ef2cf735f03a01bec62ecb4a4c8bcea94f06eee
+#19 exporting manifest list sha256:289030bca6b1c7e3bc203a0b3ef2cf735f03a01bec62ecb4a4c8bcea94f06eee done
+#19 naming to docker.io/library/private-isu-app:latest done
+#19 unpacking to docker.io/library/private-isu-app:latest done
+#19 DONE 0.1s
+
+#20 resolving provenance for metadata file
+#20 DONE 0.0s
+ Image private-isu-app Built 
+ Container private-isu-memcached-1 Recreate 
+ Container private-isu-mysql-1 Recreate 
+ Container private-isu-memcached-1 Recreated 
+ Container private-isu-mysql-1 Recreated 
+ Container private-isu-app-1 Recreate 
+ Container private-isu-app-1 Recreated 
+ Container private-isu-nginx-1 Recreate 
+ Container private-isu-nginx-1 Recreated 
+ Container private-isu-memcached-1 Starting 
+ Container private-isu-mysql-1 Starting 
+ Container private-isu-mysql-1 Started 
+ Container private-isu-memcached-1 Started 
+ Container private-isu-app-1 Starting 
+ Container private-isu-app-1 Started 
+ Container private-isu-nginx-1 Starting 
+ Container private-isu-nginx-1 Started 
+ Container private-isu-mysql-1 Stopping 
+ Container private-isu-mysql-1 Stopped 
+ Container private-isu-mysql-1 Starting 
+ Container private-isu-mysql-1 Started 
+MySQLの起動を待っている
+適用: webapp/sql-changes/01-db-index.sql
+{"pass":true,"score":336503,"success":327287,"fail":0,"messages":[]}
+{"pass":true,"score":329914,"success":320847,"fail":0,"messages":[]}
+{"pass":true,"score":346972,"success":337341,"fail":0,"messages":[]}
+記録した: /Users/mariko/kokeshi/isucon/private-isu/results/20261102-234228-final-06-cache-0ms.jsonl
+=== final-06-cache 100ms (24f452e)
+ Image private-isu-app Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 592B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.65kB done
+#2 DONE 0.0s
+
+#3 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#3 DONE 1.0s
+
+#4 docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#4 resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e done
+#4 CACHED
+
+#5 [internal] load metadata for docker.io/library/debian:bookworm-slim
+#5 ...
+
+#6 [internal] load metadata for docker.io/library/golang:1.27
+#6 DONE 0.8s
+
+#5 [internal] load metadata for docker.io/library/debian:bookworm-slim
+#5 DONE 0.9s
+
+#7 [internal] load .dockerignore
+#7 transferring context: 2B done
+#7 DONE 0.0s
+
+#8 [internal] load build context
+#8 transferring context: 614B done
+#8 DONE 0.0s
+
+#9 [final 1/6] FROM docker.io/library/debian:bookworm-slim@sha256:99c0b25c46d0214d5a2091092e7908907dcaecd6a962cde0ac700acee222b6f3
+#9 resolve docker.io/library/debian:bookworm-slim@sha256:99c0b25c46d0214d5a2091092e7908907dcaecd6a962cde0ac700acee222b6f3 0.0s done
+#9 DONE 0.0s
+
+#10 [build 1/4] FROM docker.io/library/golang:1.27@sha256:2920bb124f1a2e12a1d39f0cab756ae0068441ee1da7655dec7f5e374944095b
+#10 resolve docker.io/library/golang:1.27@sha256:2920bb124f1a2e12a1d39f0cab756ae0068441ee1da7655dec7f5e374944095b 0.0s done
+#10 DONE 0.0s
+
+#11 [build 3/4] RUN --mount=type=cache,target=/go/pkg/mod/   --mount=type=bind,source=go.sum,target=go.sum   --mount=type=bind,source=go.mod,target=go.mod   go mod download -x
+#11 CACHED
+
+#12 [final 2/6] RUN   --mount=type=cache,target=/var/lib/apt,sharing=locked   --mount=type=cache,target=/var/cache/apt,sharing=locked   apt-get update -qq && apt-get install -y openssl
+#12 CACHED
+
+#13 [final 4/6] WORKDIR /home/webapp
+#13 CACHED
+
+#14 [final 3/6] RUN adduser   --disabled-password   --gecos ""   --home "/nonexistent"   --shell "/sbin/nologin"   --no-create-home   --uid "10001"   appuser
+#14 CACHED
+
+#15 [build 2/4] WORKDIR /src
+#15 CACHED
+
+#16 [build 4/4] RUN --mount=type=cache,target=/go/pkg/mod/   --mount=type=bind,target=.   CGO_ENABLED=0 GOARCH=arm64 go build -o /bin/server .
+#16 CACHED
+
+#17 [final 5/6] COPY --from=build /bin/server /bin/
+#17 CACHED
+
+#18 [final 6/6] COPY ./templates ./templates
+#18 CACHED
+
+#19 exporting to image
+#19 exporting layers done
+#19 exporting manifest sha256:caf8cfaa3ef746fb3465ba4fef3161a291ab0197c5f2459bbc20116fde611420 done
+#19 exporting config sha256:dc4348b8b477f3745f083544162f55648194e743282576c3562b7224dd4b5bf6 done
+#19 exporting attestation manifest sha256:59e9872a3b0de9e2273c7f87a7b7c550d64f833779ee3acd6c523eab52c2f6da done
+#19 exporting manifest list sha256:f1245cc7e99163ac5ca65792ba3ccf008157ebab5c5ddddeaac4bd0d821e306a done
+#19 naming to docker.io/library/private-isu-app:latest done
+#19 unpacking to docker.io/library/private-isu-app:latest done
+#19 DONE 0.0s
+
+#20 resolving provenance for metadata file
+#20 DONE 0.0s
+ Image private-isu-app Built 
+ Container private-isu-memcached-1 Recreate 
+ Container private-isu-mysql-1 Recreate 
+ Container private-isu-memcached-1 Recreated 
+ Container private-isu-mysql-1 Recreated 
+ Container private-isu-app-1 Recreate 
+ Container private-isu-app-1 Recreated 
+ Container private-isu-nginx-1 Recreate 
+ Container private-isu-nginx-1 Recreated 
+ Container private-isu-memcached-1 Starting 
+ Container private-isu-mysql-1 Starting 
+ Container private-isu-memcached-1 Started 
+ Container private-isu-mysql-1 Started 
+ Container private-isu-app-1 Starting 
+ Container private-isu-app-1 Started 
+ Container private-isu-nginx-1 Starting 
+ Container private-isu-nginx-1 Started 
+ Container private-isu-mysql-1 Stopping 
+ Container private-isu-mysql-1 Stopped 
+ Container private-isu-mysql-1 Starting 
+ Container private-isu-mysql-1 Started 
+MySQLの起動を待っている
+適用: webapp/sql-changes/01-db-index.sql
+{"pass":true,"score":337047,"success":335407,"fail":0,"messages":[]}
+{"pass":true,"score":350493,"success":348832,"fail":0,"messages":[]}
+{"pass":true,"score":372401,"success":370709,"fail":0,"messages":[]}
+記録した: /Users/mariko/kokeshi/isucon/private-isu/results/20261102-235005-final-06-cache-100ms.jsonl
+=== final-07-infra 0ms (f2c6dce)
+ Image private-isu-app2 Building 
+ Image private-isu-app Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.10kB done
+#1 DONE 0.0s
+
+#2 [app2 internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.65kB 0.0s done
+#2 DONE 0.0s
+
+#3 [app2] resolve image config for docker-image://docker.io/docker/dockerfile:1
+#3 DONE 1.0s
+
+#4 [app2] docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#4 resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e done
+#4 CACHED
+
+#5 [app internal] load metadata for docker.io/library/debian:bookworm-slim
+#5 ...
+
+#6 [app internal] load metadata for docker.io/library/golang:1.27
+#6 DONE 0.8s
+
+#5 [app internal] load metadata for docker.io/library/debian:bookworm-slim
+#5 DONE 1.1s
+
+#7 [app2 internal] load .dockerignore
+#7 transferring context: 2B done
+#7 DONE 0.0s
+
+#8 [app internal] load build context
+#8 transferring context: 37.71kB 0.0s done
+#8 DONE 0.0s
+
+#9 [app2 final 1/6] FROM docker.io/library/debian:bookworm-slim@sha256:99c0b25c46d0214d5a2091092e7908907dcaecd6a962cde0ac700acee222b6f3
+#9 resolve docker.io/library/debian:bookworm-slim@sha256:99c0b25c46d0214d5a2091092e7908907dcaecd6a962cde0ac700acee222b6f3 0.0s done
+#9 DONE 0.0s
+
+#10 [app2 build 1/4] FROM docker.io/library/golang:1.27@sha256:2920bb124f1a2e12a1d39f0cab756ae0068441ee1da7655dec7f5e374944095b
+#10 resolve docker.io/library/golang:1.27@sha256:2920bb124f1a2e12a1d39f0cab756ae0068441ee1da7655dec7f5e374944095b 0.0s done
+#10 DONE 0.0s
+
+#11 [app2 final 3/6] RUN adduser   --disabled-password   --gecos ""   --home "/nonexistent"   --shell "/sbin/nologin"   --no-create-home   --uid "10001"   appuser
+#11 CACHED
+
+#12 [app2 final 2/6] RUN   --mount=type=cache,target=/var/lib/apt,sharing=locked   --mount=type=cache,target=/var/cache/apt,sharing=locked   apt-get update -qq && apt-get install -y openssl
+#12 CACHED
+
+#13 [app2 final 4/6] WORKDIR /home/webapp
+#13 CACHED
+
+#14 [app2 build 2/4] WORKDIR /src
+#14 CACHED
+
+#15 [app2 build 3/4] RUN --mount=type=cache,target=/go/pkg/mod/   --mount=type=bind,source=go.sum,target=go.sum   --mount=type=bind,source=go.mod,target=go.mod   go mod download -x
+#15 CACHED
+
+#16 [app2 build 4/4] RUN --mount=type=cache,target=/go/pkg/mod/   --mount=type=bind,target=.   CGO_ENABLED=0 GOARCH=arm64 go build -o /bin/server .
+#16 CACHED
+
+#17 [app2 final 5/6] COPY --from=build /bin/server /bin/
+#17 CACHED
+
+#18 [app2 final 6/6] COPY ./templates ./templates
+#18 CACHED
+
+#19 [app] exporting to image
+#19 exporting layers done
+#19 exporting manifest sha256:caf8cfaa3ef746fb3465ba4fef3161a291ab0197c5f2459bbc20116fde611420 done
+#19 exporting config sha256:dc4348b8b477f3745f083544162f55648194e743282576c3562b7224dd4b5bf6 done
+#19 exporting attestation manifest sha256:627a70ce7851c959ed2994c670aecd9d54f4926afb653710e0a891ebf543df72 0.0s done
+#19 exporting manifest list sha256:f4532ef28d9b3dea23fe61a01b020e4ee36c848751fbe52ca0659a5af3cc8327
+#19 exporting manifest list sha256:f4532ef28d9b3dea23fe61a01b020e4ee36c848751fbe52ca0659a5af3cc8327 done
+#19 naming to docker.io/library/private-isu-app:latest done
+#19 unpacking to docker.io/library/private-isu-app:latest done
+#19 DONE 0.1s
+
+#20 [app] resolving provenance for metadata file
+#20 DONE 0.0s
+
+#21 [app2] resolving provenance for metadata file
+#21 DONE 0.0s
+
+#22 [app2] exporting to image
+#22 exporting layers done
+#22 exporting manifest sha256:35ad430bd74bed22bbadc2a187a454ea918b6f28198aecfe3f3bc1d6869d64ba done
+#22 exporting config sha256:c02123d2d78dfb85e061ad1528c58d908033356e2e536b827298ee5f114bf3b9 done
+#22 exporting attestation manifest sha256:09de7d2359d2d39070459b92d0ef9be0dfc62a19f7bbdc13379b159ae2997f12 0.0s done
+#22 exporting manifest list sha256:b52d6d5573b513ade77d4860539637923ea28235886f4fcb7add65c806b100f4 done
+#22 naming to docker.io/library/private-isu-app2:latest done
+#22 unpacking to docker.io/library/private-isu-app2:latest done
+#22 DONE 0.1s
+ Image private-isu-app Built 
+ Image private-isu-app2 Built 
+ Container private-isu-memcached-1 Recreate 
+ Container private-isu-mysql-1 Recreate 
+ Container private-isu-memcached-1 Recreated 
+ Container private-isu-mysql-1 Recreated 
+ Container private-isu-app2-1 Creating 
+ Container private-isu-app-1 Recreate 
+ Container private-isu-app2-1 Created 
+ Container private-isu-app-1 Recreated 
+ Container private-isu-nginx-1 Recreate 
+ Container private-isu-nginx-1 Recreated 
+ Container private-isu-memcached-1 Starting 
+ Container private-isu-mysql-1 Starting 
+ Container private-isu-memcached-1 Started 
+ Container private-isu-mysql-1 Started 
+ Container private-isu-app2-1 Starting 
+ Container private-isu-app-1 Starting 
+ Container private-isu-app-1 Started 
+ Container private-isu-nginx-1 Starting 
+ Container private-isu-app2-1 Started 
+ Container private-isu-nginx-1 Started 
+ Container private-isu-mysql-1 Stopping 
+ Container private-isu-mysql-1 Stopped 
+ Container private-isu-mysql-1 Starting 
+ Container private-isu-mysql-1 Started 
+MySQLの起動を待っている
+適用: webapp/sql-changes/01-db-index.sql
+{"pass":true,"score":286194,"success":277866,"fail":0,"messages":[]}
+{"pass":true,"score":310828,"success":300877,"fail":0,"messages":[]}
+{"pass":true,"score":270868,"success":262447,"fail":0,"messages":[]}
+記録した: /Users/mariko/kokeshi/isucon/private-isu/results/20261102-235654-final-07-infra-0ms.jsonl
+=== final-07-infra 100ms (f2c6dce)
+ Image private-isu-app Building 
+ Image private-isu-app2 Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.10kB done
+#1 DONE 0.0s
+
+#2 [app2 internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.65kB done
+#2 DONE 0.0s
+
+#3 [app2] resolve image config for docker-image://docker.io/docker/dockerfile:1
+#3 DONE 1.0s
+
+#4 [app] docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#4 resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e 0.0s done
+#4 CACHED
+
+#5 [app internal] load metadata for docker.io/library/debian:bookworm-slim
+#5 DONE 0.9s
+
+#6 [app2 internal] load metadata for docker.io/library/golang:1.27
+#6 DONE 0.8s
+
+#7 [app internal] load .dockerignore
+#7 transferring context: 2B done
+#7 DONE 0.0s
+
+#8 [app internal] load build context
+#8 transferring context: 614B done
+#8 DONE 0.0s
+
+#9 [app final 1/6] FROM docker.io/library/debian:bookworm-slim@sha256:99c0b25c46d0214d5a2091092e7908907dcaecd6a962cde0ac700acee222b6f3
+#9 resolve docker.io/library/debian:bookworm-slim@sha256:99c0b25c46d0214d5a2091092e7908907dcaecd6a962cde0ac700acee222b6f3 0.0s done
+#9 DONE 0.0s
+
+#10 [app build 1/4] FROM docker.io/library/golang:1.27@sha256:2920bb124f1a2e12a1d39f0cab756ae0068441ee1da7655dec7f5e374944095b
+#10 resolve docker.io/library/golang:1.27@sha256:2920bb124f1a2e12a1d39f0cab756ae0068441ee1da7655dec7f5e374944095b 0.0s done
+#10 DONE 0.0s
+
+#11 [app2 build 3/4] RUN --mount=type=cache,target=/go/pkg/mod/   --mount=type=bind,source=go.sum,target=go.sum   --mount=type=bind,source=go.mod,target=go.mod   go mod download -x
+#11 CACHED
+
+#12 [app2 build 2/4] WORKDIR /src
+#12 CACHED
+
+#13 [app2 final 2/6] RUN   --mount=type=cache,target=/var/lib/apt,sharing=locked   --mount=type=cache,target=/var/cache/apt,sharing=locked   apt-get update -qq && apt-get install -y openssl
+#13 CACHED
+
+#14 [app2 final 3/6] RUN adduser   --disabled-password   --gecos ""   --home "/nonexistent"   --shell "/sbin/nologin"   --no-create-home   --uid "10001"   appuser
+#14 CACHED
+
+#15 [app2 final 5/6] COPY --from=build /bin/server /bin/
+#15 CACHED
+
+#16 [app2 final 4/6] WORKDIR /home/webapp
+#16 CACHED
+
+#17 [app2 build 4/4] RUN --mount=type=cache,target=/go/pkg/mod/   --mount=type=bind,target=.   CGO_ENABLED=0 GOARCH=arm64 go build -o /bin/server .
+#17 CACHED
+
+#18 [app2 final 6/6] COPY ./templates ./templates
+#18 CACHED
+
+#19 [app2] exporting to image
+#19 exporting layers done
+#19 exporting manifest sha256:35ad430bd74bed22bbadc2a187a454ea918b6f28198aecfe3f3bc1d6869d64ba done
+#19 exporting config sha256:c02123d2d78dfb85e061ad1528c58d908033356e2e536b827298ee5f114bf3b9 done
+#19 exporting attestation manifest sha256:2d54a1d55b7c19bba56e9a627dd6d7870bb0df41a979d05f470c6c167c508d75
+#19 exporting attestation manifest sha256:2d54a1d55b7c19bba56e9a627dd6d7870bb0df41a979d05f470c6c167c508d75 0.1s done
+#19 exporting manifest list sha256:6cf655cff0a5c0d72153562dfeb7c1cbf0d21db951531668c2e66964971c0ad6 0.0s done
+#19 naming to docker.io/library/private-isu-app2:latest done
+#19 unpacking to docker.io/library/private-isu-app2:latest done
+#19 DONE 0.2s
+
+#20 [app] exporting to image
+#20 exporting layers done
+#20 exporting manifest sha256:caf8cfaa3ef746fb3465ba4fef3161a291ab0197c5f2459bbc20116fde611420 done
+#20 exporting config sha256:dc4348b8b477f3745f083544162f55648194e743282576c3562b7224dd4b5bf6 done
+#20 exporting attestation manifest sha256:f358a8caecea6db39a2b1f7e66ab021cd6b8dcc6af0b618fa065b342cb17f911 0.1s done
+#20 exporting manifest list sha256:22d7f7adc1e10fe3aa914d0584687c8096a30224dd6843700fbad76f0e695273 0.0s done
+#20 naming to docker.io/library/private-isu-app:latest done
+#20 unpacking to docker.io/library/private-isu-app:latest done
+#20 DONE 0.2s
+
+#21 [app] resolving provenance for metadata file
+#21 DONE 0.1s
+
+#22 [app2] resolving provenance for metadata file
+#22 DONE 0.1s
+ Image private-isu-app2 Built 
+ Image private-isu-app Built 
+ Container private-isu-memcached-1 Recreate 
+ Container private-isu-mysql-1 Recreate 
+ Container private-isu-memcached-1 Recreated 
+ Container private-isu-mysql-1 Recreated 
+ Container private-isu-app-1 Recreate 
+ Container private-isu-app2-1 Recreate 
+ Container private-isu-app2-1 Recreated 
+ Container private-isu-app-1 Recreated 
+ Container private-isu-nginx-1 Recreate 
+ Container private-isu-nginx-1 Recreated 
+ Container private-isu-memcached-1 Starting 
+ Container private-isu-mysql-1 Starting 
+ Container private-isu-memcached-1 Started 
+ Container private-isu-mysql-1 Started 
+ Container private-isu-app2-1 Starting 
+ Container private-isu-app-1 Starting 
+ Container private-isu-app-1 Started 
+ Container private-isu-nginx-1 Starting 
+ Container private-isu-app2-1 Started 
+ Container private-isu-nginx-1 Started 
+ Container private-isu-mysql-1 Stopping 
+ Container private-isu-mysql-1 Stopped 
+ Container private-isu-mysql-1 Starting 
+ Container private-isu-mysql-1 Started 
+MySQLの起動を待っている
+適用: webapp/sql-changes/01-db-index.sql
+{"pass":true,"score":421993,"success":419900,"fail":0,"messages":[]}
+{"pass":true,"score":487062,"success":484722,"fail":0,"messages":[]}
+{"pass":true,"score":447934,"success":445754,"fail":0,"messages":[]}
+記録した: /Users/mariko/kokeshi/isucon/private-isu/results/20261103-000351-final-07-infra-100ms.jsonl
+time             label                                  branch   commit   state  delay_ms  median                scores                successes          fails
+20261102-133848  baseline-mysql1cpu                     kokeshi  ccc39e0  clean  0         0                     0,0,0                 442,382,110        58,57,64
+20261102-135603  baseline-mysql1cpu                     kokeshi  ccc39e0  clean  100       0                     0,0,0                 4,4,4              6,6,6
+20261102-165533  baseline-colima4cpu                    kokeshi  c0fec05  clean  0         4478                  4355,4478,4478        4204,4317,4329     0,0,0
+20261102-170310  baseline-colima4cpu                    kokeshi  e4d5e5b  clean  100       0                     0,0,0                 4,4,4              6,6,6
+20261102-171628  perf-02-db-index-colima4cpu            kokeshi  f4d14b0  clean  0         28116                 28116,29762,15574     26200,27713,14639  0,0,0
+20261102-172317  perf-02-db-index-colima4cpu            kokeshi  f4d14b0  clean  100       0                     0,0,0                 4,4,4              6,6,6
+20261102-173951  baseline-before-port-fix               kokeshi  1bf25fa  clean  0         3131                  3131,3146,3086        3010,3025,2967     0,0,0
+20261102-174510  baseline                               kokeshi  1bf25fa  clean  100       0                     0,0,0                 4,4,4              6,6,6
+20261102-175018  perf-02-db-index-port-exhausted        kokeshi  1bf25fa  clean  0         0                     0,0,0                 28315,28240,28242  8104,3848,3439
+20261102-175545  perf-02-db-index                       kokeshi  1bf25fa  clean  100       0                     0,0,0                 4,4,4              6,6,6
+20261102-182006  baseline                               kokeshi  3f0eb60  clean  0         3098                  3091,3247,3098        2972,3128,2979     0,0,0
+20261102-182511  perf-02-db-index                       kokeshi  3f0eb60  clean  0         49872                 50905,49872,32399     47703,46752,30425  0,0,0
+20261102-183220  perf-03-db-query-interrupted-by-sleep  kokeshi  5825ae6  clean  0         0                     73401,0,0             66278,0,0          0,0,0
+20261102-212250  perf-03-db-query                       kokeshi  5825ae6  clean  100       2558                  2619,2558,2399        2420,2359,2206     0,0,0
+20261102-213007  perf-03-db-query                       kokeshi  902e253  clean  0         36881                 37213,36881,34379     33686,33470,31228  0,0,0
+20261102-223408  final-01-baseline                      3f0eb60  clean    0      3476      3461,3509,3476        3335,3388,3350        0,0,0
+20261102-223943  final-01-baseline                      3f0eb60  clean    100    0         0,0,0                 4,4,4                 6,6,6
+20261102-224956  final-02-db-index                      3f0eb60  clean    0      38459     33206,38459,39334     31213,36144,36919     0,0,0
+20261102-225542  final-02-db-index                      3f0eb60  clean    100    0         0,0,0                 4,4,4                 6,6,6
+20261102-230050  final-03-db-query                      902e253  clean    0      62208     62625,59359,62208     56668,53794,56315     0,0,0
+20261102-230617  final-03-db-query                      902e253  clean    100    2261      2261,2094,2289        2082,1913,2098        0,0,0
+20261102-231321  final-04-app-connection                9817c01  clean    0      76485     76485,82738,76271     69591,75290,69469     0,0,0
+20261102-231900  final-04-app-connection                9817c01  clean    100    5951      6145,5924,5951        5757,5539,5566        0,0,0
+20261102-232733  final-05-static                        18dbd50  clean    0      296071    251275,296071,299576  244810,287614,291164  0,0,0
+20261102-233505  final-05-static                        18dbd50  clean    100    23711     23643,23720,23711     23134,23199,23187     0,0,0
+20261102-234228  final-06-cache                         24f452e  clean    0      336503    336503,329914,346972  327287,320847,337341  0,0,0
+20261102-235005  final-06-cache                         24f452e  clean    100    350493    337047,350493,372401  335407,348832,370709  0,0,0
+20261102-235654  final-07-infra                         f2c6dce  clean    0      286194    286194,310828,270868  277866,300877,262447  0,0,0
+20261103-000351  final-07-infra                         f2c6dce  clean    100    447934    421993,487062,447934  419900,484722,445754  0,0,0
